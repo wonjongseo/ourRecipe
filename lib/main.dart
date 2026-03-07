@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/export.dart';
 import 'package:get/route_manager.dart';
+import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/common/app_theme.dart';
 import 'package:our_recipe/core/pages/app_pages.dart';
 import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
 
@@ -14,12 +17,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Our Recipe',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: AppTheme.lightTheme,
       getPages: AppPages.pages,
       initialRoute: SplashScreen.name,
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      fallbackLocale: const Locale('ja', 'JP'),
+      locale: Locale(Get.locale.toString()),
+      translations: AppStrings(),
     );
   }
 }

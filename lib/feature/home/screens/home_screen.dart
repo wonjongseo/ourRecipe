@@ -22,7 +22,7 @@ class HomeScreen extends GetView<HomeController> {
             ),
             NavigationDestination(
               icon: Icon(FontAwesomeIcons.bowlFood),
-              label: '내 요리',
+              label: '재료',
             ),
             NavigationDestination(icon: Icon(Icons.settings), label: '설정'),
           ],
