@@ -26,11 +26,17 @@ class RecipesScreen extends GetView<RecipeController> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(110),
           child: AppBar(
-            backgroundColor: AppColors.secondartColor,
+            backgroundColor:
+                Theme.of(context).appBarTheme.backgroundColor ??
+                Theme.of(context).colorScheme.surface,
             centerTitle: true,
             title: Text(
               AppStrings.recipe.tr,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color:
+                    Theme.of(context).appBarTheme.foregroundColor ??
+                    Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(40),
@@ -165,6 +171,7 @@ class RecipesScreen extends GetView<RecipeController> {
   }
 
   Widget recipeListTIle(RecipeModel recipe) {
+    final isDark = Theme.of(Get.context!).brightness == Brightness.dark;
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () => controller.goToDetailScreen(recipe),
@@ -174,7 +181,10 @@ class RecipesScreen extends GetView<RecipeController> {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade300,
+              color:
+                  isDark
+                      ? Colors.black.withValues(alpha: 0.45)
+                      : Colors.black.withValues(alpha: 0.10),
               offset: Offset(0, 2),
               blurRadius: 10,
             ),

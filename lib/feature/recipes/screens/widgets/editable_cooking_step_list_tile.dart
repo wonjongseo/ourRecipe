@@ -27,6 +27,7 @@ class EditableCookingStepListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -34,7 +35,10 @@ class EditableCookingStepListTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade300,
+            color:
+                isDark
+                    ? Colors.black.withValues(alpha: 0.45)
+                    : Colors.black.withValues(alpha: 0.10),
             offset: Offset(0, 2),
             blurRadius: 10,
           ),

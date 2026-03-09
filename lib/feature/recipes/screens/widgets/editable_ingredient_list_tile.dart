@@ -16,6 +16,7 @@ class EditableIngredientListTile extends StatelessWidget {
   final Function(int) onTap;
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.only(bottom: 10),
       child: InkWell(
@@ -27,7 +28,10 @@ class EditableIngredientListTile extends StatelessWidget {
             color: Theme.of(context).cardColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade300,
+                color:
+                    isDark
+                        ? Colors.black.withValues(alpha: 0.45)
+                        : Colors.black.withValues(alpha: 0.10),
                 offset: Offset(0, 2),
                 blurRadius: 10,
               ),

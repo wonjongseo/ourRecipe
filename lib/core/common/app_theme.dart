@@ -40,9 +40,10 @@ class AppTheme {
       textTheme: textTheme,
       scaffoldBackgroundColor: AppColors.backgroundColor,
       appBarTheme: AppBarTheme(
-        backgroundColor: _lightColorScheme.primaryContainer,
-        foregroundColor: _lightColorScheme.onPrimaryContainer,
+        backgroundColor: AppColors.secondaryColor,
+        foregroundColor: AppColors.onSecondaryColor,
         elevation: 0,
+        scrolledUnderElevation: 0,
         titleTextStyle: textTheme.titleLarge,
       ),
 
@@ -74,10 +75,14 @@ class AppTheme {
       textTheme: textTheme,
       scaffoldBackgroundColor: const Color(0xFF121212),
       appBarTheme: AppBarTheme(
-        backgroundColor: const Color(0xFF121212),
-        foregroundColor: Colors.white,
+        // Light mode accent(#E7BE98)와 톤을 맞춘 다크 전용 AppBar 컬러.
+        backgroundColor: const Color(0xFF3A2C25),
+        foregroundColor: const Color(0xFFF4E4D4),
         elevation: 0,
-        titleTextStyle: textTheme.titleLarge?.copyWith(color: Colors.white),
+        scrolledUnderElevation: 0,
+        titleTextStyle: textTheme.titleLarge?.copyWith(
+          color: const Color(0xFFF4E4D4),
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
