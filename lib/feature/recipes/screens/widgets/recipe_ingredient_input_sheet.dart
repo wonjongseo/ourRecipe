@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_dropdown_styles.dart';
+import 'package:our_recipe/core/common/app_functions.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_ingredient_input_controller.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
-import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_product_repository.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
@@ -50,15 +51,13 @@ class _RecipeIngredientInputSheetState
   }
 
   Future<void> _showIngredientPickerSheet() async {
-    final selected = await showModalBottomSheet<IngredientProductModel>(
+    final selected = await AppFunctions.showBottomSheet(
       context: context,
-      isScrollControlled: true,
-      builder:
-          (_) => IngredientProductPickerSheet(
-            filterGroups: controller.filterGroupedProducts,
-            onTapManage: _goToIngredientManagementScreen,
-            selectedProductId: controller.selectedProductId,
-          ),
+      child: IngredientProductPickerSheet(
+        filterGroups: controller.filterGroupedProducts,
+        onTapManage: _goToIngredientManagementScreen,
+        selectedProductId: controller.selectedProductId,
+      ),
     );
 
     if (selected == null) return;
@@ -74,72 +73,97 @@ class _RecipeIngredientInputSheetState
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Container(
       width: double.infinity,
-      height: size.height * .6,
+      constraints: BoxConstraints(maxHeight: size.height * .7),
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           const SizedBox(height: 20),
-          Column(
-            children: [
-              _IngredientNameField(
-                selectedIngredientNameRx: controller.selectedIngredientName,
-                onTapField: _showIngredientPickerSheet,
-                onTapManage: _goToIngredientManagementScreen,
-              ),
-              const SizedBox(height: 10),
-              _ingredientAmountField(),
-              Obx(
-                () =>
-                    controller.isAppProvidedProductSelected
-                        ? Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              AppStrings.appProvidedUnitFixedGuide.tr,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                          ),
-                        )
-                        : const SizedBox.shrink(),
-              ),
-              const SizedBox(height: 20),
-              CustomTextFormField(
-                label: AppStrings.memo.tr,
-                maxLine: 2,
-                textInputAction: TextInputAction.newline,
-                controller: controller.memoTextCtl,
-              ),
-              const SizedBox(height: 20),
-              Obx(
-                () =>
-                    controller.hasPrice == false
-                        ? Text.rich(
-                          textAlign: TextAlign.center,
-                          TextSpan(
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 11,
-                            ),
 
-                            children: [
-                              TextSpan(
-                                text: '${AppStrings.priceNotRegistered.tr}\n',
-                              ),
-                              TextSpan(text: AppStrings.recipePriceGuide.tr),
-                            ],
-                          ),
-                        )
-                        : SizedBox(),
-              ),
-            ],
+          Expanded(
+            child: Obx(
+              () =>
+                  controller.isLoading
+                      ? Center(child: CircularProgressIndicator.adaptive())
+                      : SingleChildScrollView(
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
+                        child: Column(
+                          children: [
+                            _IngredientNameField(
+                              selectedIngredientNameRx:
+                                  controller.selectedIngredientName,
+                              onTapField: _showIngredientPickerSheet,
+                              onTapManage: _goToIngredientManagementScreen,
+                            ),
+                            const SizedBox(height: 10),
+                            _ingredientAmountField(),
+                            Obx(
+                              () =>
+                                  controller.isAppProvidedProductSelected
+                                      ? Padding(
+                                        padding: const EdgeInsets.only(top: 6),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            AppStrings
+                                                .appProvidedUnitFixedGuide
+                                                .tr,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      : const SizedBox.shrink(),
+                            ),
+                            const SizedBox(height: 20),
+                            CustomTextFormField(
+                              label: AppStrings.memo.tr,
+                              maxLine: 2,
+                              textInputAction: TextInputAction.newline,
+                              keyboardType: TextInputType.multiline,
+                              controller: controller.memoTextCtl,
+                            ),
+                            const SizedBox(height: 20),
+                            Obx(
+                              () =>
+                                  controller.hasPrice == false
+                                      ? Text.rich(
+                                        textAlign: TextAlign.center,
+                                        TextSpan(
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurfaceVariant,
+                                            fontSize: 11,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  '${AppStrings.priceNotRegistered.tr}\n',
+                                            ),
+                                            TextSpan(
+                                              text: AppStrings.recipePriceGuide.tr,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      : const SizedBox(),
+                            ),
+                          ],
+                        ),
+                      ),
+            ),
           ),
-          const Spacer(),
+          const SizedBox(height: 12),
           InkWell(
             onTap: _add,
             child: Container(
@@ -188,6 +212,14 @@ class _RecipeIngredientInputSheetState
                 style: TextStyle(fontSize: UiConstants.formFieldFontSize),
                 decoration: InputDecoration(
                   label: Text(AppStrings.quantity.tr),
+                  labelStyle: TextStyle(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.55),
+                  ),
+                  floatingLabelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   border: const OutlineInputBorder(borderSide: BorderSide.none),
                 ),
               ),
@@ -211,12 +243,9 @@ class _RecipeIngredientInputSheetState
     required bool enabled,
   }) {
     return DropdownButton2(
-      buttonStyleData: ButtonStyleData(height: UiConstants.formFieldHeight),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
-        ),
-      ),
+      buttonStyleData: AppDropdownStyles.dropdown2ButtonStyle(),
+      dropdownStyleData: AppDropdownStyles.dropdown2MenuStyle(context),
+      menuItemStyleData: AppDropdownStyles.dropdown2ItemStyle(),
       underline: const SizedBox(),
       isExpanded: true,
       value: controller.ingredientUnit.value,
@@ -273,24 +302,22 @@ class _IngredientNameField extends StatelessWidget {
               ),
               labelText: AppStrings.ingredientName.tr,
               filled: true,
+              hintStyle: TextStyle(color: Colors.grey),
               hintText: AppStrings.ingredientSearchHint.tr,
+              labelStyle: TextStyle(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.55),
+              ),
+              floatingLabelStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
               fillColor: Theme.of(context).colorScheme.surface,
-
               border: AppInputBorders.normal(),
               enabledBorder: AppInputBorders.normal(),
               focusedBorder: AppInputBorders.focused(),
               prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass, size: 13),
-              suffixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: onTapManage,
-                    icon: const Icon(Icons.settings_outlined, size: 18),
-                  ),
-                  const Icon(Icons.arrow_drop_down),
-                  const SizedBox(width: 6),
-                ],
-              ),
+              suffixIcon: const Icon(Icons.arrow_drop_down),
             ),
             child: Text(
               selectedIngredientNameRx.value ??

@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
+import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_category_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_repository.dart';
@@ -57,6 +61,9 @@ class RecipeController extends GetxController {
 
   final selectedFilter = const RecipeFilter.all().obs;
   final _searchQuery = ''.obs;
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
+  final searchTextCtrl = TextEditingController();
   String get searchQuery => _searchQuery.value;
 
   void onChangeFilter(RecipeFilter filter) {
@@ -71,29 +78,55 @@ class RecipeController extends GetxController {
   }
 
   void _setUp() async {
-    await _fetchCategories();
-    await _fetchRecipes();
+    _isLoading.value = true;
+    try {
+      await _fetchCategories();
+      await _fetchRecipes();
+    } catch (e, s) {
+      LogManager.error('Recipe setup failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> _fetchRecipes() async {
-    final recipes = await _repository.fetchRecipes();
-    _recipes.assignAll(recipes);
-    _applyFilters();
+    try {
+      final recipes = await _repository.fetchRecipes();
+      _recipes.assignAll(recipes);
+      _applyFilters();
+    } catch (e, s) {
+      LogManager.error('Fetch recipes failed', error: e, stackTrace: s);
+      rethrow;
+    }
   }
 
   Future<void> _fetchCategories() async {
-    final categories = await _categoryRepository.fetchCategories();
-    categories.sort();
-    _categories.assignAll(categories);
-    if (selectedFilter.value.type == RecipeFilterType.category &&
-        !_categories.contains(selectedFilter.value.category)) {
-      selectedFilter.value = const RecipeFilter.all();
+    try {
+      final categories = await _categoryRepository.fetchCategories();
+      categories.sort();
+      _categories.assignAll(categories);
+      if (selectedFilter.value.type == RecipeFilterType.category &&
+          !_categories.contains(selectedFilter.value.category)) {
+        selectedFilter.value = const RecipeFilter.all();
+      }
+    } catch (e, s) {
+      LogManager.error('Fetch categories failed', error: e, stackTrace: s);
+      rethrow;
     }
   }
 
   Future<void> refreshCategories() async {
-    await _fetchCategories();
-    _applyFilters();
+    _isLoading.value = true;
+    try {
+      await _fetchCategories();
+      _applyFilters();
+    } catch (e, s) {
+      LogManager.error('Refresh categories failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<RecipeModel?> goToEditScreen({RecipeModel? recipeModel}) async {
@@ -101,25 +134,48 @@ class RecipeController extends GetxController {
       EditRecipeScreen.name,
       arguments: recipeModel,
     );
-    await _fetchCategories();
-    if (result is! RecipeModel) return null;
-
-    await _repository.saveRecipe(result);
-    await _fetchRecipes();
-    return result;
+    _isLoading.value = true;
+    try {
+      await _fetchCategories();
+      if (result is! RecipeModel) return null;
+      await _repository.saveRecipe(result);
+      await _fetchRecipes();
+      return result;
+    } catch (e, s) {
+      LogManager.error('Save recipe failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+      return null;
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> goToDetailScreen(RecipeModel recipeModel) async {
     await Get.toNamed(DetailRecipeScreen.name, arguments: recipeModel);
-    await _fetchCategories();
-    await _fetchRecipes();
+    _isLoading.value = true;
+    try {
+      await _fetchCategories();
+      await _fetchRecipes();
+    } catch (e, s) {
+      LogManager.error('Refresh after detail failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   void deleteRecipe(RecipeModel recipe) async {
-    await _repository.deleteRecipe(recipe.id);
-
-    _fetchRecipes();
-    Get.back();
+    _isLoading.value = true;
+    try {
+      await _repository.deleteRecipe(recipe.id);
+      await _fetchRecipes();
+      Get.back();
+    } catch (e, s) {
+      LogManager.error('Delete recipe failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> toggleLike(String recipeId) async {
@@ -128,8 +184,16 @@ class RecipeController extends GetxController {
 
     final recipe = _recipes[index];
     final toggled = recipe.copyWith(isLiked: !recipe.isLiked);
-    await _repository.saveRecipe(toggled);
-    await _fetchRecipes();
+    _isLoading.value = true;
+    try {
+      await _repository.saveRecipe(toggled);
+      await _fetchRecipes();
+    } catch (e, s) {
+      LogManager.error('Toggle bookmark failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> toggleBookmark(String recipeId) async {
@@ -139,6 +203,18 @@ class RecipeController extends GetxController {
   void onChanged(String? query) {
     _searchQuery.value = (query ?? '').trim();
     _applyFilters();
+  }
+
+  void clearQuery() {
+    searchTextCtrl.clear();
+    _searchQuery.value = '';
+    _applyFilters();
+  }
+
+  @override
+  void onClose() {
+    searchTextCtrl.dispose();
+    super.onClose();
   }
 
   void _applyFilters() {

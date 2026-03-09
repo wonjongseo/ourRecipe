@@ -40,6 +40,7 @@ class RecipesScreen extends GetView<RecipeController> {
                 ).copyWith(bottom: 20),
                 child: Obx(
                   () => CustomSearchBar(
+                    controller: controller.searchTextCtrl,
                     onChanged: controller.onChanged,
                     prefixIcon: Icon(
                       FontAwesomeIcons.magnifyingGlass,
@@ -49,7 +50,7 @@ class RecipesScreen extends GetView<RecipeController> {
                         controller.searchQuery.isEmpty
                             ? null
                             : IconButton(
-                              onPressed: () {},
+                              onPressed: () => controller.clearQuery(),
                               icon: Icon(FontAwesomeIcons.xmark),
                             ),
                   ),
@@ -59,33 +60,38 @@ class RecipesScreen extends GetView<RecipeController> {
           ),
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                  child: Obx(() => _filterChips()),
-                ),
+          child: Obx(
+            () =>
+                controller.isLoading
+                    ? Center(child: CircularProgressIndicator.adaptive())
+                    : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 14),
+                            child: Obx(() => _filterChips()),
+                          ),
 
-                SizedBox(height: 10),
-                Obx(
-                  () => Expanded(
-                    child: ListView.separated(
-                      separatorBuilder:
-                          (context, index) => SizedBox(height: 12),
-                      shrinkWrap: false,
-                      itemCount: controller.recipes.length,
-                      itemBuilder: (context, index) {
-                        final recipe = controller.recipes[index];
+                          SizedBox(height: 10),
+                          Obx(
+                            () => Expanded(
+                              child: ListView.separated(
+                                separatorBuilder:
+                                    (context, index) => SizedBox(height: 12),
+                                shrinkWrap: false,
+                                itemCount: controller.recipes.length,
+                                itemBuilder: (context, index) {
+                                  final recipe = controller.recipes[index];
 
-                        return recipeListTIle(recipe);
-                      },
+                                  return recipeListTIle(recipe);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ),

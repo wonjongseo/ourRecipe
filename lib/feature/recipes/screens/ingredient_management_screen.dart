@@ -18,7 +18,9 @@ class IngredientManagementScreen
         bottomNavigationBar: const AdBannerBottomSheet(),
         appBar: AppBar(title: Text(AppStrings.ingredientManagement.tr)),
         body:
-            controller.groupedProducts.isEmpty
+            controller.isLoading
+                ? Center(child: CircularProgressIndicator.adaptive())
+                : controller.groupedProducts.isEmpty
                 ? Center(
                   child: Text(
                     AppStrings.noRegisteredIngredient.tr,

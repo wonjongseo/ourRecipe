@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
+import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
@@ -19,6 +21,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   final RecipeController controller = Get.find<RecipeController>();
   final ShoppingTodoRepository _todoRepository = ShoppingTodoRepository();
   final RxSet<String> checkedKeys = <String>{}.obs;
+  final RxBool _isLoading = true.obs;
 
   @override
   void initState() {
@@ -40,7 +43,9 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
         appBar: AppBar(centerTitle: true, title: Text(AppStrings.shopping.tr)),
         body: SafeArea(
           child:
-              bookmarked.isEmpty
+              _isLoading.value
+                  ? Center(child: CircularProgressIndicator.adaptive())
+                  : bookmarked.isEmpty
                   ? Center(
                     child: Text(
                       AppStrings.noBookmarkedRecipes.tr,
@@ -81,7 +86,12 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
-            offset: const Offset(0, 3),
+            offset: const Offset(1, 1),
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 10,
+            offset: const Offset(-1, -1),
           ),
         ],
       ),
@@ -201,13 +211,26 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   }
 
   Future<void> _loadCheckedKeys() async {
-    final saved = await _todoRepository.fetchCheckedKeys();
-    if (saved.isEmpty) return;
-    checkedKeys.addAll(saved);
-    checkedKeys.refresh();
+    _isLoading.value = true;
+    try {
+      final saved = await _todoRepository.fetchCheckedKeys();
+      if (saved.isEmpty) return;
+      checkedKeys.addAll(saved);
+      checkedKeys.refresh();
+    } catch (e, s) {
+      LogManager.error('Load shopping todos failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> _persistCheckedKeys() async {
-    await _todoRepository.saveCheckedKeys(checkedKeys);
+    try {
+      await _todoRepository.saveCheckedKeys(checkedKeys);
+    } catch (e, s) {
+      LogManager.error('Save shopping todos failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    }
   }
 }

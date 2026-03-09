@@ -78,7 +78,13 @@ class MyPageController extends GetxController {
     _applyTheme(locale: currentLocale(), mode: themeMode.value);
   }
 
-  Future<void> changeTextScale(double value) async {
+  void previewTextScale(double value) {
+    final clamped = value.clamp(0.8, 1.4).toDouble();
+    textScale.value = clamped;
+    ThemeService.textScale.value = clamped;
+  }
+
+  Future<void> persistTextScale(double value) async {
     final clamped = value.clamp(0.8, 1.4).toDouble();
     textScale.value = clamped;
     ThemeService.textScale.value = clamped;

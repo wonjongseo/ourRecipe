@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:our_recipe/core/common/app_functions.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,7 +14,47 @@ class ImageService {
     VoidCallback? onPickStart,
     VoidCallback? onPickEnd,
   }) async {
-    print('asas');
+    return await AppFunctions.showBottomSheet(
+      context: context,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+              onPressed: () async {
+                try {
+                  onPickStart?.call();
+                  final image = await _pickImageFromCamera();
+                  Get.back(result: image);
+                } catch (e) {
+                  LogManager.error('$e');
+                } finally {
+                  onPickEnd?.call();
+                }
+              },
+              icon: Icon(Icons.camera_alt_outlined, size: 30),
+            ),
+            SizedBox(width: 20),
+            IconButton(
+              onPressed: () async {
+                try {
+                  onPickStart?.call();
+                  final image = await _getImageFromLibery();
+                  Get.back(result: image);
+                } catch (e) {
+                  LogManager.error('$e');
+                } finally {
+                  onPickEnd?.call();
+                }
+              },
+              icon: Icon(Icons.folder_copy_outlined, size: 10 * 3),
+            ),
+            SizedBox(width: 10 * 2),
+          ],
+        ),
+      ),
+    );
     return await showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -68,6 +109,7 @@ class ImageService {
                 ],
               ),
             ),
+
             SizedBox(height: 10 * 5),
           ],
         );

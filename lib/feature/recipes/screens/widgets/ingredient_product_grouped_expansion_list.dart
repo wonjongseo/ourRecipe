@@ -30,9 +30,9 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = Theme.of(context).colorScheme.outline.withValues(
-      alpha: 0.55,
-    );
+    final borderColor = Theme.of(
+      context,
+    ).colorScheme.outline.withValues(alpha: 0.55);
     final languageCode = Get.locale?.languageCode ?? 'ja';
     return ListView.builder(
       shrinkWrap: shrinkWrap,
@@ -103,7 +103,10 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                       ),
                       subtitle: Text(
                         '${item.products.length}',
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 11),
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 11,
+                        ),
                       ),
                       children:
                           item.products.map((product) {
@@ -113,9 +116,8 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                               dense: true,
                               tileColor:
                                   isSelected
-                                      ? Theme.of(
-                                        context,
-                                      ).colorScheme.primary.withValues(alpha: 0.10)
+                                      ? Theme.of(context).colorScheme.primary
+                                          .withValues(alpha: 0.10)
                                       : null,
                               contentPadding: const EdgeInsets.only(
                                 left: 44,
@@ -133,7 +135,10 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                                       ? Icon(
                                         Icons.check_circle,
                                         size: 16,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
                                       )
                                       : const Icon(
                                         Icons.arrow_forward_ios_rounded,

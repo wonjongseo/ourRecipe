@@ -72,4 +72,9 @@ class IngredientProductModel {
       sodium: (json['sodium'] as num?)?.toDouble(),
     );
   }
+
+  @override
+  String toString() {
+    return 'IngredientProductModel(id: $id, isDefault: $isDefault, name: $name, category: $category, manufacturer: $manufacturer, price: $price, baseGram: $baseGram, kcal: $kcal, water: $water, protein: $protein, fat: $fat, carbohydrate: $carbohydrate, fiber: $fiber, ash: $ash, sodium: $sodium)';
+  }
 }

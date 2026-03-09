@@ -31,6 +31,7 @@ class _IngredientProductPickerSheetState
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Called IngredientProductPickerSheet');
     final filteredGroups = widget.filterGroups(query);
     final appProvidedGroups =
         filteredGroups
@@ -41,12 +42,28 @@ class _IngredientProductPickerSheetState
             .where((group) => group.id.startsWith('custom_'))
             .toList();
 
-    return SafeArea(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.8,
+        height: MediaQuery.of(context).size.height * 0.9,
+        width: double.infinity,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            SizedBox(height: 24),
+            SizedBox(height: 6),
+            TextButton.icon(
+              onPressed: () async {
+                Get.back();
+                await widget.onTapManage?.call();
+              },
+              label: Text(AppStrings.ingredientManageScreen.tr),
+              icon: const Icon(Icons.arrow_forward_ios_rounded),
+              iconAlignment: IconAlignment.end,
+            ),
+
+            SizedBox(height: 6),
             _searchForm(context),
             SizedBox(height: 12),
             Expanded(
@@ -135,7 +152,7 @@ class _IngredientProductPickerSheetState
           filled: true,
           hintText: AppStrings.search.tr,
           fillColor: Theme.of(context).colorScheme.surface,
-
+          hintStyle: TextStyle(color: Colors.grey),
           border: AppInputBorders.normal(),
           enabledBorder: AppInputBorders.normal(),
           focusedBorder: AppInputBorders.focused(),
@@ -185,29 +202,32 @@ class _IngredientProductPickerSheetState
     );
   }
 
-  Column _emptyForSearch(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        Icon(Icons.search_off_rounded, size: 28, color: Colors.grey.shade500),
-        const SizedBox(height: 10),
-        Text(
-          AppStrings.noRegisteredIngredient.tr,
-          style: TextStyle(color: AppColors.noRegisteredItemColor),
-        ),
-
-        if (widget.onTapManage != null) ...[
-          const SizedBox(height: 4),
-          ElevatedButton.icon(
-            onPressed: () async {
-              Navigator.of(context).pop();
-              await widget.onTapManage?.call();
-            },
-            label: Text(AppStrings.ingredientManagement.tr),
-            icon: const Icon(Icons.arrow_forward_ios_rounded),
+  Widget _emptyForSearch(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          Icon(Icons.search_off_rounded, size: 28, color: Colors.grey.shade500),
+          const SizedBox(height: 10),
+          Text(
+            AppStrings.noRegisteredIngredient.tr,
+            style: TextStyle(color: AppColors.noRegisteredItemColor),
           ),
+
+          // if (widget.onTapManage != null) ...[
+          //   const SizedBox(height: 4),
+          //   ElevatedButton.icon(
+          //     onPressed: () async {
+          //       Navigator.of(context).pop();
+          //       await widget.onTapManage?.call();
+          //     },
+          //     label: Text(AppStrings.ingredientManagement.tr),
+          //     icon: const Icon(Icons.arrow_forward_ios_rounded),
+          //   ),
+          // ],
         ],
-      ],
+      ),
     );
   }
 }

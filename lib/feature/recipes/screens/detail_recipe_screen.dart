@@ -71,6 +71,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                     onPressed: _canStartCooking ? _goToStartCooking : null,
                     icon: const Icon(Icons.play_arrow_rounded),
                     label: Text(AppStrings.startCooking.tr),
+                    iconAlignment: IconAlignment.end,
                   ),
                 ),
               ),
@@ -551,6 +552,8 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
         ),
       ),
       PopupMenuButton<String>(
+        color: Theme.of(context).colorScheme.surface,
+        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
         onSelected: (value) {
           switch (value) {
             case 'share':
@@ -571,9 +574,18 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppStrings.share.tr),
+                    Text(
+                      AppStrings.share.tr,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     SizedBox(width: 4),
-                    Icon(Icons.share_outlined, size: 18),
+                    Icon(
+                      Icons.share_outlined,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ],
                 ),
               ),
@@ -582,9 +594,18 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppStrings.edit.tr),
+                    Text(
+                      AppStrings.edit.tr,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     SizedBox(width: 4),
-                    Icon(FontAwesomeIcons.edit, size: 18),
+                    Icon(
+                      FontAwesomeIcons.edit,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ],
                 ),
               ),
@@ -593,9 +614,18 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppStrings.delete.tr),
+                    Text(
+                      AppStrings.delete.tr,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
                     SizedBox(width: 4),
-                    Icon(FontAwesomeIcons.circleMinus, size: 18),
+                    Icon(
+                      FontAwesomeIcons.circleMinus,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ],
                 ),
               ),

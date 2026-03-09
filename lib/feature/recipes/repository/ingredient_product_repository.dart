@@ -3,10 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
+
 import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
-import 'package:sqflite/sqflite.dart';
 
 class IngredientProductRepository {
   IngredientProductRepository({RecipeDatabaseService? database})
@@ -45,7 +46,9 @@ class IngredientProductRepository {
 
   Future<Set<String>> _fetchDeletedDefaultIds() async {
     final db = await _database.db;
-    final rows = await db.query(RecipeDatabaseService.ingredientDefaultDeletions);
+    final rows = await db.query(
+      RecipeDatabaseService.ingredientDefaultDeletions,
+    );
     return rows.map((row) => row['id'] as String).toSet();
   }
 
@@ -173,7 +176,13 @@ class IngredientProductRepository {
             final foodCode = (foodMap['foodCode'] as String? ?? '').trim();
             if (foodCode.isEmpty) continue;
             final foodName = (foodMap['name'] as String? ?? '').trim();
-            final name = '$itemName $foodName'.trim();
+            var name = foodName;
+            if (itemName.isNotEmpty && name.startsWith(itemName)) {
+              name = name.substring(itemName.length).trim();
+            }
+            if (name.isEmpty) {
+              name = foodName.isNotEmpty ? foodName : itemName;
+            }
             itemProducts.add(
               IngredientProductModel(
                 id: foodCode,
@@ -222,9 +231,7 @@ class IngredientProductRepository {
   String _resolvedLanguageCode() {
     final appLang = Get.locale?.languageCode.trim().toLowerCase();
     if (appLang != null && appLang.isNotEmpty) return appLang;
-    return PlatformDispatcher.instance.locale.languageCode
-        .trim()
-        .toLowerCase();
+    return PlatformDispatcher.instance.locale.languageCode.trim().toLowerCase();
   }
 
   String _assetPathForLang(String languageCode) {
@@ -341,6 +348,10 @@ class IngredientProductGroup {
     required this.name,
     required this.items,
   });
+
+  @override
+  String toString() =>
+      'IngredientProductGroup(id: $id, name: $name, items: $items)';
 }
 
 class IngredientProductSubGroup {
@@ -353,4 +364,8 @@ class IngredientProductSubGroup {
     required this.name,
     required this.products,
   });
+
+  @override
+  String toString() =>
+      'IngredientProductSubGroup(id: $id, name: $name, products: $products)';
 }

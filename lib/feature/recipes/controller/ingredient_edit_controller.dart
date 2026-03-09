@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
@@ -15,6 +16,9 @@ class IngredientEditController extends GetxController {
     this._productRepository,
     this._categoryRepository,
   );
+
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
 
   final IngredientProductModel? product;
   final IngredientProductRepository _productRepository;
@@ -83,25 +87,33 @@ class IngredientEditController extends GetxController {
   }
 
   Future<void> _loadCategories() async {
-    final values = await _categoryRepository.fetchAllCategories();
-    final custom = <String>[];
-    final defaults = <String>[];
-    for (final value in values) {
-      if (IngredientCategoryCatalog.isDefaultId(value)) {
-        defaults.add(value);
-      } else {
-        custom.add(value);
+    try {
+      _isLoading.value = true;
+      final values = await _categoryRepository.fetchAllCategories();
+      final custom = <String>[];
+      final defaults = <String>[];
+      for (final value in values) {
+        if (IngredientCategoryCatalog.isDefaultId(value)) {
+          defaults.add(value);
+        } else {
+          custom.add(value);
+        }
       }
-    }
-    custom.sort();
-    categories
-      ..clear()
-      ..addAll(defaults)
-      ..addAll(custom);
+      custom.sort();
+      categories
+        ..clear()
+        ..addAll(defaults)
+        ..addAll(custom);
 
-    final selected = selectedCategory.value;
-    if (selected != null && !categories.contains(selected)) {
-      selectedCategory.value = null;
+      final selected = selectedCategory.value;
+      if (selected != null && !categories.contains(selected)) {
+        selectedCategory.value = null;
+      }
+    } catch (e) {
+      LogManager.error('$e');
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
     }
   }
 
@@ -156,14 +168,30 @@ class IngredientEditController extends GetxController {
       sodium: _toDouble(sodiumCtrl),
     );
 
-    await _productRepository.saveProduct(saved);
-    Get.back(result: true);
+    try {
+      _isLoading.value = true;
+      await _productRepository.saveProduct(saved);
+      Get.back(result: true);
+    } catch (e, s) {
+      LogManager.error('Save ingredient failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> delete() async {
     final target = product;
     if (target == null) return;
-    await _productRepository.deleteProduct(target.id);
-    Get.back(result: true);
+    try {
+      _isLoading.value = true;
+      await _productRepository.deleteProduct(target.id);
+      Get.back(result: true);
+    } catch (e, s) {
+      LogManager.error('Delete ingredient failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 }

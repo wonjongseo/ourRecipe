@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
-import 'package:our_recipe/core/common/app_input_borders.dart';
+import 'package:our_recipe/core/common/app_dropdown_styles.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
@@ -21,7 +21,6 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         bottomNavigationBar: SafeArea(
-          bottom: false,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -30,7 +29,10 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                 margin: EdgeInsets.symmetric(horizontal: 12),
                 height: 55,
                 child: ElevatedButton.icon(
-                  onPressed: () => controller.saveRecipeModel(),
+                  onPressed:
+                      controller.isLoading
+                          ? null
+                          : () => controller.saveRecipeModel(),
                   label: Text(
                     controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
                   ),
@@ -45,7 +47,10 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
           title: Text(AppStrings.addRecipe.tr),
           actions: [
             TextButton(
-              onPressed: () => controller.saveRecipeModel(),
+              onPressed:
+                  controller.isLoading
+                      ? null
+                      : () => controller.saveRecipeModel(),
               child: Text(
                 controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
               ),
@@ -54,50 +59,53 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
         ),
         body: SafeArea(
           child: Obx(
-            () => SingleChildScrollView(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _coverImage(),
-                  SizedBox(height: 24),
-                  _recipeCategory(),
-                  SizedBox(height: 12),
-                  CustomTextFormField(
-                    label: '레시피명',
-                    controller: controller.recipeNameTextCtrl,
-                  ),
-                  SizedBox(height: 12),
-                  CustomTextFormField(
-                    label: AppStrings.description.tr,
-                    maxLine: 3,
-                    controller: controller.descriptionTextCtrl,
-                  ),
-                  SizedBox(height: 12),
-                  CustomTextFormField(
-                    label: AppStrings.servings.tr,
-                    controller: controller.servingsTextCtrl,
-                    keyboardType: TextInputType.number,
-                    hintText: AppStrings.servingsExample.tr,
-                    suffixText: AppStrings.servingsUnit.tr,
-                  ),
+            () =>
+                controller.isLoading
+                    ? Center(child: CircularProgressIndicator.adaptive())
+                    : SingleChildScrollView(
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _coverImage(),
+                          SizedBox(height: 24),
+                          _recipeCategory(context),
+                          SizedBox(height: 12),
+                          CustomTextFormField(
+                            label: AppStrings.recipeName.tr,
+                            controller: controller.recipeNameTextCtrl,
+                          ),
+                          SizedBox(height: 12),
+                          CustomTextFormField(
+                            label: AppStrings.description.tr,
+                            maxLine: 3,
+                            controller: controller.descriptionTextCtrl,
+                          ),
+                          SizedBox(height: 12),
+                          CustomTextFormField(
+                            label: AppStrings.servings.tr,
+                            controller: controller.servingsTextCtrl,
+                            keyboardType: TextInputType.number,
+                            hintText: AppStrings.servingsExample.tr,
+                            suffixText: AppStrings.servingsUnit.tr,
+                          ),
 
-                  SizedBox(height: 24),
-                  _ingredients(),
-                  SizedBox(height: 24),
-                  _cookingSteps(),
+                          SizedBox(height: 24),
+                          _ingredients(),
+                          SizedBox(height: 24),
+                          _cookingSteps(),
 
-                  SizedBox(height: 30),
-                ],
-              ),
-            ),
+                          SizedBox(height: 30),
+                        ],
+                      ),
+                    ),
           ),
         ),
       ),
     );
   }
 
-  Widget _recipeCategory() {
+  Widget _recipeCategory(BuildContext context) {
     return SizedBox(
       height: UiConstants.formFieldHeight,
       child: DropdownButtonFormField<String>(
@@ -116,18 +124,12 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
             controller.selectedCategory.value.isEmpty
                 ? null
                 : controller.selectedCategory.value,
-        decoration: InputDecoration(
+        decoration: AppDropdownStyles.formFieldDecoration(
+          context,
           labelText: AppStrings.category.tr,
-          filled: true,
-          fillColor: Get.theme.colorScheme.surface,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          border: AppInputBorders.normal(),
-          enabledBorder: AppInputBorders.normal(),
-          focusedBorder: AppInputBorders.focused(),
-          contentPadding: EdgeInsets.symmetric(horizontal: 14),
           suffixIcon: IconButton(
             onPressed: () => controller.goToCategoryManagement(),
-            icon: Icon(Icons.settings_outlined, size: 18),
+            icon: const Icon(Icons.settings_outlined, size: 18),
           ),
         ),
         hint: Text(

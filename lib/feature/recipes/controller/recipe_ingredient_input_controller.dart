@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
@@ -13,6 +14,9 @@ class RecipeIngredientInputController extends GetxController {
     this._productRepository, {
     this.initialIngredient,
   });
+
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
 
   final IngredientProductRepository _productRepository;
   final IngredientModel? initialIngredient;
@@ -66,36 +70,44 @@ class RecipeIngredientInputController extends GetxController {
   }
 
   Future<void> loadProducts() async {
-    final values = await _productRepository.fetchProducts();
-    final grouped = await _productRepository.fetchGroupedProducts();
-    values.sort((a, b) => a.name.compareTo(b.name));
+    try {
+      _isLoading.value = true;
+      final values = await _productRepository.fetchProducts();
+      final grouped = await _productRepository.fetchGroupedProducts();
+      values.sort((a, b) => a.name.compareTo(b.name));
 
-    products.assignAll(values);
-    _productById
-      ..clear()
-      ..addEntries(values.map((item) => MapEntry(item.id, item)));
-    groupedProducts.assignAll(grouped);
+      products.assignAll(values);
+      _productById
+        ..clear()
+        ..addEntries(values.map((item) => MapEntry(item.id, item)));
+      groupedProducts.assignAll(grouped);
 
-    final selected = selectedIngredientName.value;
-    if (selected == null) return;
-    final matched = values
-        .where((item) => item.name == selected)
-        .toList(growable: false);
-    if (matched.isEmpty) {
-      selectedIngredientName.value = null;
-      selectedProductIdRx.value = null;
-      return;
-    }
-    final preferredId = selectedProductIdRx.value;
-    if (preferredId != null && _productById.containsKey(preferredId)) {
+      final selected = selectedIngredientName.value;
+      if (selected == null) return;
+      final matched = values
+          .where((item) => item.name == selected)
+          .toList(growable: false);
+      if (matched.isEmpty) {
+        selectedIngredientName.value = null;
+        selectedProductIdRx.value = null;
+        return;
+      }
+      final preferredId = selectedProductIdRx.value;
+      if (preferredId != null && _productById.containsKey(preferredId)) {
+        if (isAppProvidedProductSelected) {
+          ingredientUnit.value = IngredientUnit.gram;
+        }
+        return;
+      }
+      selectedProductIdRx.value = matched.first.id;
       if (isAppProvidedProductSelected) {
         ingredientUnit.value = IngredientUnit.gram;
       }
-      return;
-    }
-    selectedProductIdRx.value = matched.first.id;
-    if (isAppProvidedProductSelected) {
-      ingredientUnit.value = IngredientUnit.gram;
+    } catch (e) {
+      LogManager.error('$e');
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
     }
   }
 

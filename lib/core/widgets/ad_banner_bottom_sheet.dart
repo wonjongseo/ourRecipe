@@ -48,7 +48,7 @@ class _AdBannerBottomSheetState extends State<AdBannerBottomSheet> {
     final ad = _bannerAd;
     if (!_loaded || ad == null) return const SizedBox.shrink();
     return ColoredBox(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         top: false,
         child: Padding(

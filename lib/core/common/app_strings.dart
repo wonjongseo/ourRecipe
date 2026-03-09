@@ -66,6 +66,9 @@ class AppStrings extends Translations {
       AppStrings.sodium: AppStrings.sodiumJp,
       AppStrings.nutrition: AppStrings.nutritionJp,
       AppStrings.language: AppStrings.languageJp,
+      AppStrings.settingsGeneral: AppStrings.settingsGeneralJp,
+      AppStrings.settingsAppearance: AppStrings.settingsAppearanceJp,
+      AppStrings.settingsManagement: AppStrings.settingsManagementJp,
       AppStrings.categoryManagement: AppStrings.categoryManagementJp,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementJp,
       AppStrings.settings: AppStrings.settingsJp,
@@ -128,6 +131,10 @@ class AppStrings extends Translations {
       AppStrings.addCategory: AppStrings.addCategoryJp,
       AppStrings.cropper: AppStrings.cropperJp,
       AppStrings.appTitle: AppStrings.appTitleJp,
+      AppStrings.dbLoadFailed: AppStrings.dbLoadFailedJp,
+      AppStrings.dbSaveFailed: AppStrings.dbSaveFailedJp,
+      AppStrings.recipeName: AppStrings.recipeNameJp,
+      AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenJp,
     },
     'ko_KR': {
       AppStrings.appName: AppStrings.appNameKr,
@@ -192,6 +199,9 @@ class AppStrings extends Translations {
       AppStrings.sodium: AppStrings.sodiumKr,
       AppStrings.nutrition: AppStrings.nutritionKr,
       AppStrings.language: AppStrings.languageKr,
+      AppStrings.settingsGeneral: AppStrings.settingsGeneralKr,
+      AppStrings.settingsAppearance: AppStrings.settingsAppearanceKr,
+      AppStrings.settingsManagement: AppStrings.settingsManagementKr,
       AppStrings.categoryManagement: AppStrings.categoryManagementKr,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementKr,
       AppStrings.settings: AppStrings.settingsKr,
@@ -254,6 +264,10 @@ class AppStrings extends Translations {
       AppStrings.addCategory: AppStrings.addCategoryKr,
       AppStrings.cropper: AppStrings.cropperKr,
       AppStrings.appTitle: AppStrings.appTitleKr,
+      AppStrings.dbLoadFailed: AppStrings.dbLoadFailedKr,
+      AppStrings.dbSaveFailed: AppStrings.dbSaveFailedKr,
+      AppStrings.recipeName: AppStrings.recipeNameKr,
+      AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenKr,
     },
 
     'en_US': {
@@ -319,6 +333,9 @@ class AppStrings extends Translations {
       AppStrings.sodium: AppStrings.sodiumEn,
       AppStrings.nutrition: AppStrings.nutritionEn,
       AppStrings.language: AppStrings.languageEn,
+      AppStrings.settingsGeneral: AppStrings.settingsGeneralEn,
+      AppStrings.settingsAppearance: AppStrings.settingsAppearanceEn,
+      AppStrings.settingsManagement: AppStrings.settingsManagementEn,
       AppStrings.categoryManagement: AppStrings.categoryManagementEn,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementEn,
       AppStrings.settings: AppStrings.settingsEn,
@@ -381,6 +398,10 @@ class AppStrings extends Translations {
       AppStrings.addCategory: AppStrings.addCategoryEn,
       AppStrings.cropper: AppStrings.cropperEn,
       AppStrings.appTitle: AppStrings.appTitleEn,
+      AppStrings.dbLoadFailed: AppStrings.dbLoadFailedEn,
+      AppStrings.dbSaveFailed: AppStrings.dbSaveFailedEn,
+      AppStrings.recipeName: AppStrings.recipeNameEn,
+      AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenEn,
     },
   };
 
@@ -564,6 +585,21 @@ class AppStrings extends Translations {
   static String languageKr = "언어";
   static String languageJp = "言語";
   static String languageEn = "Language";
+
+  static String settingsGeneral = "settingsGeneralTr";
+  static String settingsGeneralKr = "일반";
+  static String settingsGeneralJp = "一般";
+  static String settingsGeneralEn = "General";
+
+  static String settingsAppearance = "settingsAppearanceTr";
+  static String settingsAppearanceKr = "화면";
+  static String settingsAppearanceJp = "表示";
+  static String settingsAppearanceEn = "Appearance";
+
+  static String settingsManagement = "settingsManagementTr";
+  static String settingsManagementKr = "관리";
+  static String settingsManagementJp = "管理";
+  static String settingsManagementEn = "Management";
 
   static String categoryManagement = "categoryManagementTr";
   static String categoryManagementKr = "카테고리 관리";
@@ -860,6 +896,26 @@ class AppStrings extends Translations {
   static String appTitleKr = "Our Recipe";
   static String appTitleJp = "Our Recipe";
   static String appTitleEn = "Our Recipe";
+
+  static String recipeName = "recipeNameTr";
+  static String recipeNameKr = "레시피명";
+  static String recipeNameJp = "レシピ名";
+  static String recipeNameEn = "Recipe Name";
+
+  static String ingredientManageScreen = "ingredientManageScreenTr";
+  static String ingredientManageScreenKr = "재료 관리 화면";
+  static String ingredientManageScreenJp = "材料管理画面";
+  static String ingredientManageScreenEn = "Ingredient Management";
+
+  static String dbLoadFailed = "dbLoadFailedTr";
+  static String dbLoadFailedKr = "데이터를 불러오지 못했어요. 다시 시도해주세요.";
+  static String dbLoadFailedJp = "データの読み込みに失敗しました。再試行してください。";
+  static String dbLoadFailedEn = "Failed to load data. Please try again.";
+
+  static String dbSaveFailed = "dbSaveFailedTr";
+  static String dbSaveFailedKr = "데이터 저장에 실패했어요. 다시 시도해주세요.";
+  static String dbSaveFailedJp = "データの保存に失敗しました。再試行してください。";
+  static String dbSaveFailedEn = "Failed to save data. Please try again.";
 
   static String memo = "memoTr";
   static String memoKr = "메모";

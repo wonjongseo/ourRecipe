@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_dropdown_styles.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
@@ -219,6 +220,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         style: TextStyle(fontSize: 12),
         decoration: InputDecoration(
+          hintStyle: TextStyle(color: Colors.grey),
           hintText: AppStrings.price.tr,
           border: OutlineInputBorder(borderSide: BorderSide.none),
         ),
@@ -230,12 +232,9 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
     Function(IngredientUnit?) onChanged,
   ) {
     return DropdownButton2(
-      buttonStyleData: ButtonStyleData(height: UiConstants.formFieldHeight),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
-        ),
-      ),
+      buttonStyleData: AppDropdownStyles.dropdown2ButtonStyle(),
+      dropdownStyleData: AppDropdownStyles.dropdown2MenuStyle(context),
+      menuItemStyleData: AppDropdownStyles.dropdown2ItemStyle(),
       underline: SizedBox(),
       isExpanded: true,
       value: productIngredientUnit,

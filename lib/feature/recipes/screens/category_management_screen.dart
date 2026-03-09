@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
+import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_category_repository.dart';
@@ -20,6 +22,7 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
   final _repository = Get.find<RecipeCategoryRepository>();
   final _controller = TextEditingController();
   final _categories = <String>[];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -28,27 +31,55 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
   }
 
   Future<void> _loadCategories() async {
-    final values = await _repository.fetchCategories();
-    values.sort();
-    if (!mounted) return;
-    setState(() {
-      _categories
-        ..clear()
-        ..addAll(values);
-    });
+    setState(() => _isLoading = true);
+    try {
+      final values = await _repository.fetchCategories();
+      values.sort();
+      if (!mounted) return;
+      setState(() {
+        _categories
+          ..clear()
+          ..addAll(values);
+      });
+    } catch (e, s) {
+      LogManager.error('Load recipe categories failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   Future<void> _addCategory() async {
     final value = _controller.text.trim();
     if (value.isEmpty) return;
-    await _repository.addCategory(value);
-    _controller.clear();
-    await _loadCategories();
+    setState(() => _isLoading = true);
+    try {
+      await _repository.addCategory(value);
+      _controller.clear();
+      await _loadCategories();
+    } catch (e, s) {
+      LogManager.error('Add recipe category failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   Future<void> _removeCategory(String category) async {
-    await _repository.removeCategory(category);
-    await _loadCategories();
+    setState(() => _isLoading = true);
+    try {
+      await _repository.removeCategory(category);
+      await _loadCategories();
+    } catch (e, s) {
+      LogManager.error(
+        'Remove recipe category failed',
+        error: e,
+        stackTrace: s,
+      );
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -88,7 +119,9 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
             const SizedBox(height: 16),
             Expanded(
               child:
-                  _categories.isEmpty
+                  _isLoading
+                      ? Center(child: CircularProgressIndicator.adaptive())
+                      : _categories.isEmpty
                       ? Center(
                         child: Text(
                           AppStrings.noRegisteredCategory.tr,
