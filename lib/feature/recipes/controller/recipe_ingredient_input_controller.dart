@@ -22,9 +22,23 @@ class RecipeIngredientInputController extends GetxController {
 
   final products = <IngredientProductModel>[].obs;
   final groupedProducts = <IngredientProductGroup>[].obs;
+  final Map<String, IngredientProductModel> _productById = {};
+  final selectedProductIdRx = RxnString();
 
   final selectedIngredientName = RxnString();
   final ingredientUnit = IngredientUnit.gram.obs;
+
+  String? get selectedProductId {
+    return selectedProductIdRx.value;
+  }
+
+  IngredientProductModel? get selectedProduct {
+    final id = selectedProductIdRx.value;
+    if (id == null || id.isEmpty) return null;
+    return _productById[id];
+  }
+
+  bool get isAppProvidedProductSelected => selectedProduct?.isDefault ?? false;
 
   @override
   void onInit() {
@@ -41,6 +55,7 @@ class RecipeIngredientInputController extends GetxController {
     memoTextCtl.text = ingredient.memo;
     ingredientUnit.value = ingredient.unit;
     _hasPrice.value = ingredient.price != null;
+    selectedProductIdRx.value = null;
   }
 
   @override
@@ -56,15 +71,40 @@ class RecipeIngredientInputController extends GetxController {
     values.sort((a, b) => a.name.compareTo(b.name));
 
     products.assignAll(values);
+    _productById
+      ..clear()
+      ..addEntries(values.map((item) => MapEntry(item.id, item)));
     groupedProducts.assignAll(grouped);
 
     final selected = selectedIngredientName.value;
-    if (selected != null && !products.any((item) => item.name == selected)) {
+    if (selected == null) return;
+    final matched = values
+        .where((item) => item.name == selected)
+        .toList(growable: false);
+    if (matched.isEmpty) {
       selectedIngredientName.value = null;
+      selectedProductIdRx.value = null;
+      return;
+    }
+    final preferredId = selectedProductIdRx.value;
+    if (preferredId != null && _productById.containsKey(preferredId)) {
+      if (isAppProvidedProductSelected) {
+        ingredientUnit.value = IngredientUnit.gram;
+      }
+      return;
+    }
+    selectedProductIdRx.value = matched.first.id;
+    if (isAppProvidedProductSelected) {
+      ingredientUnit.value = IngredientUnit.gram;
     }
   }
 
   void onChangeUnit(IngredientUnit? unit) {
+    if (isAppProvidedProductSelected) {
+      ingredientUnit.value = IngredientUnit.gram;
+      SnackBarHelper.showErrorSnackBar(AppStrings.appProvidedUnitFixedGuide.tr);
+      return;
+    }
     if (unit == null || ingredientUnit.value == unit) return;
     ingredientUnit.value = unit;
   }
@@ -74,7 +114,11 @@ class RecipeIngredientInputController extends GetxController {
 
   void selectProduct(IngredientProductModel product) {
     selectedIngredientName.value = product.name;
+    selectedProductIdRx.value = product.id;
     _hasPrice.value = product.price > 0;
+    if (product.isDefault) {
+      ingredientUnit.value = IngredientUnit.gram;
+    }
   }
 
   List<IngredientProductGroup> filterGroupedProducts(String query) {

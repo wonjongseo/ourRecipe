@@ -1,5 +1,6 @@
 class IngredientProductModel {
   final String id;
+  final bool isDefault;
   final String name;
   final String category;
   final String manufacturer;
@@ -16,6 +17,7 @@ class IngredientProductModel {
 
   const IngredientProductModel({
     required this.id,
+    this.isDefault = false,
     required this.name,
     required this.category,
     required this.manufacturer,
@@ -34,6 +36,7 @@ class IngredientProductModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'isDefault': isDefault,
       'name': name,
       'category': category,
       'manufacturer': manufacturer,
@@ -53,6 +56,7 @@ class IngredientProductModel {
   factory IngredientProductModel.fromJson(Map<String, dynamic> json) {
     return IngredientProductModel(
       id: json['id'] as String,
+      isDefault: json['isDefault'] as bool? ?? false,
       name: (json['name'] as String? ?? '').trim(),
       category: (json['category'] as String? ?? '').trim(),
       manufacturer: (json['manufacturer'] as String? ?? '').trim(),

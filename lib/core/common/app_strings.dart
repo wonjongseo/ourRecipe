@@ -20,11 +20,20 @@ class AppStrings extends Translations {
       AppStrings.price: AppStrings.priceJp,
       AppStrings.recipe: AppStrings.recipeJp,
       AppStrings.category: AppStrings.categoryJp,
+      AppStrings.selectCategoryHint: AppStrings.selectCategoryHintJp,
       AppStrings.addRecipe: AppStrings.addRecipeJp,
       AppStrings.edit: AppStrings.editJp,
       AppStrings.save: AppStrings.saveJp,
       AppStrings.addStep: AppStrings.addStepJp,
       AppStrings.timer: AppStrings.timerJp,
+      AppStrings.startCooking: AppStrings.startCookingJp,
+      AppStrings.startTimer: AppStrings.startTimerJp,
+      AppStrings.stopTimer: AppStrings.stopTimerJp,
+      AppStrings.previous: AppStrings.previousJp,
+      AppStrings.next: AppStrings.nextJp,
+      AppStrings.step: AppStrings.stepJp,
+      AppStrings.noTimerSet: AppStrings.noTimerSetJp,
+      AppStrings.noCookingStepsToStart: AppStrings.noCookingStepsToStartJp,
       AppStrings.addPhoto: AppStrings.addPhotoJp,
       AppStrings.addIngredient: AppStrings.addIngredientJp,
       AppStrings.pleaseAddIngredient: AppStrings.pleaseAddIngredientJp,
@@ -61,11 +70,20 @@ class AppStrings extends Translations {
       AppStrings.ingredientManagement: AppStrings.ingredientManagementJp,
       AppStrings.settings: AppStrings.settingsJp,
       AppStrings.quantity: AppStrings.quantityJp,
+      AppStrings.servings: AppStrings.servingsJp,
+      AppStrings.servingsExample: AppStrings.servingsExampleJp,
+      AppStrings.servingsUnit: AppStrings.servingsUnitJp,
+      AppStrings.adjustServings: AppStrings.adjustServingsJp,
+      AppStrings.ingredientSearchHint: AppStrings.ingredientSearchHintJp,
       AppStrings.add: AppStrings.addJp,
       AppStrings.categoryName: AppStrings.categoryNameJp,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryJp,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientJp,
+      AppStrings.noRegisteredCookingStep:
+          AppStrings.noRegisteredCookingStepJp,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredJp,
+      AppStrings.appProvidedUnitFixedGuide:
+          AppStrings.appProvidedUnitFixedGuideJp,
       AppStrings.ingredientCategoryManagement:
           AppStrings.ingredientCategoryManagementJp,
       AppStrings.ingredientCategory: AppStrings.ingredientCategoryJp,
@@ -84,6 +102,13 @@ class AppStrings extends Translations {
       AppStrings.delete: AppStrings.deleteJp,
       AppStrings.share: AppStrings.shareJp,
       AppStrings.theme: AppStrings.themeJp,
+      AppStrings.font: AppStrings.fontJp,
+      AppStrings.fontSize: AppStrings.fontSizeJp,
+      AppStrings.fontSystem: AppStrings.fontSystemJp,
+      AppStrings.fontNoto: AppStrings.fontNotoJp,
+      AppStrings.fontModern: AppStrings.fontModernJp,
+      AppStrings.fontSerif: AppStrings.fontSerifJp,
+      AppStrings.fontRounded: AppStrings.fontRoundedJp,
       AppStrings.systemMode: AppStrings.systemModeJp,
       AppStrings.lightMode: AppStrings.lightModeJp,
       AppStrings.darkMode: AppStrings.darkModeJp,
@@ -94,6 +119,7 @@ class AppStrings extends Translations {
       AppStrings.userAddedIngredients: AppStrings.userAddedIngredientsJp,
       AppStrings.nutritionPer100gGuide: AppStrings.nutritionPer100gGuideJp,
       AppStrings.shopping: AppStrings.shoppingJp,
+      AppStrings.myFood: AppStrings.myFoodJp,
       AppStrings.myPage: AppStrings.myPageJp,
       AppStrings.bookmark: AppStrings.bookmarkJp,
       AppStrings.bookmarkedRecipes: AppStrings.bookmarkedRecipesJp,
@@ -120,11 +146,20 @@ class AppStrings extends Translations {
       AppStrings.price: AppStrings.priceKr,
       AppStrings.recipe: AppStrings.recipeKr,
       AppStrings.category: AppStrings.categoryKr,
+      AppStrings.selectCategoryHint: AppStrings.selectCategoryHintKr,
       AppStrings.addRecipe: AppStrings.addRecipeKr,
       AppStrings.edit: AppStrings.editKr,
       AppStrings.save: AppStrings.saveKr,
       AppStrings.addStep: AppStrings.addStepKr,
       AppStrings.timer: AppStrings.timerKr,
+      AppStrings.startCooking: AppStrings.startCookingKr,
+      AppStrings.startTimer: AppStrings.startTimerKr,
+      AppStrings.stopTimer: AppStrings.stopTimerKr,
+      AppStrings.previous: AppStrings.previousKr,
+      AppStrings.next: AppStrings.nextKr,
+      AppStrings.step: AppStrings.stepKr,
+      AppStrings.noTimerSet: AppStrings.noTimerSetKr,
+      AppStrings.noCookingStepsToStart: AppStrings.noCookingStepsToStartKr,
       AppStrings.addPhoto: AppStrings.addPhotoKr,
       AppStrings.addIngredient: AppStrings.addIngredientKr,
       AppStrings.pleaseAddIngredient: AppStrings.pleaseAddIngredientKr,
@@ -161,11 +196,20 @@ class AppStrings extends Translations {
       AppStrings.ingredientManagement: AppStrings.ingredientManagementKr,
       AppStrings.settings: AppStrings.settingsKr,
       AppStrings.quantity: AppStrings.quantityKr,
+      AppStrings.servings: AppStrings.servingsKr,
+      AppStrings.servingsExample: AppStrings.servingsExampleKr,
+      AppStrings.servingsUnit: AppStrings.servingsUnitKr,
+      AppStrings.adjustServings: AppStrings.adjustServingsKr,
+      AppStrings.ingredientSearchHint: AppStrings.ingredientSearchHintKr,
       AppStrings.add: AppStrings.addKr,
       AppStrings.categoryName: AppStrings.categoryNameKr,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryKr,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientKr,
+      AppStrings.noRegisteredCookingStep:
+          AppStrings.noRegisteredCookingStepKr,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredKr,
+      AppStrings.appProvidedUnitFixedGuide:
+          AppStrings.appProvidedUnitFixedGuideKr,
       AppStrings.ingredientCategoryManagement:
           AppStrings.ingredientCategoryManagementKr,
       AppStrings.ingredientCategory: AppStrings.ingredientCategoryKr,
@@ -184,6 +228,13 @@ class AppStrings extends Translations {
       AppStrings.delete: AppStrings.deleteKr,
       AppStrings.share: AppStrings.shareKr,
       AppStrings.theme: AppStrings.themeKr,
+      AppStrings.font: AppStrings.fontKr,
+      AppStrings.fontSize: AppStrings.fontSizeKr,
+      AppStrings.fontSystem: AppStrings.fontSystemKr,
+      AppStrings.fontNoto: AppStrings.fontNotoKr,
+      AppStrings.fontModern: AppStrings.fontModernKr,
+      AppStrings.fontSerif: AppStrings.fontSerifKr,
+      AppStrings.fontRounded: AppStrings.fontRoundedKr,
       AppStrings.systemMode: AppStrings.systemModeKr,
       AppStrings.lightMode: AppStrings.lightModeKr,
       AppStrings.darkMode: AppStrings.darkModeKr,
@@ -194,6 +245,7 @@ class AppStrings extends Translations {
       AppStrings.userAddedIngredients: AppStrings.userAddedIngredientsKr,
       AppStrings.nutritionPer100gGuide: AppStrings.nutritionPer100gGuideKr,
       AppStrings.shopping: AppStrings.shoppingKr,
+      AppStrings.myFood: AppStrings.myFoodKr,
       AppStrings.myPage: AppStrings.myPageKr,
       AppStrings.bookmark: AppStrings.bookmarkKr,
       AppStrings.bookmarkedRecipes: AppStrings.bookmarkedRecipesKr,
@@ -221,11 +273,20 @@ class AppStrings extends Translations {
       AppStrings.price: AppStrings.priceEn,
       AppStrings.recipe: AppStrings.recipeEn,
       AppStrings.category: AppStrings.categoryEn,
+      AppStrings.selectCategoryHint: AppStrings.selectCategoryHintEn,
       AppStrings.addRecipe: AppStrings.addRecipeEn,
       AppStrings.edit: AppStrings.editEn,
       AppStrings.save: AppStrings.saveEn,
       AppStrings.addStep: AppStrings.addStepEn,
       AppStrings.timer: AppStrings.timerEn,
+      AppStrings.startCooking: AppStrings.startCookingEn,
+      AppStrings.startTimer: AppStrings.startTimerEn,
+      AppStrings.stopTimer: AppStrings.stopTimerEn,
+      AppStrings.previous: AppStrings.previousEn,
+      AppStrings.next: AppStrings.nextEn,
+      AppStrings.step: AppStrings.stepEn,
+      AppStrings.noTimerSet: AppStrings.noTimerSetEn,
+      AppStrings.noCookingStepsToStart: AppStrings.noCookingStepsToStartEn,
       AppStrings.addPhoto: AppStrings.addPhotoEn,
       AppStrings.addIngredient: AppStrings.addIngredientEn,
       AppStrings.pleaseAddIngredient: AppStrings.pleaseAddIngredientEn,
@@ -262,11 +323,20 @@ class AppStrings extends Translations {
       AppStrings.ingredientManagement: AppStrings.ingredientManagementEn,
       AppStrings.settings: AppStrings.settingsEn,
       AppStrings.quantity: AppStrings.quantityEn,
+      AppStrings.servings: AppStrings.servingsEn,
+      AppStrings.servingsExample: AppStrings.servingsExampleEn,
+      AppStrings.servingsUnit: AppStrings.servingsUnitEn,
+      AppStrings.adjustServings: AppStrings.adjustServingsEn,
+      AppStrings.ingredientSearchHint: AppStrings.ingredientSearchHintEn,
       AppStrings.add: AppStrings.addEn,
       AppStrings.categoryName: AppStrings.categoryNameEn,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryEn,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientEn,
+      AppStrings.noRegisteredCookingStep:
+          AppStrings.noRegisteredCookingStepEn,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredEn,
+      AppStrings.appProvidedUnitFixedGuide:
+          AppStrings.appProvidedUnitFixedGuideEn,
       AppStrings.ingredientCategoryManagement:
           AppStrings.ingredientCategoryManagementEn,
       AppStrings.ingredientCategory: AppStrings.ingredientCategoryEn,
@@ -285,6 +355,13 @@ class AppStrings extends Translations {
       AppStrings.delete: AppStrings.deleteEn,
       AppStrings.share: AppStrings.shareEn,
       AppStrings.theme: AppStrings.themeEn,
+      AppStrings.font: AppStrings.fontEn,
+      AppStrings.fontSize: AppStrings.fontSizeEn,
+      AppStrings.fontSystem: AppStrings.fontSystemEn,
+      AppStrings.fontNoto: AppStrings.fontNotoEn,
+      AppStrings.fontModern: AppStrings.fontModernEn,
+      AppStrings.fontSerif: AppStrings.fontSerifEn,
+      AppStrings.fontRounded: AppStrings.fontRoundedEn,
       AppStrings.systemMode: AppStrings.systemModeEn,
       AppStrings.lightMode: AppStrings.lightModeEn,
       AppStrings.darkMode: AppStrings.darkModeEn,
@@ -295,6 +372,7 @@ class AppStrings extends Translations {
       AppStrings.userAddedIngredients: AppStrings.userAddedIngredientsEn,
       AppStrings.nutritionPer100gGuide: AppStrings.nutritionPer100gGuideEn,
       AppStrings.shopping: AppStrings.shoppingEn,
+      AppStrings.myFood: AppStrings.myFoodEn,
       AppStrings.myPage: AppStrings.myPageEn,
       AppStrings.bookmark: AppStrings.bookmarkEn,
       AppStrings.bookmarkedRecipes: AppStrings.bookmarkedRecipesEn,
@@ -386,6 +464,11 @@ class AppStrings extends Translations {
   static String categoryJp = "カテゴリー";
   static String categoryEn = "Category";
 
+  static String selectCategoryHint = "selectCategoryHintTr";
+  static String selectCategoryHintKr = "카테고리를 선택해주세요";
+  static String selectCategoryHintJp = "カテゴリーを選択してください";
+  static String selectCategoryHintEn = "Please select a category";
+
   static String addRecipe = "addRecipeTr";
   static String addRecipeKr = "레시피 추가";
   static String addRecipeJp = "レシピ追加";
@@ -411,6 +494,47 @@ class AppStrings extends Translations {
   static String timerJp = "タイマー";
   static String timerEn = "Timer";
 
+  static String startCooking = "startCookingTr";
+  static String startCookingKr = "요리 시작";
+  static String startCookingJp = "料理開始";
+  static String startCookingEn = "Start Cooking";
+
+  static String startTimer = "startTimerTr";
+  static String startTimerKr = "타이머 시작";
+  static String startTimerJp = "タイマー開始";
+  static String startTimerEn = "Start Timer";
+
+  static String stopTimer = "stopTimerTr";
+  static String stopTimerKr = "타이머 정지";
+  static String stopTimerJp = "タイマー停止";
+  static String stopTimerEn = "Stop Timer";
+
+  static String previous = "previousTr";
+  static String previousKr = "이전";
+  static String previousJp = "前へ";
+  static String previousEn = "Prev";
+
+  static String next = "nextTr";
+  static String nextKr = "다음";
+  static String nextJp = "次へ";
+  static String nextEn = "Next";
+
+  static String step = "stepTr";
+  static String stepKr = "단계";
+  static String stepJp = "手順";
+  static String stepEn = "Step";
+
+  static String noTimerSet = "noTimerSetTr";
+  static String noTimerSetKr = "타이머 없음";
+  static String noTimerSetJp = "タイマーなし";
+  static String noTimerSetEn = "No timer";
+
+  static String noCookingStepsToStart = "noCookingStepsToStartTr";
+  static String noCookingStepsToStartKr = "조리 순서를 먼저 등록해주세요.";
+  static String noCookingStepsToStartJp = "調理手順を先に登録してください。";
+  static String noCookingStepsToStartEn =
+      "Please add cooking steps before starting.";
+
   static String addPhoto = "addPhotoTr";
   static String addPhotoKr = "사진 추가";
   static String addPhotoJp = "写真追加";
@@ -432,9 +556,9 @@ class AppStrings extends Translations {
   static String totalIngredientCostEn = "Total Ingredient Cost";
 
   static String won = "wonTr";
-  static String wonKr = "원";
-  static String wonJp = "KRW";
-  static String wonEn = "KRW";
+  static String wonKr = "₩";
+  static String wonJp = "¥";
+  static String wonEn = "\$";
 
   static String language = "languageTr";
   static String languageKr = "언어";
@@ -461,6 +585,31 @@ class AppStrings extends Translations {
   static String quantityJp = "数量";
   static String quantityEn = "Quantity";
 
+  static String servings = "servingsTr";
+  static String servingsKr = "인분";
+  static String servingsJp = "人数";
+  static String servingsEn = "Servings";
+
+  static String servingsExample = "servingsExampleTr";
+  static String servingsExampleKr = "예) 2인분";
+  static String servingsExampleJp = "例) 2人分";
+  static String servingsExampleEn = "e.g. 2 servings";
+
+  static String servingsUnit = "servingsUnitTr";
+  static String servingsUnitKr = "인분";
+  static String servingsUnitJp = "人分";
+  static String servingsUnitEn = "servings";
+
+  static String adjustServings = "adjustServingsTr";
+  static String adjustServingsKr = "인분 조절";
+  static String adjustServingsJp = "人数調整";
+  static String adjustServingsEn = "Adjust Servings";
+
+  static String ingredientSearchHint = "ingredientSearchHintTr";
+  static String ingredientSearchHintKr = "재료명을 검색해주세요";
+  static String ingredientSearchHintJp = "材料名を検索してください";
+  static String ingredientSearchHintEn = "Search ingredient name";
+
   static String add = "addTr";
   static String addKr = "추가";
   static String addJp = "追加";
@@ -481,10 +630,23 @@ class AppStrings extends Translations {
   static String noRegisteredIngredientJp = "登録された材料がありません";
   static String noRegisteredIngredientEn = "No ingredients registered";
 
+  static String noRegisteredCookingStep = "noRegisteredCookingStepTr";
+  static String noRegisteredCookingStepKr = "등록된 조리 순서가 없습니다";
+  static String noRegisteredCookingStepJp = "登録された調理手順がありません";
+  static String noRegisteredCookingStepEn = "No cooking steps registered";
+
   static String priceNotRegistered = "priceNotRegisteredTr";
   static String priceNotRegisteredKr = "가격이 등록되어있지 않습니다.";
   static String priceNotRegisteredJp = "価格が登録されていません。";
   static String priceNotRegisteredEn = "Price is not registered.";
+
+  static String appProvidedUnitFixedGuide = "appProvidedUnitFixedGuideTr";
+  static String appProvidedUnitFixedGuideKr =
+      "앱 제공 재료는 단위가 g(그램)으로 고정됩니다.";
+  static String appProvidedUnitFixedGuideJp =
+      "アプリ提供食材は単位がg(グラム)に固定されます。";
+  static String appProvidedUnitFixedGuideEn =
+      "App-provided ingredients use a fixed unit: g (gram).";
 
   static String ingredientCategoryManagement = "ingredientCategoryManagementTr";
   static String ingredientCategoryManagementKr = "재료 카테고리 관리";
@@ -567,6 +729,41 @@ class AppStrings extends Translations {
   static String themeJp = "テーマ";
   static String themeEn = "Theme";
 
+  static String font = "fontTr";
+  static String fontKr = "폰트";
+  static String fontJp = "フォント";
+  static String fontEn = "Font";
+
+  static String fontSize = "fontSizeTr";
+  static String fontSizeKr = "폰트 크기";
+  static String fontSizeJp = "フォントサイズ";
+  static String fontSizeEn = "Font Size";
+
+  static String fontSystem = "fontSystemTr";
+  static String fontSystemKr = "기본";
+  static String fontSystemJp = "デフォルト";
+  static String fontSystemEn = "Default";
+
+  static String fontNoto = "fontNotoTr";
+  static String fontNotoKr = "노토";
+  static String fontNotoJp = "Noto";
+  static String fontNotoEn = "Noto";
+
+  static String fontModern = "fontModernTr";
+  static String fontModernKr = "모던";
+  static String fontModernJp = "モダン";
+  static String fontModernEn = "Modern";
+
+  static String fontSerif = "fontSerifTr";
+  static String fontSerifKr = "세리프";
+  static String fontSerifJp = "セリフ";
+  static String fontSerifEn = "Serif";
+
+  static String fontRounded = "fontRoundedTr";
+  static String fontRoundedKr = "둥근";
+  static String fontRoundedJp = "ラウンド";
+  static String fontRoundedEn = "Rounded";
+
   static String systemMode = "systemModeTr";
   static String systemModeKr = "시스템";
   static String systemModeJp = "システム";
@@ -618,6 +815,11 @@ class AppStrings extends Translations {
   static String shoppingKr = "장보기";
   static String shoppingJp = "買い物";
   static String shoppingEn = "Shopping";
+
+  static String myFood = "myFoodTr";
+  static String myFoodKr = "내 재료";
+  static String myFoodJp = "マイ食材";
+  static String myFoodEn = "My Food";
 
   static String myPage = "myPageTr";
   static String myPageKr = "마이페이지";

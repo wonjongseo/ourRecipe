@@ -13,10 +13,12 @@ class IngredientProductPickerSheet extends StatefulWidget {
     super.key,
     required this.filterGroups,
     this.onTapManage,
+    this.selectedProductId,
   });
 
   final List<IngredientProductGroup> Function(String query) filterGroups;
   final Future<void> Function()? onTapManage;
+  final String? selectedProductId;
 
   @override
   State<IngredientProductPickerSheet> createState() =>
@@ -72,28 +74,7 @@ class _IngredientProductPickerSheetState
       // padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
       padding: EdgeInsets.symmetric(horizontal: 12),
       children: [
-        _appDataOrUserData(
-          context,
-          AppStrings.appProvidedIngredients.tr,
-          AppStrings.nutritionPer100gGuide.tr,
-        ),
-        SizedBox(height: 4),
-        if (appProvidedGroups.isEmpty)
-          _sectionEmpty(context)
-        else
-          IngredientProductGroupedExpansionList(
-            groups: appProvidedGroups,
-            query: query,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            onTapProduct: (product) {
-              Navigator.of(context).pop(product);
-            },
-          ),
-        const SizedBox(height: 16),
         _appDataOrUserData(context, AppStrings.userAddedIngredients.tr, null),
-
         if (userAddedGroups.isEmpty)
           _sectionEmpty(context)
         else
@@ -103,6 +84,29 @@ class _IngredientProductPickerSheetState
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
+            selectedProductId: widget.selectedProductId,
+            onTapProduct: (product) {
+              Navigator.of(context).pop(product);
+            },
+          ),
+        const SizedBox(height: 16),
+        _appDataOrUserData(
+          context,
+          AppStrings.appProvidedIngredients.tr,
+          AppStrings.nutritionPer100gGuide.tr,
+        ),
+        SizedBox(height: 4),
+
+        if (appProvidedGroups.isEmpty)
+          _sectionEmpty(context)
+        else
+          IngredientProductGroupedExpansionList(
+            groups: appProvidedGroups,
+            query: query,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            selectedProductId: widget.selectedProductId,
             onTapProduct: (product) {
               Navigator.of(context).pop(product);
             },
@@ -115,6 +119,7 @@ class _IngredientProductPickerSheetState
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: TextFormField(
+        autofocus: true,
         onChanged: (value) {
           setState(() {
             query = value.trim();

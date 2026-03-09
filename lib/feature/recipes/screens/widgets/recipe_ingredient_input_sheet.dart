@@ -57,6 +57,7 @@ class _RecipeIngredientInputSheetState
           (_) => IngredientProductPickerSheet(
             filterGroups: controller.filterGroupedProducts,
             onTapManage: _goToIngredientManagementScreen,
+            selectedProductId: controller.selectedProductId,
           ),
     );
 
@@ -89,6 +90,24 @@ class _RecipeIngredientInputSheetState
               ),
               const SizedBox(height: 10),
               _ingredientAmountField(),
+              Obx(
+                () =>
+                    controller.isAppProvidedProductSelected
+                        ? Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              AppStrings.appProvidedUnitFixedGuide.tr,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                        )
+                        : const SizedBox.shrink(),
+              ),
               const SizedBox(height: 20),
               CustomTextFormField(
                 label: AppStrings.memo.tr,
@@ -109,11 +128,10 @@ class _RecipeIngredientInputSheetState
                             ),
 
                             children: [
-                              TextSpan(text: '재품의 가격이 등록되어있지 않습니다.\n'),
                               TextSpan(
-                                text:
-                                    '재품의 가격을 등록하면 레시피에 들어가는 총 가격을 확인할 수 있습니다.',
+                                text: '${AppStrings.priceNotRegistered.tr}\n',
                               ),
+                              TextSpan(text: AppStrings.recipePriceGuide.tr),
                             ],
                           ),
                         )
@@ -135,7 +153,7 @@ class _RecipeIngredientInputSheetState
               child: Text(
                 widget.initialIngredient == null
                     ? AppStrings.addIngredient.tr
-                    : '재료 수정',
+                    : AppStrings.ingredientEdit.tr,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -174,7 +192,14 @@ class _RecipeIngredientInputSheetState
                 ),
               ),
             ),
-            Expanded(flex: 2, child: Obx(() => _ingredientUnitDropdown())),
+            Expanded(
+              flex: 2,
+              child: Obx(
+                () => _ingredientUnitDropdown(
+                  enabled: !controller.isAppProvidedProductSelected,
+                ),
+              ),
+            ),
             const SizedBox(width: 4),
           ],
         ),
@@ -182,7 +207,9 @@ class _RecipeIngredientInputSheetState
     );
   }
 
-  DropdownButton2<IngredientUnit> _ingredientUnitDropdown() {
+  DropdownButton2<IngredientUnit> _ingredientUnitDropdown({
+    required bool enabled,
+  }) {
     return DropdownButton2(
       buttonStyleData: ButtonStyleData(height: UiConstants.formFieldHeight),
       dropdownStyleData: DropdownStyleData(
@@ -193,7 +220,7 @@ class _RecipeIngredientInputSheetState
       underline: const SizedBox(),
       isExpanded: true,
       value: controller.ingredientUnit.value,
-      onChanged: controller.onChangeUnit,
+      onChanged: enabled ? controller.onChangeUnit : null,
       items:
           IngredientUnit.values
               .map(
@@ -246,7 +273,7 @@ class _IngredientNameField extends StatelessWidget {
               ),
               labelText: AppStrings.ingredientName.tr,
               filled: true,
-              hintText: '재료명을 검색해주세요',
+              hintText: AppStrings.ingredientSearchHint.tr,
               fillColor: Theme.of(context).colorScheme.surface,
 
               border: AppInputBorders.normal(),
@@ -266,7 +293,8 @@ class _IngredientNameField extends StatelessWidget {
               ),
             ),
             child: Text(
-              selectedIngredientNameRx.value ?? '재료명을 검색해주세요',
+              selectedIngredientNameRx.value ??
+                  AppStrings.ingredientSearchHint.tr,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

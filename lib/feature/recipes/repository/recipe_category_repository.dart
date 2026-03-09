@@ -1,28 +1,20 @@
-import 'dart:convert';
-
-import 'package:our_recipe/core/services/shared_preferences_service.dart';
-import 'package:our_recipe/feature/recipes/repository/recipe_storage_keys.dart';
+import 'package:our_recipe/core/services/recipe_database_service.dart';
+import 'package:sqflite/sqflite.dart';
 
 class RecipeCategoryRepository {
-  RecipeCategoryRepository({SharedPreferencesService? storage})
-    : _storage = storage ?? SharedPreferencesService();
+  RecipeCategoryRepository({RecipeDatabaseService? database})
+    : _database = database ?? RecipeDatabaseService();
 
-  final SharedPreferencesService _storage;
+  final RecipeDatabaseService _database;
 
   Future<List<String>> fetchCategories() async {
-    final raw = await _storage.getString(RecipeStorageKeys.categories);
-    if (raw == null || raw.isEmpty) return [];
-
-    try {
-      final decoded = jsonDecode(raw) as List<dynamic>;
-      return decoded
-          .map((item) => item.toString().trim())
-          .where((item) => item.isNotEmpty)
-          .toSet()
-          .toList();
-    } catch (_) {
-      return [];
-    }
+    final db = await _database.db;
+    final rows = await db.query(RecipeDatabaseService.recipeCategories);
+    return rows
+        .map((row) => (row['name'] as String).trim())
+        .where((name) => name.isNotEmpty)
+        .toSet()
+        .toList();
   }
 
   Future<void> saveCategories(List<String> categories) async {
@@ -32,24 +24,38 @@ class RecipeCategoryRepository {
             .where((item) => item.isNotEmpty)
             .toSet()
             .toList();
-    final encoded = jsonEncode(normalized);
-    await _storage.setString(RecipeStorageKeys.categories, encoded);
+    final db = await _database.db;
+    await db.transaction((txn) async {
+      await txn.delete(RecipeDatabaseService.recipeCategories);
+      for (final category in normalized) {
+        await txn.insert(
+          RecipeDatabaseService.recipeCategories,
+          {'name': category},
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
   }
 
   Future<void> addCategory(String category) async {
     final value = category.trim();
     if (value.isEmpty) return;
-    final categories = await fetchCategories();
-    if (categories.contains(value)) return;
-    categories.add(value);
-    await saveCategories(categories);
+    final db = await _database.db;
+    await db.insert(
+      RecipeDatabaseService.recipeCategories,
+      {'name': value},
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 
   Future<void> removeCategory(String category) async {
     final value = category.trim();
     if (value.isEmpty) return;
-    final categories = await fetchCategories();
-    categories.removeWhere((item) => item == value);
-    await saveCategories(categories);
+    final db = await _database.db;
+    await db.delete(
+      RecipeDatabaseService.recipeCategories,
+      where: 'name = ?',
+      whereArgs: [value],
+    );
   }
 }

@@ -5,6 +5,7 @@ import 'package:our_recipe/feature/recipes/repository/recipe_repository.dart';
 import 'package:our_recipe/feature/recipes/screens/detail_recipe_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/edit_recipe_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/nutrition_detail_screen.dart';
+import 'package:our_recipe/feature/start_cooking/screen/start_cooking_screen.dart';
 
 enum RecipeFilterType { all, favorite, category }
 
@@ -55,7 +56,8 @@ class RecipeController extends GetxController {
   List<String> get categories => _categories;
 
   final selectedFilter = const RecipeFilter.all().obs;
-  String _searchQuery = '';
+  final _searchQuery = ''.obs;
+  String get searchQuery => _searchQuery.value;
 
   void onChangeFilter(RecipeFilter filter) {
     selectedFilter.value = filter;
@@ -135,7 +137,7 @@ class RecipeController extends GetxController {
   }
 
   void onChanged(String? query) {
-    _searchQuery = (query ?? '').trim();
+    _searchQuery.value = (query ?? '').trim();
     _applyFilters();
   }
 
@@ -160,5 +162,9 @@ class RecipeController extends GetxController {
     Get.to(
       () => NutritionDetailScreen(recipe: recipe, nutritionKey: nutritionKey),
     );
+  }
+
+  void goToStartCooking(RecipeModel recipeModel) {
+    Get.toNamed(StartCookingScreen.name, arguments: recipeModel);
   }
 }

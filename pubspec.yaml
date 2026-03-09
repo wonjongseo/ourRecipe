@@ -42,12 +42,14 @@ dependencies:
   logger: ^2.6.2
   image_cropper: ^11.0.0
   dropdown_button2: ^2.3.9
+  shared_preferences: ^2.5.3
   sqflite: ^2.4.1
   path: ^1.9.0
   path_provider: ^2.1.5
   share_plus: ^10.1.2
   screenshot: ^3.0.0
   google_mobile_ads:
+  google_fonts: ^6.3.0
 
 dev_dependencies:
   flutter_test:

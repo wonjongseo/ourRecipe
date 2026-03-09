@@ -52,6 +52,7 @@ class EditRecipeController extends GetxController {
   final categories = <String>[].obs;
   final isLiked = false.obs;
   final selectedCategory = ''.obs;
+  bool get isEdit => recipeModel != null;
 
   double get totalUseCount =>
       ingredients.fold<double>(0, (sum, item) => sum + (item.usedCost ?? 0));
@@ -272,17 +273,21 @@ class EditRecipeController extends GetxController {
     final coverImagePath = coverImage?.path;
 
     List<CookingStepModel> cookingStepModels = [];
-    for (var i = 0; i < inputCookingSteps.length; i++) {
-      final inputCookingStep = inputCookingSteps[i];
-
+    for (final inputCookingStep in inputCookingSteps) {
+      final instruction = inputCookingStep.descriptionTeCtrl.text.trim();
       final imagePath = inputCookingStep.image?.path;
+      final hasImage = imagePath != null && imagePath.isNotEmpty;
+      final hasTimer = inputCookingStep.timer > 0;
+      final isEmptyStep = instruction.isEmpty && !hasImage && !hasTimer;
+      if (isEmptyStep) continue;
+
       cookingStepModels.add(
         CookingStepModel(
           id: inputCookingStep.id,
-          order: i + 1,
-          instruction: inputCookingStep.descriptionTeCtrl.text,
+          order: cookingStepModels.length + 1,
+          instruction: instruction,
           imagePath: imagePath,
-          timerSec: inputCookingStep.timer,
+          timerSec: hasTimer ? inputCookingStep.timer : null,
         ),
       );
     }

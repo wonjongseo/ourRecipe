@@ -3,16 +3,16 @@ import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:our_recipe/core/services/shared_preferences_service.dart';
+import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
-import 'package:our_recipe/feature/recipes/repository/recipe_storage_keys.dart';
+import 'package:sqflite/sqflite.dart';
 
 class IngredientProductRepository {
-  IngredientProductRepository({SharedPreferencesService? storage})
-    : _storage = storage ?? SharedPreferencesService();
+  IngredientProductRepository({RecipeDatabaseService? database})
+    : _database = database ?? RecipeDatabaseService();
 
-  final SharedPreferencesService _storage;
+  final RecipeDatabaseService _database;
   static final Map<String, List<IngredientProductModel>>
   _defaultProductsCacheByLang = {};
   static final Map<String, List<IngredientProductGroup>>
@@ -35,51 +35,18 @@ class IngredientProductRepository {
   }
 
   Future<List<IngredientProductModel>> _fetchCustomProducts() async {
-    final raw = await _storage.getString(RecipeStorageKeys.ingredientProducts);
-    if (raw == null || raw.isEmpty) return [];
-    try {
-      final decoded = jsonDecode(raw) as List<dynamic>;
-      return decoded.map((item) {
-        final product = IngredientProductModel.fromJson(
-          item as Map<String, dynamic>,
-        );
-        final normalizedCategory = IngredientCategoryCatalog.normalizeDefaultId(
-          product.category,
-        );
-        if (normalizedCategory == product.category) return product;
-        return IngredientProductModel(
-          id: product.id,
-          name: product.name,
-          category: normalizedCategory,
-          manufacturer: product.manufacturer,
-          price: product.price,
-          baseGram: product.baseGram,
-          kcal: product.kcal,
-          water: product.water,
-          protein: product.protein,
-          fat: product.fat,
-          carbohydrate: product.carbohydrate,
-          fiber: product.fiber,
-          ash: product.ash,
-          sodium: product.sodium,
-        );
-      }).toList();
-    } catch (_) {
-      return [];
-    }
+    final db = await _database.db;
+    final rows = await db.query(
+      RecipeDatabaseService.ingredientProducts,
+      where: 'is_default = 0',
+    );
+    return rows.map(_productFromRow).toList();
   }
 
   Future<Set<String>> _fetchDeletedDefaultIds() async {
-    final raw = await _storage.getString(
-      RecipeStorageKeys.ingredientProductsDeletedDefaults,
-    );
-    if (raw == null || raw.isEmpty) return <String>{};
-    try {
-      final decoded = jsonDecode(raw) as List<dynamic>;
-      return decoded.map((item) => item.toString()).toSet();
-    } catch (_) {
-      return <String>{};
-    }
+    final db = await _database.db;
+    final rows = await db.query(RecipeDatabaseService.ingredientDefaultDeletions);
+    return rows.map((row) => row['id'] as String).toSet();
   }
 
   Future<List<IngredientProductModel>> _loadDefaultProducts() async {
@@ -210,6 +177,7 @@ class IngredientProductRepository {
             itemProducts.add(
               IngredientProductModel(
                 id: foodCode,
+                isDefault: true,
                 name: name,
                 category: category,
                 manufacturer: '',
@@ -272,43 +240,94 @@ class IngredientProductRepository {
   }
 
   Future<void> saveProducts(List<IngredientProductModel> products) async {
-    final encoded = jsonEncode(products.map((item) => item.toJson()).toList());
-    await _storage.setString(RecipeStorageKeys.ingredientProducts, encoded);
+    final db = await _database.db;
+    await db.transaction((txn) async {
+      await txn.delete(
+        RecipeDatabaseService.ingredientProducts,
+        where: 'is_default = 0',
+      );
+      for (final product in products) {
+        await txn.insert(
+          RecipeDatabaseService.ingredientProducts,
+          _productToRow(product, isDefault: false),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
   }
 
   Future<void> saveProduct(IngredientProductModel product) async {
-    final products = await _fetchCustomProducts();
-    final index = products.indexWhere((item) => item.id == product.id);
-    if (index == -1) {
-      products.add(product);
-    } else {
-      products[index] = product;
-    }
-    await saveProducts(products);
-
-    final deletedIds = await _fetchDeletedDefaultIds();
-    if (deletedIds.remove(product.id)) {
-      await _storage.setString(
-        RecipeStorageKeys.ingredientProductsDeletedDefaults,
-        jsonEncode(deletedIds.toList()),
+    final db = await _database.db;
+    await db.transaction((txn) async {
+      await txn.insert(
+        RecipeDatabaseService.ingredientProducts,
+        _productToRow(product, isDefault: false),
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
-    }
+      await txn.delete(
+        RecipeDatabaseService.ingredientDefaultDeletions,
+        where: 'id = ?',
+        whereArgs: [product.id],
+      );
+    });
   }
 
   Future<void> deleteProduct(String productId) async {
-    final products = await _fetchCustomProducts();
-    final before = products.length;
-    products.removeWhere((item) => item.id == productId);
-    await saveProducts(products);
+    final db = await _database.db;
+    final deleted = await db.delete(
+      RecipeDatabaseService.ingredientProducts,
+      where: 'id = ? AND is_default = 0',
+      whereArgs: [productId],
+    );
+    if (deleted > 0) return;
+    await db.insert(
+      RecipeDatabaseService.ingredientDefaultDeletions,
+      {'id': productId},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
-    if (before == products.length) {
-      final deletedIds = await _fetchDeletedDefaultIds();
-      deletedIds.add(productId);
-      await _storage.setString(
-        RecipeStorageKeys.ingredientProductsDeletedDefaults,
-        jsonEncode(deletedIds.toList()),
-      );
-    }
+  IngredientProductModel _productFromRow(Map<String, Object?> row) {
+    return IngredientProductModel(
+      id: row['id'] as String,
+      isDefault: false,
+      name: (row['name'] as String? ?? '').trim(),
+      category: (row['category'] as String? ?? '').trim(),
+      manufacturer: (row['manufacturer'] as String? ?? '').trim(),
+      price: (row['price'] as num?)?.toDouble() ?? 0,
+      baseGram: (row['base_gram'] as num?)?.toDouble() ?? 0,
+      kcal: (row['kcal'] as num?)?.toDouble(),
+      water: (row['water'] as num?)?.toDouble(),
+      protein: (row['protein'] as num?)?.toDouble(),
+      fat: (row['fat'] as num?)?.toDouble(),
+      carbohydrate: (row['carbohydrate'] as num?)?.toDouble(),
+      fiber: (row['fiber'] as num?)?.toDouble(),
+      ash: (row['ash'] as num?)?.toDouble(),
+      sodium: (row['sodium'] as num?)?.toDouble(),
+    );
+  }
+
+  Map<String, Object?> _productToRow(
+    IngredientProductModel product, {
+    required bool isDefault,
+  }) {
+    return {
+      'id': product.id,
+      'name': product.name,
+      'category': product.category,
+      'manufacturer': product.manufacturer,
+      'price': product.price,
+      'base_gram': product.baseGram,
+      'kcal': product.kcal,
+      'water': product.water,
+      'protein': product.protein,
+      'fat': product.fat,
+      'carbohydrate': product.carbohydrate,
+      'fiber': product.fiber,
+      'ash': product.ash,
+      'sodium': product.sodium,
+      'is_default': isDefault ? 1 : 0,
+    };
   }
 }
 

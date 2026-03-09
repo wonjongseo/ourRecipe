@@ -14,6 +14,7 @@ class HomeScreen extends GetView<HomeController> {
         body: controller.body,
         bottomNavigationBar: NavigationBar(
           selectedIndex: controller.pageIdx,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           onDestinationSelected: controller.onDestinationSelected,
           destinations: [
             NavigationDestination(

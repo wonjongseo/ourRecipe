@@ -259,7 +259,12 @@ class IngredientEditScreen extends GetView<IngredientEditController> {
             onPressed: controller.delete,
             icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
           ),
-        TextButton(onPressed: controller.save, child: Text(AppStrings.save.tr)),
+        TextButton(
+          onPressed: controller.save,
+          child: Text(
+            controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+          ),
+        ),
       ],
     );
   }

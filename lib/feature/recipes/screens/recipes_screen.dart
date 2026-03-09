@@ -15,61 +15,77 @@ class RecipesScreen extends GetView<RecipeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: const AdBannerBottomSheet(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => controller.goToEditScreen(),
-        child: Icon(Icons.add),
-      ),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(110),
-        child: AppBar(
-          backgroundColor: AppColors.secondartColor,
-          centerTitle: true,
-          title: Text(
-            AppStrings.recipe.tr,
-            style: TextStyle(color: Colors.white),
-          ),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(40),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ).copyWith(bottom: 20),
-              child: CustomSearchBar(
-                onChanged: controller.onChanged,
-                prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass, size: 20),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        bottomNavigationBar: const AdBannerBottomSheet(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => controller.goToEditScreen(),
+          child: Icon(Icons.add),
+        ),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(110),
+          child: AppBar(
+            backgroundColor: AppColors.secondartColor,
+            centerTitle: true,
+            title: Text(
+              AppStrings.recipe.tr,
+              style: TextStyle(color: Colors.white),
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ).copyWith(bottom: 20),
+                child: Obx(
+                  () => CustomSearchBar(
+                    onChanged: controller.onChanged,
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      size: 20,
+                    ),
+                    suffixIcon:
+                        controller.searchQuery.isEmpty
+                            ? null
+                            : IconButton(
+                              onPressed: () {},
+                              icon: Icon(FontAwesomeIcons.xmark),
+                            ),
+                  ),
+                ),
               ),
             ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 14),
-                child: Obx(() => _filterChips()),
-              ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  child: Obx(() => _filterChips()),
+                ),
 
-              SizedBox(height: 10),
-              Obx(
-                () => Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(height: 12),
-                    shrinkWrap: false,
-                    itemCount: controller.recipes.length,
-                    itemBuilder: (context, index) {
-                      final recipe = controller.recipes[index];
+                SizedBox(height: 10),
+                Obx(
+                  () => Expanded(
+                    child: ListView.separated(
+                      separatorBuilder:
+                          (context, index) => SizedBox(height: 12),
+                      shrinkWrap: false,
+                      itemCount: controller.recipes.length,
+                      itemBuilder: (context, index) {
+                        final recipe = controller.recipes[index];
 
-                      return recipeListTIle(recipe);
-                    },
+                        return recipeListTIle(recipe);
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

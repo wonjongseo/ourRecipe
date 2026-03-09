@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/common/ui_constants.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
     super.key,
     this.controller,
     this.hintText,
-    this.suffixText,
+
+    this.suffixIcon,
     this.prefixIcon,
     this.onChanged,
   });
 
   final String? hintText;
-  final String? suffixText;
+
+  final Widget? suffixIcon;
   final Widget? prefixIcon;
   final TextEditingController? controller;
 
@@ -29,7 +32,8 @@ class CustomSearchBar extends StatelessWidget {
         filled: true,
         fillColor: Theme.of(context).colorScheme.surface,
         hintText: AppStrings.search.tr,
-        suffixText: suffixText,
+        hintStyle: TextStyle(color: Colors.grey),
+        suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         contentPadding: EdgeInsets.symmetric(horizontal: 12),
         border: AppInputBorders.normal(),

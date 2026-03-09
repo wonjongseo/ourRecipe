@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
-import 'package:our_recipe/core/services/shared_preferences_service.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
-import 'package:our_recipe/feature/recipes/repository/recipe_storage_keys.dart';
+import 'package:our_recipe/feature/shopping/repository/shopping_todo_repository.dart';
 
 class ShoppingScreen extends StatefulWidget {
   const ShoppingScreen({super.key});
@@ -18,7 +17,7 @@ class ShoppingScreen extends StatefulWidget {
 
 class _ShoppingScreenState extends State<ShoppingScreen> {
   final RecipeController controller = Get.find<RecipeController>();
-  final SharedPreferencesService _storage = SharedPreferencesService();
+  final ShoppingTodoRepository _todoRepository = ShoppingTodoRepository();
   final RxSet<String> checkedKeys = <String>{}.obs;
 
   @override
@@ -202,22 +201,13 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   }
 
   Future<void> _loadCheckedKeys() async {
-    final saved = await _storage.getJson<List<String>>(
-      RecipeStorageKeys.shoppingCheckedIngredients,
-      (decoded) {
-        if (decoded is! List<dynamic>) return <String>[];
-        return decoded.map((item) => item.toString()).toList();
-      },
-    );
-    if (saved == null || saved.isEmpty) return;
+    final saved = await _todoRepository.fetchCheckedKeys();
+    if (saved.isEmpty) return;
     checkedKeys.addAll(saved);
     checkedKeys.refresh();
   }
 
   Future<void> _persistCheckedKeys() async {
-    await _storage.setJson(
-      RecipeStorageKeys.shoppingCheckedIngredients,
-      checkedKeys.toList(),
-    );
+    await _todoRepository.saveCheckedKeys(checkedKeys);
   }
 }

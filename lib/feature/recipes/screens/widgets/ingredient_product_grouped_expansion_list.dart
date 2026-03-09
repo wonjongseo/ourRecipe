@@ -15,6 +15,7 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
     this.trailingBuilder,
     this.shrinkWrap = false,
     this.physics,
+    this.selectedProductId,
   });
 
   final List<IngredientProductGroup> groups;
@@ -25,6 +26,7 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
   final void Function(IngredientProductModel product) onTapProduct;
   final bool shrinkWrap;
   final ScrollPhysics? physics;
+  final String? selectedProductId;
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +108,15 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                       children:
                           item.products.map((product) {
                             final subtitle = subtitleBuilder?.call(product);
+                            final isSelected = selectedProductId == product.id;
                             return ListTile(
                               dense: true,
+                              tileColor:
+                                  isSelected
+                                      ? Theme.of(
+                                        context,
+                                      ).colorScheme.primary.withValues(alpha: 0.10)
+                                      : null,
                               contentPadding: const EdgeInsets.only(
                                 left: 44,
                                 right: 12,
@@ -120,10 +129,16 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                                   subtitle == null ? null : Text(subtitle),
                               trailing:
                                   trailingBuilder?.call(product) ??
-                                  const Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 12,
-                                  ),
+                                  (isSelected
+                                      ? Icon(
+                                        Icons.check_circle,
+                                        size: 16,
+                                        color: Theme.of(context).colorScheme.primary,
+                                      )
+                                      : const Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: 12,
+                                      )),
                               onTap: () => onTapProduct(product),
                             );
                           }).toList(),

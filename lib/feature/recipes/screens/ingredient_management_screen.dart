@@ -28,6 +28,28 @@ class IngredientManagementScreen
                 : ListView(
                   padding: const EdgeInsets.all(16),
                   children: [
+                    _sectionTitle(AppStrings.userAddedIngredients.tr),
+                    const SizedBox(height: 8),
+                    if (controller.userAddedGroups.isEmpty)
+                      _emptyLabel(context)
+                    else
+                      IngredientProductGroupedExpansionList(
+                        groups: controller.userAddedGroups,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        subtitleBuilder:
+                            (item) =>
+                                '${item.manufacturer} · ${item.baseGram}${AppStrings.gram.tr} / ${item.price.toStringAsFixed(0)}${AppStrings.won.tr}',
+                        trailingBuilder:
+                            (_) => const Icon(
+                              Icons.chevron_right_rounded,
+                              size: 16,
+                            ),
+                        onTapProduct:
+                            (item) => controller.goToEdit(product: item),
+                      ),
+                    const SizedBox(height: 18),
                     _sectionTitle(AppStrings.appProvidedIngredients.tr),
                     const SizedBox(height: 4),
                     Text(
@@ -51,28 +73,6 @@ class IngredientManagementScreen
                         subtitleBuilder:
                             (item) =>
                                 '${item.baseGram}${AppStrings.gram.tr} / ${item.price.toStringAsFixed(0)}${AppStrings.won.tr}',
-                        trailingBuilder:
-                            (_) => const Icon(
-                              Icons.chevron_right_rounded,
-                              size: 16,
-                            ),
-                        onTapProduct:
-                            (item) => controller.goToEdit(product: item),
-                      ),
-                    const SizedBox(height: 18),
-                    _sectionTitle(AppStrings.userAddedIngredients.tr),
-                    const SizedBox(height: 8),
-                    if (controller.userAddedGroups.isEmpty)
-                      _emptyLabel(context)
-                    else
-                      IngredientProductGroupedExpansionList(
-                        groups: controller.userAddedGroups,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        subtitleBuilder:
-                            (item) =>
-                                '${item.manufacturer} · ${item.baseGram}${AppStrings.gram.tr} / ${item.price.toStringAsFixed(0)}${AppStrings.won.tr}',
                         trailingBuilder:
                             (_) => const Icon(
                               Icons.chevron_right_rounded,

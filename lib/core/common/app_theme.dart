@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_fonts.dart';
 
 class AppTheme {
   static final _lightColorScheme = ColorScheme.light(
@@ -25,46 +26,70 @@ class AppTheme {
     outline: const Color(0xFF424242),
   );
 
-  static ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
-    colorScheme: _lightColorScheme,
-    scaffoldBackgroundColor: AppColors.backgroundColor,
-    appBarTheme: AppBarTheme(
-      backgroundColor: _lightColorScheme.primaryContainer,
-      foregroundColor: _lightColorScheme.onPrimaryContainer,
-      elevation: 0,
-    ),
-
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.onPrimaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  static ThemeData lightThemeFor(
+    Locale locale, {
+    String fontKey = AppFonts.system,
+  }) {
+    final textTheme = AppFonts.textThemeFor(
+      fontKey: fontKey,
+      locale: locale,
+      base: ThemeData.light(useMaterial3: true).textTheme,
+    );
+    return ThemeData.light(useMaterial3: true).copyWith(
+      colorScheme: _lightColorScheme,
+      textTheme: textTheme,
+      scaffoldBackgroundColor: AppColors.backgroundColor,
+      appBarTheme: AppBarTheme(
+        backgroundColor: _lightColorScheme.primaryContainer,
+        foregroundColor: _lightColorScheme.onPrimaryContainer,
+        elevation: 0,
+        titleTextStyle: textTheme.titleLarge,
       ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: AppColors.primaryColor),
-    ),
-    cardColor: Colors.white,
-  );
 
-  static ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
-    colorScheme: _darkColorScheme,
-    scaffoldBackgroundColor: const Color(0xFF121212),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF121212),
-      foregroundColor: Colors.white,
-      elevation: 0,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: _darkColorScheme.primary,
-        foregroundColor: _darkColorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryColor,
+          foregroundColor: AppColors.onPrimaryColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
       ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: _darkColorScheme.primary),
-    ),
-    cardColor: const Color(0xFF1E1E1E),
-  );
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: AppColors.primaryColor),
+      ),
+      cardColor: Colors.white,
+    );
+  }
+
+  static ThemeData darkThemeFor(
+    Locale locale, {
+    String fontKey = AppFonts.system,
+  }) {
+    final textTheme = AppFonts.textThemeFor(
+      fontKey: fontKey,
+      locale: locale,
+      base: ThemeData.dark(useMaterial3: true).textTheme,
+    );
+    return ThemeData.dark(useMaterial3: true).copyWith(
+      colorScheme: _darkColorScheme,
+      textTheme: textTheme,
+      scaffoldBackgroundColor: const Color(0xFF121212),
+      appBarTheme: AppBarTheme(
+        backgroundColor: const Color(0xFF121212),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        titleTextStyle: textTheme.titleLarge?.copyWith(color: Colors.white),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: _darkColorScheme.primary,
+          foregroundColor: _darkColorScheme.onPrimary,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: _darkColorScheme.primary),
+      ),
+      cardColor: const Color(0xFF1E1E1E),
+    );
+  }
 }

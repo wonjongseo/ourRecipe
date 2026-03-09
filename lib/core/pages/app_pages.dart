@@ -6,20 +6,25 @@ import 'package:our_recipe/feature/recipes/controller/edit_recipe_controller.dar
 import 'package:our_recipe/feature/recipes/controller/ingredient_category_management_controller.dart';
 import 'package:our_recipe/feature/recipes/controller/ingredient_edit_controller.dart';
 import 'package:our_recipe/feature/recipes/controller/ingredient_management_controller.dart';
+import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
+import 'package:our_recipe/feature/recipes/repository/cook_log_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_category_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_product_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_category_repository.dart';
+import 'package:our_recipe/feature/recipes/repository/recipe_repository.dart';
 import 'package:our_recipe/feature/recipes/screens/category_management_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/detail_recipe_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/edit_recipe_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_category_management_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_edit_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
-import 'package:our_recipe/feature/settings/controller/setting_controller.dart';
+import 'package:our_recipe/feature/my_page/controller/my_page_controller.dart';
 import 'package:our_recipe/feature/splash/controller/splash_controller.dart';
 import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
+import 'package:our_recipe/feature/start_cooking/controller/start_cooking_controller.dart';
+import 'package:our_recipe/feature/start_cooking/screen/start_cooking_screen.dart';
 
 class AppPages {
   const AppPages._();
@@ -34,8 +39,14 @@ class AppPages {
       page: () => HomeScreen(),
       binding: BindingsBuilder.put(() {
         final homeController = HomeController();
-        if (!Get.isRegistered<SettingController>()) {
-          Get.put(SettingController(), permanent: true);
+        if (!Get.isRegistered<MyPageController>()) {
+          Get.put(RecipeRepository());
+          Get.put(RecipeCategoryRepository());
+          Get.put(CookLogRepository());
+          Get.put(IngredientProductRepository());
+          Get.put(IngredientCategoryRepository());
+          Get.put(RecipeController(Get.find(), Get.find()));
+          Get.put(MyPageController(), permanent: true);
         }
         return homeController;
       }),
@@ -67,7 +78,9 @@ class AppPages {
       name: IngredientManagementScreen.name,
       page: () => const IngredientManagementScreen(),
       binding: BindingsBuilder.put(
-        () => IngredientManagementController(Get.find<IngredientProductRepository>()),
+        () => IngredientManagementController(
+          Get.find<IngredientProductRepository>(),
+        ),
       ),
     ),
     GetPage(
@@ -90,6 +103,14 @@ class AppPages {
           Get.find<IngredientCategoryRepository>(),
         ),
       ),
+    ),
+    GetPage(
+      name: StartCookingScreen.name,
+      page: () => StartCookingScreen(),
+      binding: BindingsBuilder.put(() {
+        final recipeModel = Get.arguments as RecipeModel;
+        return StartCookingController(recipeModel);
+      }),
     ),
   ];
 }

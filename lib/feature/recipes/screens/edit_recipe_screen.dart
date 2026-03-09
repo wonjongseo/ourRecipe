@@ -20,19 +20,35 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton.icon(onPressed: () {}, label: Text('wㅓ장')),
-            const AdBannerBottomSheet(),
-          ],
+        bottomNavigationBar: SafeArea(
+          bottom: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 12),
+                height: 55,
+                child: ElevatedButton.icon(
+                  onPressed: () => controller.saveRecipeModel(),
+                  label: Text(
+                    controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+                  ),
+                  icon: Icon(Icons.add),
+                ),
+              ),
+              const AdBannerBottomSheet(),
+            ],
+          ),
         ),
         appBar: AppBar(
           title: Text(AppStrings.addRecipe.tr),
           actions: [
             TextButton(
               onPressed: () => controller.saveRecipeModel(),
-              child: Text(AppStrings.save.tr),
+              child: Text(
+                controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+              ),
             ),
           ],
         ),
@@ -48,7 +64,7 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                   _recipeCategory(),
                   SizedBox(height: 12),
                   CustomTextFormField(
-                    label: AppStrings.name.tr,
+                    label: '레시피명',
                     controller: controller.recipeNameTextCtrl,
                   ),
                   SizedBox(height: 12),
@@ -59,11 +75,11 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                   ),
                   SizedBox(height: 12),
                   CustomTextFormField(
-                    label: '인분',
+                    label: AppStrings.servings.tr,
                     controller: controller.servingsTextCtrl,
                     keyboardType: TextInputType.number,
-                    hintText: '2인분',
-                    suffixText: '분',
+                    hintText: AppStrings.servingsExample.tr,
+                    suffixText: AppStrings.servingsUnit.tr,
                   ),
 
                   SizedBox(height: 24),
@@ -115,7 +131,9 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
           ),
         ),
         hint: Text(
-          '카테고리를 선택해주세요',
+          controller.categories.isEmpty
+              ? '카테고리를 등록해주세요'
+              : AppStrings.selectCategoryHint.tr,
           style: TextStyle(
             fontSize: UiConstants.formFieldHintSize,
             color: Colors.grey.shade600,
