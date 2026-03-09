@@ -138,13 +138,25 @@ class RecipeIngredientInputController extends GetxController {
     final lower = query.toLowerCase();
     final results = <IngredientProductGroup>[];
     for (final group in groupedProducts) {
+      final isGroupMatched = group.name.toLowerCase().contains(lower);
+      if (isGroupMatched) {
+        results.add(group);
+        continue;
+      }
       final matchedItems = <IngredientProductSubGroup>[];
       for (final item in group.items) {
+        final isItemMatched = item.name.toLowerCase().contains(lower);
         final filteredProducts =
-            item.products
-                .where((product) => product.name.toLowerCase().contains(lower))
-                .toList();
-        if (filteredProducts.isEmpty) continue;
+            isItemMatched
+                ? item.products
+                : item.products
+                    .where(
+                      (product) => product.name.toLowerCase().contains(lower),
+                    )
+                    .toList();
+        if (filteredProducts.isEmpty) {
+          continue;
+        }
         matchedItems.add(
           IngredientProductSubGroup(
             id: item.id,
