@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 
 class CustomSearchBar extends StatelessWidget {
@@ -27,20 +27,15 @@ class CustomSearchBar extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Theme.of(context).colorScheme.surface,
         hintText: AppStrings.search.tr,
         suffixText: suffixText,
         prefixIcon: prefixIcon,
         contentPadding: EdgeInsets.symmetric(horizontal: 12),
-        border: _border(),
-        enabledBorder: _border(),
-        focusedBorder: _border(),
+        border: AppInputBorders.normal(),
+        enabledBorder: AppInputBorders.normal(),
+        focusedBorder: AppInputBorders.focused(),
       ),
     );
   }
-
-  OutlineInputBorder _border() => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(20),
-    borderSide: BorderSide(color: AppColors.borderColor),
-  );
 }

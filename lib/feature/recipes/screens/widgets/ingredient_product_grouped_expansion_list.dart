@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
+import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
+import 'package:our_recipe/feature/recipes/repository/ingredient_product_repository.dart';
+
+class IngredientProductGroupedExpansionList extends StatelessWidget {
+  const IngredientProductGroupedExpansionList({
+    super.key,
+    required this.groups,
+    required this.onTapProduct,
+    this.query = '',
+    this.padding = const EdgeInsets.fromLTRB(8, 8, 8, 16),
+    this.subtitleBuilder,
+    this.trailingBuilder,
+    this.shrinkWrap = false,
+    this.physics,
+  });
+
+  final List<IngredientProductGroup> groups;
+  final String query;
+  final EdgeInsetsGeometry padding;
+  final String? Function(IngredientProductModel product)? subtitleBuilder;
+  final Widget? Function(IngredientProductModel product)? trailingBuilder;
+  final void Function(IngredientProductModel product) onTapProduct;
+  final bool shrinkWrap;
+  final ScrollPhysics? physics;
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = Theme.of(context).colorScheme.outline.withValues(
+      alpha: 0.55,
+    );
+    final languageCode = Get.locale?.languageCode ?? 'ja';
+    return ListView.builder(
+      shrinkWrap: shrinkWrap,
+      physics: physics,
+      padding: padding,
+      itemCount: groups.length,
+      itemBuilder: (context, groupIndex) {
+        final group = groups[groupIndex];
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: borderColor),
+          ),
+          child: ExpansionTile(
+            key: ValueKey('group_${group.id}_$query'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            initiallyExpanded: query.isNotEmpty,
+            leading: Icon(
+              Icons.folder_outlined,
+              size: 18,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            title: Text(
+              IngredientCategoryCatalog.displayName(group.name, languageCode),
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+            subtitle: Text(
+              '${group.items.length}',
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 11),
+            ),
+            childrenPadding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            children:
+                group.items.map((item) {
+                  return Container(
+                    margin: const EdgeInsets.only(left: 8, right: 4, bottom: 6),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: borderColor),
+                    ),
+                    child: ExpansionTile(
+                      key: ValueKey('item_${item.id}_$query'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      collapsedShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      initiallyExpanded: query.isNotEmpty,
+                      leading: Icon(
+                        Icons.label_outline_rounded,
+                        size: 16,
+                        color: Colors.grey.shade700,
+                      ),
+                      title: Text(
+                        IngredientCategoryCatalog.displayName(
+                          item.name,
+                          languageCode,
+                        ),
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      subtitle: Text(
+                        '${item.products.length}',
+                        style: TextStyle(color: Colors.grey.shade600, fontSize: 11),
+                      ),
+                      children:
+                          item.products.map((product) {
+                            final subtitle = subtitleBuilder?.call(product);
+                            return ListTile(
+                              dense: true,
+                              contentPadding: const EdgeInsets.only(
+                                left: 44,
+                                right: 12,
+                              ),
+                              title: Text(
+                                product.name,
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                              subtitle:
+                                  subtitle == null ? null : Text(subtitle),
+                              trailing:
+                                  trailingBuilder?.call(product) ??
+                                  const Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 12,
+                                  ),
+                              onTap: () => onTapProduct(product),
+                            );
+                          }).toList(),
+                    ),
+                  );
+                }).toList(),
+          ),
+        );
+      },
+    );
+  }
+}

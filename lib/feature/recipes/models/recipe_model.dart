@@ -1,25 +1,5 @@
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_step_model.dart';
-import 'package:our_recipe/core/common/app_strings.dart';
-
-enum RecipeCategory { korean, western, japanese, chinese, etc }
-
-extension RecipeCategoryE on RecipeCategory {
-  String get displayName {
-    switch (this) {
-      case RecipeCategory.korean:
-        return AppStrings.koreanCategory;
-      case RecipeCategory.western:
-        return AppStrings.westernCategory;
-      case RecipeCategory.japanese:
-        return AppStrings.japaneseCategory;
-      case RecipeCategory.chinese:
-        return AppStrings.chineseCategory;
-      case RecipeCategory.etc:
-        return AppStrings.etcCategory;
-    }
-  }
-}
 
 /// 레시피 원본 정보 모델.
 class RecipeModel {
@@ -45,13 +25,21 @@ class RecipeModel {
   final List<CookingStepModel> steps;
 
   /// 레시피 카테고리.
-  final RecipeCategory category;
+  final String category;
 
   /// 현재 사용자 좋아요 여부.
   final bool isLiked;
 
   /// 저장된 총 재료비.
   final double totalIngredientCost;
+  final double totalKcal;
+  final double totalWater;
+  final double totalProtein;
+  final double totalFat;
+  final double totalCarbohydrate;
+  final double totalFiber;
+  final double totalAsh;
+  final double totalSodium;
 
   /// 최초 생성 시각.
   final DateTime createdAt;
@@ -67,9 +55,17 @@ class RecipeModel {
     this.coverImagePath,
     this.ingredients = const [],
     this.steps = const [],
-    this.category = RecipeCategory.korean,
+    this.category = '',
     this.isLiked = false,
     this.totalIngredientCost = 0,
+    this.totalKcal = 0,
+    this.totalWater = 0,
+    this.totalProtein = 0,
+    this.totalFat = 0,
+    this.totalCarbohydrate = 0,
+    this.totalFiber = 0,
+    this.totalAsh = 0,
+    this.totalSodium = 0,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -82,9 +78,17 @@ class RecipeModel {
     String? coverImagePath,
     List<IngredientModel>? ingredients,
     List<CookingStepModel>? steps,
-    RecipeCategory? category,
+    String? category,
     bool? isLiked,
     double? totalIngredientCost,
+    double? totalKcal,
+    double? totalWater,
+    double? totalProtein,
+    double? totalFat,
+    double? totalCarbohydrate,
+    double? totalFiber,
+    double? totalAsh,
+    double? totalSodium,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -99,6 +103,14 @@ class RecipeModel {
       category: category ?? this.category,
       isLiked: isLiked ?? this.isLiked,
       totalIngredientCost: totalIngredientCost ?? this.totalIngredientCost,
+      totalKcal: totalKcal ?? this.totalKcal,
+      totalWater: totalWater ?? this.totalWater,
+      totalProtein: totalProtein ?? this.totalProtein,
+      totalFat: totalFat ?? this.totalFat,
+      totalCarbohydrate: totalCarbohydrate ?? this.totalCarbohydrate,
+      totalFiber: totalFiber ?? this.totalFiber,
+      totalAsh: totalAsh ?? this.totalAsh,
+      totalSodium: totalSodium ?? this.totalSodium,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -113,9 +125,17 @@ class RecipeModel {
       'coverImagePath': coverImagePath,
       'ingredients': ingredients.map((item) => item.toJson()).toList(),
       'steps': steps.map((item) => item.toJson()).toList(),
-      'category': category.name,
+      'category': category,
       'isLiked': isLiked,
       'totalIngredientCost': totalIngredientCost,
+      'totalKcal': totalKcal,
+      'totalWater': totalWater,
+      'totalProtein': totalProtein,
+      'totalFat': totalFat,
+      'totalCarbohydrate': totalCarbohydrate,
+      'totalFiber': totalFiber,
+      'totalAsh': totalAsh,
+      'totalSodium': totalSodium,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };
@@ -142,12 +162,18 @@ class RecipeModel {
                     CookingStepModel.fromJson(item as Map<String, dynamic>),
               )
               .toList(),
-      category: _recipeCategoryFromName(
-        (json['category'] as String?) ?? RecipeCategory.korean.name,
-      ),
+      category: (json['category'] as String?) ?? '',
       isLiked: (json['isLiked'] as bool?) ?? false,
       totalIngredientCost:
           (json['totalIngredientCost'] as num?)?.toDouble() ?? 0,
+      totalKcal: (json['totalKcal'] as num?)?.toDouble() ?? 0,
+      totalWater: (json['totalWater'] as num?)?.toDouble() ?? 0,
+      totalProtein: (json['totalProtein'] as num?)?.toDouble() ?? 0,
+      totalFat: (json['totalFat'] as num?)?.toDouble() ?? 0,
+      totalCarbohydrate: (json['totalCarbohydrate'] as num?)?.toDouble() ?? 0,
+      totalFiber: (json['totalFiber'] as num?)?.toDouble() ?? 0,
+      totalAsh: (json['totalAsh'] as num?)?.toDouble() ?? 0,
+      totalSodium: (json['totalSodium'] as num?)?.toDouble() ?? 0,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
@@ -162,13 +188,70 @@ class RecipeModel {
       (sum, item) => sum + (item.usedCost ?? 0),
     );
   }
-}
 
-RecipeCategory _recipeCategoryFromName(String name) {
-  for (final category in RecipeCategory.values) {
-    if (category.name == name) return category;
+  double get kcalTotal {
+    if (totalKcal > 0) return totalKcal;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedKcal ?? 0),
+    );
   }
-  return RecipeCategory.korean;
+
+  double get waterTotal {
+    if (totalWater > 0) return totalWater;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedWater ?? 0),
+    );
+  }
+
+  double get proteinTotal {
+    if (totalProtein > 0) return totalProtein;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedProtein ?? 0),
+    );
+  }
+
+  double get fatTotal {
+    if (totalFat > 0) return totalFat;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedFat ?? 0),
+    );
+  }
+
+  double get carbohydrateTotal {
+    if (totalCarbohydrate > 0) return totalCarbohydrate;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedCarbohydrate ?? 0),
+    );
+  }
+
+  double get fiberTotal {
+    if (totalFiber > 0) return totalFiber;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedFiber ?? 0),
+    );
+  }
+
+  double get ashTotal {
+    if (totalAsh > 0) return totalAsh;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedAsh ?? 0),
+    );
+  }
+
+  double get sodiumTotal {
+    if (totalSodium > 0) return totalSodium;
+    return ingredients.fold<double>(
+      0,
+      (sum, item) => sum + (item.usedSodium ?? 0),
+    );
+  }
 }
 
 /// 실제 요리 수행 기록 모델.

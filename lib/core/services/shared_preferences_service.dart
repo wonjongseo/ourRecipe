@@ -1,25 +1,61 @@
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart';
 
 class SharedPreferencesService {
-  static SharedPreferences? _cachedPrefs;
+  static Database? _cachedDb;
+  static const _tableName = 'app_kv_store';
 
-  Future<SharedPreferences> get _prefs async {
-    _cachedPrefs ??= await SharedPreferences.getInstance();
-    return _cachedPrefs!;
+  Future<Database> get _db async {
+    final cached = _cachedDb;
+    if (cached != null) return cached;
+
+    final dbPath = await getDatabasesPath();
+    final fullPath = path.join(dbPath, 'our_recipe.db');
+    _cachedDb = await openDatabase(
+      fullPath,
+      version: 1,
+      onCreate: (db, _) async {
+        await db.execute('''
+          CREATE TABLE $_tableName (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+          )
+        ''');
+      },
+    );
+    return _cachedDb!;
   }
 
   Future<String?> getString(String key) async {
-    return (await _prefs).getString(key);
+    final rows = await (await _db).query(
+      _tableName,
+      columns: ['value'],
+      where: 'key = ?',
+      whereArgs: [key],
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    final value = rows.first['value'];
+    return value is String ? value : null;
   }
 
   Future<bool> setString(String key, String value) async {
-    return (await _prefs).setString(key, value);
+    await (await _db).insert(_tableName, {
+      'key': key,
+      'value': value,
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    return true;
   }
 
   Future<bool> remove(String key) async {
-    return (await _prefs).remove(key);
+    await (await _db).delete(
+      _tableName,
+      where: 'key = ?',
+      whereArgs: [key],
+    );
+    return true;
   }
 
   Future<T?> getJson<T>(

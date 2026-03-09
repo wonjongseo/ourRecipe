@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
@@ -95,7 +96,9 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
               height: 50,
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(
+                  UiConstants.formFieldRadius,
+                ),
               ),
               alignment: Alignment.center,
               child: Text(
@@ -183,7 +186,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
   ) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
         border: Border.all(color: AppColors.borderColor),
       ),
       child: Row(
@@ -208,7 +211,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
   Container _inputPrice() {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
         border: Border.all(color: AppColors.borderColor),
       ),
       child: TextFormField(
@@ -227,6 +230,12 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
     Function(IngredientUnit?) onChanged,
   ) {
     return DropdownButton2(
+      buttonStyleData: ButtonStyleData(height: UiConstants.formFieldHeight),
+      dropdownStyleData: DropdownStyleData(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
+        ),
+      ),
       underline: SizedBox(),
       isExpanded: true,
       value: productIngredientUnit,
@@ -235,7 +244,10 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
         final unit = IngredientUnit.values[i];
         return DropdownMenuItem(
           value: unit,
-          child: Text(unit.displayName, style: TextStyle(fontSize: 12)),
+          child: Text(
+            unit.displayName,
+            style: TextStyle(fontSize: UiConstants.formFieldFontSize),
+          ),
         );
       }),
     );

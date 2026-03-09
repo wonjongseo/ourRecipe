@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
+import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/recipes/screens/widgets/custom_search_bar.dart';
@@ -15,20 +16,26 @@ class RecipesScreen extends GetView<RecipeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: TextButton.icon(
+      bottomNavigationBar: const AdBannerBottomSheet(),
+      floatingActionButton: FloatingActionButton(
         onPressed: () => controller.goToEditScreen(),
-        icon: Icon(Icons.add),
-        label: Text(AppStrings.addRecipe.tr),
+        child: Icon(Icons.add),
       ),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(110),
         child: AppBar(
+          backgroundColor: AppColors.secondartColor,
           centerTitle: true,
-          title: Text(AppStrings.recipe.tr),
+          title: Text(
+            AppStrings.recipe.tr,
+            style: TextStyle(color: Colors.white),
+          ),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(40),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ).copyWith(bottom: 20),
               child: CustomSearchBar(
                 onChanged: controller.onChanged,
                 prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass, size: 20),
@@ -39,10 +46,15 @@ class RecipesScreen extends GetView<RecipeController> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 14),
+                child: Obx(() => _filterChips()),
+              ),
+
+              SizedBox(height: 10),
               Obx(
                 () => Expanded(
                   child: ListView.separated(
@@ -64,13 +76,79 @@ class RecipesScreen extends GetView<RecipeController> {
     );
   }
 
+  Widget _filterChips() {
+    final selected = controller.selectedFilter.value;
+    final chips = <Widget>[
+      _filterChip(
+        label: AppStrings.all.tr,
+        selected: selected == const RecipeFilter.all(),
+        onTap: () => controller.onChangeFilter(const RecipeFilter.all()),
+      ),
+      _filterChip(
+        label: AppStrings.favorite.tr,
+        selected: selected == const RecipeFilter.favorite(),
+        onTap: () => controller.onChangeFilter(const RecipeFilter.favorite()),
+      ),
+      ...controller.categories.map((category) {
+        final filter = RecipeFilter.category(category);
+        return _filterChip(
+          label: category,
+          selected: selected == filter,
+          onTap: () => controller.onChangeFilter(filter),
+        );
+      }),
+    ];
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(children: chips),
+      ),
+    );
+  }
+
+  Widget _filterChip({
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(999),
+            color:
+                selected
+                    ? AppColors.primaryColor
+                    : Get.theme.colorScheme.surface,
+            border: Border.all(
+              color: selected ? AppColors.primaryColor : AppColors.borderColor,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: selected ? Colors.white : Get.theme.colorScheme.onSurface,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget recipeListTIle(RecipeModel recipe) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () => controller.goToDetailScreen(recipe),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(Get.context!).cardColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -119,7 +197,7 @@ class RecipesScreen extends GetView<RecipeController> {
                     Row(
                       children: [
                         Text(
-                          recipe.category.displayName.tr,
+                          recipe.category.isEmpty ? '-' : recipe.category,
                           style: TextStyle(fontSize: 11),
                         ),
                         SizedBox(width: 8),
@@ -134,13 +212,13 @@ class RecipesScreen extends GetView<RecipeController> {
               ],
             ),
             IconButton(
-              onPressed: () => controller.toggleLike(recipe.id),
+              onPressed: () => controller.toggleBookmark(recipe.id),
               icon: Icon(
                 recipe.isLiked
-                    ? FontAwesomeIcons.solidHeart
-                    : FontAwesomeIcons.heart,
+                    ? FontAwesomeIcons.solidBookmark
+                    : FontAwesomeIcons.bookmark,
                 size: 20,
-                color: recipe.isLiked ? Colors.pinkAccent : null,
+                color: recipe.isLiked ? AppColors.primaryColor : null,
               ),
             ),
           ],

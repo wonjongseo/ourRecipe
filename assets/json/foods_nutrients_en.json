@@ -1,0 +1,5636 @@
+[
+  {
+    "categoryCode": "01",
+    "categoryName": "Baked Products",
+    "items": [
+      {
+        "name": "Bread",
+        "foods": [
+          {
+            "foodCode": "325871",
+            "indexCode": "0017",
+            "name": "white, commercially prepared",
+            "kcal": 270,
+            "water": 35.7,
+            "protein": 9.43,
+            "fat": 3.59,
+            "carbohydrate": 49.2,
+            "fiber": 2.3,
+            "ash": 2.1,
+            "sodium": 477
+          },
+          {
+            "foodCode": "335240",
+            "indexCode": "0044",
+            "name": "whole-wheat, commercially prepared",
+            "kcal": 254,
+            "water": 38.7,
+            "protein": 12.3,
+            "fat": 3.55,
+            "carbohydrate": 43.1,
+            "fiber": 6,
+            "ash": 2.36,
+            "sodium": 450
+          }
+        ]
+      },
+      {
+        "name": "Cookies",
+        "foods": [
+          {
+            "foodCode": "333008",
+            "indexCode": "0036",
+            "name": "oatmeal, soft, with raisins",
+            "kcal": 430,
+            "water": 8.85,
+            "protein": 5.79,
+            "fat": 14.3,
+            "carbohydrate": 69.6,
+            "fiber": 3.3,
+            "ash": 1.44,
+            "sodium": 314
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "02",
+    "categoryName": "Beef Products",
+    "items": [
+      {
+        "name": "Beef",
+        "foods": [
+          {
+            "foodCode": "2514743",
+            "indexCode": "0222",
+            "name": "ground, 90% lean meat / 10% fat, raw",
+            "kcal": null,
+            "water": 69,
+            "protein": 18.2,
+            "fat": 12.8,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.846,
+            "sodium": 61.6
+          },
+          {
+            "foodCode": "2514744",
+            "indexCode": "0223",
+            "name": "ground, 80% lean meat / 20% fat, raw",
+            "kcal": null,
+            "water": 62.8,
+            "protein": 17.5,
+            "fat": 19.4,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.828,
+            "sodium": 54.9
+          },
+          {
+            "foodCode": "2646172",
+            "indexCode": "0255",
+            "name": "ribeye, steak, boneless, choice, raw",
+            "kcal": null,
+            "water": 60.6,
+            "protein": 18.7,
+            "fat": 20,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.892,
+            "sodium": 42.5
+          },
+          {
+            "foodCode": "2646173",
+            "indexCode": "0256",
+            "name": "round, top round, boneless, choice, raw",
+            "kcal": null,
+            "water": 70.9,
+            "protein": 21.5,
+            "fat": 5.7,
+            "carbohydrate": 0.852,
+            "fiber": null,
+            "ash": 1.09,
+            "sodium": 45.5
+          },
+          {
+            "foodCode": "2646174",
+            "indexCode": "0257",
+            "name": "chuck, roast, boneless, choice, raw",
+            "kcal": null,
+            "water": 63.4,
+            "protein": 18.4,
+            "fat": 17.8,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.894,
+            "sodium": 48.4
+          },
+          {
+            "foodCode": "2646175",
+            "indexCode": "0258",
+            "name": "flank, steak, boneless, choice, raw",
+            "kcal": null,
+            "water": 69.8,
+            "protein": 20.1,
+            "fat": 9.4,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.994,
+            "sodium": 51.3
+          },
+          {
+            "foodCode": "2727572",
+            "indexCode": "0323",
+            "name": "short loin (NY strip steak), raw",
+            "kcal": null,
+            "water": 66,
+            "protein": 21.3,
+            "fat": 11.5,
+            "carbohydrate": 0.221,
+            "fiber": null,
+            "ash": 0.964,
+            "sodium": 43.1
+          },
+          {
+            "foodCode": "2727573",
+            "indexCode": "0324",
+            "name": "tenderloin steak, raw",
+            "kcal": null,
+            "water": 71.2,
+            "protein": 21.1,
+            "fat": 6.46,
+            "carbohydrate": 0.18,
+            "fiber": null,
+            "ash": 1.06,
+            "sodium": 44.8
+          },
+          {
+            "foodCode": "2727574",
+            "indexCode": "0325",
+            "name": "top sirloin steak, raw",
+            "kcal": null,
+            "water": 71,
+            "protein": 22,
+            "fat": 5.71,
+            "carbohydrate": 0.218,
+            "fiber": null,
+            "ash": 1.09,
+            "sodium": 42.8
+          },
+          {
+            "foodCode": "746758",
+            "indexCode": "0045",
+            "name": "loin, tenderloin roast, separable lean only, boneless, trimmed to 0\" fat, select, cooked, roasted",
+            "kcal": 176,
+            "water": 65.7,
+            "protein": 27.7,
+            "fat": 6.36,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.22,
+            "sodium": 54
+          },
+          {
+            "foodCode": "746759",
+            "indexCode": "0046",
+            "name": "loin, top loin steak, boneless, lip-on, separable lean only, trimmed to 1/8\" fat, choice, raw",
+            "kcal": 155,
+            "water": 69.9,
+            "protein": 22.8,
+            "fat": 6.39,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.01,
+            "sodium": 45
+          },
+          {
+            "foodCode": "746760",
+            "indexCode": "0047",
+            "name": "round, eye of round roast, boneless, separable lean only, trimmed to 0\" fat, select, raw",
+            "kcal": 122,
+            "water": 73.7,
+            "protein": 23.4,
+            "fat": 2.48,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.08,
+            "sodium": 50
+          },
+          {
+            "foodCode": "746761",
+            "indexCode": "0048",
+            "name": "round, top round roast, boneless, separable lean only, trimmed to 0\" fat, select, raw",
+            "kcal": 123,
+            "water": 73.3,
+            "protein": 23.7,
+            "fat": 2.41,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.11,
+            "sodium": 55
+          },
+          {
+            "foodCode": "746762",
+            "indexCode": "0049",
+            "name": "short loin, porterhouse steak, separable lean only, trimmed to 1/8\" fat, select, raw",
+            "kcal": 145,
+            "water": 71.4,
+            "protein": 22.7,
+            "fat": 5.32,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.02,
+            "sodium": 43
+          },
+          {
+            "foodCode": "746763",
+            "indexCode": "0050",
+            "name": "short loin, t-bone steak, bone-in, separable lean only, trimmed to 1/8\" fat, choice, cooked, grilled",
+            "kcal": 219,
+            "water": 60.3,
+            "protein": 27.3,
+            "fat": 11.4,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.02,
+            "sodium": 67
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "03",
+    "categoryName": "Beverages",
+    "items": [
+      {
+        "name": "Almond milk",
+        "foods": [
+          {
+            "foodCode": "1999631",
+            "indexCode": "0136",
+            "name": "unsweetened, plain, shelf stable",
+            "kcal": null,
+            "water": 97.4,
+            "protein": 0.555,
+            "fat": 1.22,
+            "carbohydrate": 0.337,
+            "fiber": 0,
+            "ash": 0.487,
+            "sodium": 59.6
+          },
+          {
+            "foodCode": "2257045",
+            "indexCode": "0160",
+            "name": "unsweetened, plain, refrigerated",
+            "kcal": null,
+            "water": 96.5,
+            "protein": 0.656,
+            "fat": 1.56,
+            "carbohydrate": 0.671,
+            "fiber": 0,
+            "ash": 0.595,
+            "sodium": 59.2
+          }
+        ]
+      },
+      {
+        "name": "Oat milk",
+        "foods": [
+          {
+            "foodCode": "2257046",
+            "indexCode": "0161",
+            "name": "unsweetened, plain, refrigerated",
+            "kcal": null,
+            "water": 90.6,
+            "protein": 0.797,
+            "fat": 2.75,
+            "carbohydrate": 5.1,
+            "fiber": 0,
+            "ash": 0.794,
+            "sodium": 42
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "04",
+    "categoryName": "Cereal Grains and Pasta",
+    "items": [
+      {
+        "name": "Buckwheat",
+        "foods": [
+          {
+            "foodCode": "2512378",
+            "indexCode": "0218",
+            "name": "whole grain",
+            "kcal": null,
+            "water": 13,
+            "protein": 11.1,
+            "fat": 3.04,
+            "carbohydrate": 71.1,
+            "fiber": 4.05,
+            "ash": 1.82,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Bulgur",
+        "foods": [
+          {
+            "foodCode": "2710820",
+            "indexCode": "0293",
+            "name": "dry, raw",
+            "kcal": null,
+            "water": 8.48,
+            "protein": 11.8,
+            "fat": 2.42,
+            "carbohydrate": 75.9,
+            "fiber": 11.7,
+            "ash": 1.46,
+            "sodium": 2.18
+          }
+        ]
+      },
+      {
+        "name": "Chia seeds",
+        "foods": [
+          {
+            "foodCode": "2710819",
+            "indexCode": "0292",
+            "name": "dry, raw",
+            "kcal": null,
+            "water": 7.45,
+            "protein": 17,
+            "fat": 32.9,
+            "carbohydrate": 38.3,
+            "fiber": null,
+            "ash": 4.37,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Corn flour",
+        "foods": [
+          {
+            "foodCode": "2710835",
+            "indexCode": "0308",
+            "name": "masa harina, white or yellow, dry, raw",
+            "kcal": null,
+            "water": 10.1,
+            "protein": 7.56,
+            "fat": 4.34,
+            "carbohydrate": 76.7,
+            "fiber": 7.04,
+            "ash": 1.33,
+            "sodium": 2.73
+          }
+        ]
+      },
+      {
+        "name": "Einkorn",
+        "foods": [
+          {
+            "foodCode": "2710827",
+            "indexCode": "0300",
+            "name": "grain, dry, raw",
+            "kcal": null,
+            "water": 10.5,
+            "protein": 15.1,
+            "fat": 3.81,
+            "carbohydrate": 68.7,
+            "fiber": 8.91,
+            "ash": 1.89,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Farro",
+        "foods": [
+          {
+            "foodCode": "2710828",
+            "indexCode": "0301",
+            "name": "pearled, dry, raw",
+            "kcal": null,
+            "water": 10.5,
+            "protein": 12.6,
+            "fat": 3.1,
+            "carbohydrate": 72.1,
+            "fiber": 7.31,
+            "ash": 1.66,
+            "sodium": 0.845
+          }
+        ]
+      },
+      {
+        "name": "Flour",
+        "foods": [
+          {
+            "foodCode": "1104812",
+            "indexCode": "0116",
+            "name": "rice, brown",
+            "kcal": 365,
+            "water": 12.1,
+            "protein": 7.19,
+            "fat": 3.85,
+            "carbohydrate": 75.5,
+            "fiber": null,
+            "ash": 1.4,
+            "sodium": 1
+          },
+          {
+            "foodCode": "1104867",
+            "indexCode": "0117",
+            "name": "rice, glutinous",
+            "kcal": 358,
+            "water": 11.8,
+            "protein": 6.69,
+            "fat": 1.16,
+            "carbohydrate": 80.1,
+            "fiber": null,
+            "ash": 0.22,
+            "sodium": 6
+          },
+          {
+            "foodCode": "1104913",
+            "indexCode": "0118",
+            "name": "pastry, unenriched, unbleached",
+            "kcal": 358,
+            "water": 11.9,
+            "protein": 8.75,
+            "fat": 1.64,
+            "carbohydrate": 77.2,
+            "fiber": null,
+            "ash": 0.53,
+            "sodium": 1
+          },
+          {
+            "foodCode": "2003586",
+            "indexCode": "0140",
+            "name": "00",
+            "kcal": null,
+            "water": 12.2,
+            "protein": 11.4,
+            "fat": 1.52,
+            "carbohydrate": 74.4,
+            "fiber": 2.66,
+            "ash": 0.464,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2003587",
+            "indexCode": "0141",
+            "name": "spelt, whole grain",
+            "kcal": null,
+            "water": 10.7,
+            "protein": 14.5,
+            "fat": 2.54,
+            "carbohydrate": 70.7,
+            "fiber": 9.34,
+            "ash": 1.54,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2003588",
+            "indexCode": "0142",
+            "name": "semolina, coarse and semi-coarse",
+            "kcal": null,
+            "water": 12.2,
+            "protein": 11.7,
+            "fat": 1.6,
+            "carbohydrate": 73.8,
+            "fiber": 3.22,
+            "ash": 0.608,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2003589",
+            "indexCode": "0143",
+            "name": "semolina, fine",
+            "kcal": null,
+            "water": 12.1,
+            "protein": 13.3,
+            "fat": 1.84,
+            "carbohydrate": 72,
+            "fiber": 3.68,
+            "ash": 0.735,
+            "sodium": 0.426
+          },
+          {
+            "foodCode": "2261421",
+            "indexCode": "0174",
+            "name": "oat, whole grain",
+            "kcal": null,
+            "water": 8.86,
+            "protein": 13.2,
+            "fat": 6.31,
+            "carbohydrate": 69.9,
+            "fiber": 10.5,
+            "ash": 1.75,
+            "sodium": 3.62
+          },
+          {
+            "foodCode": "2512371",
+            "indexCode": "0211",
+            "name": "amaranth",
+            "kcal": null,
+            "water": 9.49,
+            "protein": 13.2,
+            "fat": 6.24,
+            "carbohydrate": 68.8,
+            "fiber": 7.21,
+            "ash": 2.29,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2512372",
+            "indexCode": "0212",
+            "name": "quinoa",
+            "kcal": null,
+            "water": 9.95,
+            "protein": 11.9,
+            "fat": 6.6,
+            "carbohydrate": 69.5,
+            "fiber": 6.3,
+            "ash": 2,
+            "sodium": 6.32
+          },
+          {
+            "foodCode": "2512373",
+            "indexCode": "0213",
+            "name": "sorghum",
+            "kcal": null,
+            "water": 9.41,
+            "protein": 8.27,
+            "fat": 3.59,
+            "carbohydrate": 77.4,
+            "fiber": 6.02,
+            "ash": 1.34,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2512374",
+            "indexCode": "0214",
+            "name": "buckwheat",
+            "kcal": null,
+            "water": 12,
+            "protein": 8.88,
+            "fat": 2.48,
+            "carbohydrate": 75,
+            "fiber": 10.4,
+            "ash": 1.57,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2512375",
+            "indexCode": "0215",
+            "name": "rye",
+            "kcal": null,
+            "water": 11.1,
+            "protein": 8.4,
+            "fat": 1.91,
+            "carbohydrate": 77.2,
+            "fiber": 13.7,
+            "ash": 1.4,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2512376",
+            "indexCode": "0216",
+            "name": "barley",
+            "kcal": null,
+            "water": 9.9,
+            "protein": 8.72,
+            "fat": 2.45,
+            "carbohydrate": 77.4,
+            "fiber": 12.8,
+            "ash": 1.53,
+            "sodium": 20.3
+          },
+          {
+            "foodCode": "789890",
+            "indexCode": "0103",
+            "name": "wheat, all-purpose, enriched, bleached",
+            "kcal": 366,
+            "water": 9.83,
+            "protein": 10.9,
+            "fat": 1.48,
+            "carbohydrate": 77.3,
+            "fiber": null,
+            "ash": 0.42,
+            "sodium": 2
+          },
+          {
+            "foodCode": "789951",
+            "indexCode": "0104",
+            "name": "wheat, all-purpose, enriched, unbleached",
+            "kcal": 358,
+            "water": 11.7,
+            "protein": 13.1,
+            "fat": 1.48,
+            "carbohydrate": 73.2,
+            "fiber": null,
+            "ash": 0.53,
+            "sodium": 4
+          },
+          {
+            "foodCode": "790018",
+            "indexCode": "0105",
+            "name": "wheat, all-purpose, unenriched, unbleached",
+            "kcal": 362,
+            "water": 11.1,
+            "protein": 12,
+            "fat": 1.7,
+            "carbohydrate": 74.6,
+            "fiber": 3,
+            "ash": 0.56,
+            "sodium": 2
+          },
+          {
+            "foodCode": "790085",
+            "indexCode": "0106",
+            "name": "whole wheat, unenriched",
+            "kcal": 370,
+            "water": 9.44,
+            "protein": 15.1,
+            "fat": 2.73,
+            "carbohydrate": 71.2,
+            "fiber": 10.6,
+            "ash": 1.56,
+            "sodium": 3
+          },
+          {
+            "foodCode": "790146",
+            "indexCode": "0107",
+            "name": "bread, white, enriched, unbleached",
+            "kcal": 363,
+            "water": 10.7,
+            "protein": 14.3,
+            "fat": 1.65,
+            "carbohydrate": 72.8,
+            "fiber": null,
+            "ash": 0.5,
+            "sodium": 3
+          },
+          {
+            "foodCode": "790214",
+            "indexCode": "0108",
+            "name": "rice, white, unenriched",
+            "kcal": 359,
+            "water": 11.6,
+            "protein": 6.94,
+            "fat": 1.3,
+            "carbohydrate": 79.8,
+            "fiber": 0.5,
+            "ash": 0.35,
+            "sodium": 5
+          },
+          {
+            "foodCode": "790276",
+            "indexCode": "0109",
+            "name": "corn, yellow, fine meal, enriched",
+            "kcal": 364,
+            "water": 10.8,
+            "protein": 6.2,
+            "fat": 1.74,
+            "carbohydrate": 80.8,
+            "fiber": 4.3,
+            "ash": 0.46,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Fonio",
+        "foods": [
+          {
+            "foodCode": "2710829",
+            "indexCode": "0302",
+            "name": "grain, dry, raw",
+            "kcal": null,
+            "water": 9.37,
+            "protein": 7.17,
+            "fat": 1.69,
+            "carbohydrate": 81.3,
+            "fiber": 2.2,
+            "ash": 0.46,
+            "sodium": 2.97
+          }
+        ]
+      },
+      {
+        "name": "Khorasan",
+        "foods": [
+          {
+            "foodCode": "2710830",
+            "indexCode": "0303",
+            "name": "grain, dry, raw",
+            "kcal": null,
+            "water": 8.9,
+            "protein": 14.8,
+            "fat": 2.8,
+            "carbohydrate": 71.8,
+            "fiber": 10.5,
+            "ash": 1.75,
+            "sodium": 3.94
+          }
+        ]
+      },
+      {
+        "name": "Millet",
+        "foods": [
+          {
+            "foodCode": "2512379",
+            "indexCode": "0219",
+            "name": "whole grain",
+            "kcal": null,
+            "water": 10.2,
+            "protein": 10,
+            "fat": 4.19,
+            "carbohydrate": 74.4,
+            "fiber": 2.62,
+            "ash": 1.13,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Oats",
+        "foods": [
+          {
+            "foodCode": "2346396",
+            "indexCode": "0192",
+            "name": "whole grain, rolled, old fashioned",
+            "kcal": null,
+            "water": 10.2,
+            "protein": 13.5,
+            "fat": 5.89,
+            "carbohydrate": 68.7,
+            "fiber": null,
+            "ash": 1.71,
+            "sodium": 0.668
+          },
+          {
+            "foodCode": "2346397",
+            "indexCode": "0193",
+            "name": "whole grain, steel cut",
+            "kcal": null,
+            "water": 10.1,
+            "protein": 12.5,
+            "fat": 5.8,
+            "carbohydrate": 69.8,
+            "fiber": null,
+            "ash": 1.8,
+            "sodium": 0.311
+          }
+        ]
+      },
+      {
+        "name": "Rice",
+        "foods": [
+          {
+            "foodCode": "2512380",
+            "indexCode": "0220",
+            "name": "brown, long grain, unenriched, raw",
+            "kcal": null,
+            "water": 11.5,
+            "protein": 7.25,
+            "fat": 3.31,
+            "carbohydrate": 76.7,
+            "fiber": 3.02,
+            "ash": 1.28,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2512381",
+            "indexCode": "0221",
+            "name": "white, long grain, unenriched, raw",
+            "kcal": null,
+            "water": 11.2,
+            "protein": 7.04,
+            "fat": 1.03,
+            "carbohydrate": 80.3,
+            "fiber": 0.149,
+            "ash": 0.425,
+            "sodium": 0.462
+          },
+          {
+            "foodCode": "2710825",
+            "indexCode": "0298",
+            "name": "black, unenriched, raw",
+            "kcal": null,
+            "water": 10.5,
+            "protein": 7.57,
+            "fat": 3.44,
+            "carbohydrate": 77.2,
+            "fiber": 4.18,
+            "ash": 1.34,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2710838",
+            "indexCode": "0311",
+            "name": "red, unenriched, dry, raw",
+            "kcal": null,
+            "water": 10.5,
+            "protein": 8.56,
+            "fat": 3.44,
+            "carbohydrate": 76.2,
+            "fiber": 4.2,
+            "ash": 1.33,
+            "sodium": 0.438
+          }
+        ]
+      },
+      {
+        "name": "Sorghum",
+        "foods": [
+          {
+            "foodCode": "2710842",
+            "indexCode": "0315",
+            "name": "whole grain, white, dry, raw",
+            "kcal": null,
+            "water": 10.6,
+            "protein": 10.1,
+            "fat": 4.22,
+            "carbohydrate": 73.6,
+            "fiber": 8.27,
+            "ash": 1.51,
+            "sodium": 0.329
+          }
+        ]
+      },
+      {
+        "name": "Sorghum bran",
+        "foods": [
+          {
+            "foodCode": "2710839",
+            "indexCode": "0312",
+            "name": "white, unenriched, dry, raw",
+            "kcal": null,
+            "water": 7.42,
+            "protein": 11.2,
+            "fat": 9.26,
+            "carbohydrate": 68.7,
+            "fiber": 35,
+            "ash": 3.45,
+            "sodium": 2.92
+          }
+        ]
+      },
+      {
+        "name": "Sorghum flour",
+        "foods": [
+          {
+            "foodCode": "2710840",
+            "indexCode": "0313",
+            "name": "white, pearled, unenriched, dry, raw",
+            "kcal": null,
+            "water": 11.9,
+            "protein": 10.2,
+            "fat": 3.24,
+            "carbohydrate": 73.5,
+            "fiber": 3.3,
+            "ash": 1.17,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Sorghum grain",
+        "foods": [
+          {
+            "foodCode": "2710841",
+            "indexCode": "0314",
+            "name": "white, pearled, unenriched, dry, raw",
+            "kcal": null,
+            "water": 10.4,
+            "protein": 10.2,
+            "fat": 3.26,
+            "carbohydrate": 74.9,
+            "fiber": 3.92,
+            "ash": 1.16,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Wild rice",
+        "foods": [
+          {
+            "foodCode": "2710821",
+            "indexCode": "0294",
+            "name": "dry, raw",
+            "kcal": null,
+            "water": 8.43,
+            "protein": 12.8,
+            "fat": 1.7,
+            "carbohydrate": 75.7,
+            "fiber": 4.26,
+            "ash": 1.41,
+            "sodium": 1.01
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "05",
+    "categoryName": "Dairy and Egg Products",
+    "items": [
+      {
+        "name": "Butter",
+        "foods": [
+          {
+            "foodCode": "789828",
+            "indexCode": "0102",
+            "name": "stick, unsalted",
+            "kcal": null,
+            "water": 17.4,
+            "protein": null,
+            "fat": 81.5,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": 10
+          },
+          {
+            "foodCode": "790508",
+            "indexCode": "0110",
+            "name": "stick, salted",
+            "kcal": null,
+            "water": 15.8,
+            "protein": null,
+            "fat": 82.2,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": 524
+          }
+        ]
+      },
+      {
+        "name": "Buttermilk",
+        "foods": [
+          {
+            "foodCode": "2259792",
+            "indexCode": "0168",
+            "name": "low fat",
+            "kcal": null,
+            "water": 89.8,
+            "protein": 3.46,
+            "fat": 1.08,
+            "carbohydrate": 4.81,
+            "fiber": null,
+            "ash": 0.852,
+            "sodium": 92.5
+          }
+        ]
+      },
+      {
+        "name": "Cheese",
+        "foods": [
+          {
+            "foodCode": "2259795",
+            "indexCode": "0171",
+            "name": "parmesan, grated, refrigerated",
+            "kcal": null,
+            "water": 30.8,
+            "protein": 30.1,
+            "fat": 29.5,
+            "carbohydrate": 4.33,
+            "fiber": null,
+            "ash": 5.2,
+            "sodium": 1050
+          },
+          {
+            "foodCode": "2259796",
+            "indexCode": "0172",
+            "name": "feta, whole milk, crumbled",
+            "kcal": null,
+            "water": 51.9,
+            "protein": 19.7,
+            "fat": 19.1,
+            "carbohydrate": 5.58,
+            "fiber": null,
+            "ash": 3.74,
+            "sodium": 1030
+          },
+          {
+            "foodCode": "2647438",
+            "indexCode": "0260",
+            "name": "monterey jack, solid",
+            "kcal": null,
+            "water": 39.2,
+            "protein": 22.6,
+            "fat": 32.6,
+            "carbohydrate": 1.9,
+            "fiber": null,
+            "ash": 3.68,
+            "sodium": 662
+          },
+          {
+            "foodCode": "2647439",
+            "indexCode": "0261",
+            "name": "pasteurized process cheese food or product, American, singles",
+            "kcal": null,
+            "water": 44.8,
+            "protein": 15.6,
+            "fat": 23.9,
+            "carbohydrate": 8.19,
+            "fiber": null,
+            "ash": 7.6,
+            "sodium": 1420
+          },
+          {
+            "foodCode": "2647440",
+            "indexCode": "0262",
+            "name": "provolone, sliced",
+            "kcal": null,
+            "water": 42.3,
+            "protein": 23.5,
+            "fat": 28.1,
+            "carbohydrate": 2.45,
+            "fiber": null,
+            "ash": 3.62,
+            "sodium": 601
+          },
+          {
+            "foodCode": "2647441",
+            "indexCode": "0263",
+            "name": "oaxaca, solid",
+            "kcal": null,
+            "water": 49.8,
+            "protein": 22.1,
+            "fat": 22.1,
+            "carbohydrate": 2.4,
+            "fiber": null,
+            "ash": 3.55,
+            "sodium": 734
+          },
+          {
+            "foodCode": "2647442",
+            "indexCode": "0264",
+            "name": "queso fresco, solid",
+            "kcal": null,
+            "water": 51.4,
+            "protein": 18.9,
+            "fat": 23.4,
+            "carbohydrate": 2.96,
+            "fiber": null,
+            "ash": 3.42,
+            "sodium": 626
+          },
+          {
+            "foodCode": "2647443",
+            "indexCode": "0265",
+            "name": "cotija, solid",
+            "kcal": null,
+            "water": 40,
+            "protein": 23.8,
+            "fat": 27.2,
+            "carbohydrate": 2.72,
+            "fiber": null,
+            "ash": 6.2,
+            "sodium": 1620
+          },
+          {
+            "foodCode": "325036",
+            "indexCode": "0012",
+            "name": "parmesan, grated",
+            "kcal": 421,
+            "water": 22.8,
+            "protein": 29.6,
+            "fat": 28,
+            "carbohydrate": 12.4,
+            "fiber": null,
+            "ash": 7.15,
+            "sodium": 1750
+          },
+          {
+            "foodCode": "325198",
+            "indexCode": "0013",
+            "name": "pasteurized process, American, vitamin D fortified",
+            "kcal": 366,
+            "water": 39.6,
+            "protein": 18,
+            "fat": 30.6,
+            "carbohydrate": 5.27,
+            "fiber": null,
+            "ash": 6.59,
+            "sodium": 1660
+          },
+          {
+            "foodCode": "328637",
+            "indexCode": "0022",
+            "name": "cheddar",
+            "kcal": 408,
+            "water": 36.6,
+            "protein": 23.3,
+            "fat": 34,
+            "carbohydrate": 2.44,
+            "fiber": null,
+            "ash": 3.67,
+            "sodium": 654
+          },
+          {
+            "foodCode": "328841",
+            "indexCode": "0023",
+            "name": "cottage, lowfat, 2% milkfat",
+            "kcal": 84,
+            "water": 81.1,
+            "protein": 11,
+            "fat": 2.3,
+            "carbohydrate": 4.31,
+            "fiber": null,
+            "ash": 1.25,
+            "sodium": 321
+          },
+          {
+            "foodCode": "329370",
+            "indexCode": "0024",
+            "name": "mozzarella, low moisture, part-skim",
+            "kcal": 298,
+            "water": 47.7,
+            "protein": 23.7,
+            "fat": 20.4,
+            "carbohydrate": 4.44,
+            "fiber": null,
+            "ash": 3.79,
+            "sodium": 699
+          },
+          {
+            "foodCode": "746765",
+            "indexCode": "0052",
+            "name": "dry white, queso seco",
+            "kcal": 326,
+            "water": 42.2,
+            "protein": 24.5,
+            "fat": 24.3,
+            "carbohydrate": 2.07,
+            "fiber": null,
+            "ash": 6.93,
+            "sodium": 1810
+          },
+          {
+            "foodCode": "746766",
+            "indexCode": "0053",
+            "name": "ricotta, whole milk",
+            "kcal": 157,
+            "water": 72.9,
+            "protein": 7.81,
+            "fat": 11,
+            "carbohydrate": 6.86,
+            "fiber": null,
+            "ash": 1.36,
+            "sodium": 105
+          },
+          {
+            "foodCode": "746767",
+            "indexCode": "0054",
+            "name": "swiss",
+            "kcal": 393,
+            "water": 37.6,
+            "protein": 27,
+            "fat": 31,
+            "carbohydrate": 1.44,
+            "fiber": null,
+            "ash": 2.97,
+            "sodium": 185
+          },
+          {
+            "foodCode": "747429",
+            "indexCode": "0074",
+            "name": "American, restaurant",
+            "kcal": 375,
+            "water": 39.5,
+            "protein": 17.5,
+            "fat": 31.1,
+            "carbohydrate": 6.35,
+            "fiber": null,
+            "ash": 5.57,
+            "sodium": 1600
+          }
+        ]
+      },
+      {
+        "name": "Cottage cheese",
+        "foods": [
+          {
+            "foodCode": "2346384",
+            "indexCode": "0180",
+            "name": "full fat, large or small curd",
+            "kcal": null,
+            "water": 78.1,
+            "protein": 11.6,
+            "fat": 4.22,
+            "carbohydrate": 4.6,
+            "fiber": null,
+            "ash": 1.45,
+            "sodium": 350
+          }
+        ]
+      },
+      {
+        "name": "Cream",
+        "foods": [
+          {
+            "foodCode": "2346386",
+            "indexCode": "0182",
+            "name": "heavy",
+            "kcal": null,
+            "water": 58.1,
+            "protein": 2.02,
+            "fat": 35.6,
+            "carbohydrate": 3.8,
+            "fiber": null,
+            "ash": 0.492,
+            "sodium": 20.6
+          },
+          {
+            "foodCode": "2346387",
+            "indexCode": "0183",
+            "name": "sour, full fat",
+            "kcal": null,
+            "water": 72.6,
+            "protein": 3.07,
+            "fat": 18,
+            "carbohydrate": 5.56,
+            "fiber": null,
+            "ash": 0.804,
+            "sodium": 50
+          }
+        ]
+      },
+      {
+        "name": "Cream cheese",
+        "foods": [
+          {
+            "foodCode": "2346385",
+            "indexCode": "0181",
+            "name": "full fat, block",
+            "kcal": null,
+            "water": 54.7,
+            "protein": 5.79,
+            "fat": 33.5,
+            "carbohydrate": 4.56,
+            "fiber": null,
+            "ash": 1.44,
+            "sodium": 368
+          }
+        ]
+      },
+      {
+        "name": "Egg",
+        "foods": [
+          {
+            "foodCode": "323604",
+            "indexCode": "0007",
+            "name": "whole, raw, frozen, pasteurized",
+            "kcal": 150,
+            "water": 75.4,
+            "protein": 12.3,
+            "fat": 10.3,
+            "carbohydrate": 0.91,
+            "fiber": null,
+            "ash": 1.16,
+            "sodium": 121
+          },
+          {
+            "foodCode": "323697",
+            "indexCode": "0008",
+            "name": "white, raw, frozen, pasteurized",
+            "kcal": 48,
+            "water": 88.3,
+            "protein": 10.1,
+            "fat": 0.16,
+            "carbohydrate": 0.74,
+            "fiber": null,
+            "ash": 0.7,
+            "sodium": 144
+          },
+          {
+            "foodCode": "323793",
+            "indexCode": "0009",
+            "name": "white, dried",
+            "kcal": 376,
+            "water": 7.98,
+            "protein": 79.9,
+            "fat": 0.65,
+            "carbohydrate": 6.02,
+            "fiber": null,
+            "ash": 5.47,
+            "sodium": 1250
+          },
+          {
+            "foodCode": "329490",
+            "indexCode": "0025",
+            "name": "whole, dried",
+            "kcal": 575,
+            "water": 4.07,
+            "protein": 48.1,
+            "fat": 39.8,
+            "carbohydrate": 1.87,
+            "fiber": null,
+            "ash": 6.2,
+            "sodium": 485
+          },
+          {
+            "foodCode": "329596",
+            "indexCode": "0026",
+            "name": "yolk, raw, frozen, pasteurized",
+            "kcal": 296,
+            "water": 56.1,
+            "protein": 15.6,
+            "fat": 25.1,
+            "carbohydrate": 0.59,
+            "fiber": null,
+            "ash": 2.65,
+            "sodium": 66
+          },
+          {
+            "foodCode": "329716",
+            "indexCode": "0027",
+            "name": "yolk, dried",
+            "kcal": 654,
+            "water": 3.64,
+            "protein": 34.2,
+            "fat": 55.5,
+            "carbohydrate": 1.07,
+            "fiber": null,
+            "ash": 5.54,
+            "sodium": 149
+          }
+        ]
+      },
+      {
+        "name": "Eggs",
+        "foods": [
+          {
+            "foodCode": "747997",
+            "indexCode": "0094",
+            "name": "Grade A, Large, egg white",
+            "kcal": 55,
+            "water": 86.3,
+            "protein": 10.7,
+            "fat": 0,
+            "carbohydrate": 2.36,
+            "fiber": null,
+            "ash": 0.65,
+            "sodium": null
+          },
+          {
+            "foodCode": "748236",
+            "indexCode": "0095",
+            "name": "Grade A, Large, egg yolk",
+            "kcal": 334,
+            "water": 52.1,
+            "protein": 16.2,
+            "fat": 28.8,
+            "carbohydrate": 1.02,
+            "fiber": null,
+            "ash": 1.89,
+            "sodium": null
+          },
+          {
+            "foodCode": "748967",
+            "indexCode": "0100",
+            "name": "Grade A, Large, egg whole",
+            "kcal": 148,
+            "water": 75.8,
+            "protein": 12.4,
+            "fat": 9.96,
+            "carbohydrate": 0.96,
+            "fiber": 0,
+            "ash": 0.85,
+            "sodium": 129
+          }
+        ]
+      },
+      {
+        "name": "Milk",
+        "foods": [
+          {
+            "foodCode": "746772",
+            "indexCode": "0059",
+            "name": "lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D",
+            "kcal": 43,
+            "water": 89.7,
+            "protein": 3.38,
+            "fat": 0.95,
+            "carbohydrate": 5.18,
+            "fiber": null,
+            "ash": 0.8,
+            "sodium": 39
+          },
+          {
+            "foodCode": "746776",
+            "indexCode": "0063",
+            "name": "nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+            "kcal": 34,
+            "water": 90.8,
+            "protein": 3.43,
+            "fat": 0.08,
+            "carbohydrate": 4.92,
+            "fiber": null,
+            "ash": 0.77,
+            "sodium": 41
+          },
+          {
+            "foodCode": "746778",
+            "indexCode": "0065",
+            "name": "reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D",
+            "kcal": 50,
+            "water": 89.1,
+            "protein": 3.36,
+            "fat": 1.9,
+            "carbohydrate": 4.9,
+            "fiber": null,
+            "ash": 0.75,
+            "sodium": 39
+          },
+          {
+            "foodCode": "746782",
+            "indexCode": "0069",
+            "name": "whole, 3.25% milkfat, with added vitamin D",
+            "kcal": 60,
+            "water": 88.1,
+            "protein": 3.27,
+            "fat": 3.2,
+            "carbohydrate": 4.63,
+            "fiber": null,
+            "ash": 0.8,
+            "sodium": 38
+          }
+        ]
+      },
+      {
+        "name": "Yogurt",
+        "foods": [
+          {
+            "foodCode": "2259793",
+            "indexCode": "0169",
+            "name": "plain, whole milk",
+            "kcal": null,
+            "water": 85.3,
+            "protein": 3.82,
+            "fat": 4.48,
+            "carbohydrate": 5.57,
+            "fiber": null,
+            "ash": 0.847,
+            "sodium": 41.8
+          },
+          {
+            "foodCode": "2259794",
+            "indexCode": "0170",
+            "name": "Greek, plain, whole milk",
+            "kcal": null,
+            "water": 81.3,
+            "protein": 8.78,
+            "fat": 4.39,
+            "carbohydrate": 4.75,
+            "fiber": null,
+            "ash": 0.753,
+            "sodium": 33.8
+          },
+          {
+            "foodCode": "2647437",
+            "indexCode": "0259",
+            "name": "plain, nonfat",
+            "kcal": null,
+            "water": 86.6,
+            "protein": 4.23,
+            "fat": 0.087,
+            "carbohydrate": 8.08,
+            "fiber": null,
+            "ash": 1.04,
+            "sodium": 51.5
+          },
+          {
+            "foodCode": "330137",
+            "indexCode": "0028",
+            "name": "Greek, plain, nonfat",
+            "kcal": 61,
+            "water": 85,
+            "protein": 10.3,
+            "fat": 0.37,
+            "carbohydrate": 3.64,
+            "fiber": null,
+            "ash": 0.72,
+            "sodium": 36
+          },
+          {
+            "foodCode": "330415",
+            "indexCode": "0029",
+            "name": "Greek, strawberry, nonfat",
+            "kcal": 83,
+            "water": 79,
+            "protein": 8.06,
+            "fat": 0.15,
+            "carbohydrate": 12.2,
+            "fiber": 0.6,
+            "ash": 0.59,
+            "sodium": 32
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "06",
+    "categoryName": "Fats and Oils",
+    "items": [
+      {
+        "name": "Oil",
+        "foods": [
+          {
+            "foodCode": "1750348",
+            "indexCode": "0127",
+            "name": "peanut",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "1750349",
+            "indexCode": "0128",
+            "name": "sunflower",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "1750350",
+            "indexCode": "0129",
+            "name": "safflower",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "1750351",
+            "indexCode": "0130",
+            "name": "olive, extra light",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "330458",
+            "indexCode": "0030",
+            "name": "coconut",
+            "kcal": 833,
+            "water": 0.03,
+            "protein": 0,
+            "fat": 99.1,
+            "carbohydrate": 0.84,
+            "fiber": null,
+            "ash": 0.03,
+            "sodium": 0
+          },
+          {
+            "foodCode": "748278",
+            "indexCode": "0096",
+            "name": "canola",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "748323",
+            "indexCode": "0097",
+            "name": "corn",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "748366",
+            "indexCode": "0098",
+            "name": "soybean",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "748608",
+            "indexCode": "0099",
+            "name": "olive, extra virgin",
+            "kcal": null,
+            "water": null,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": null,
+            "sodium": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "07",
+    "categoryName": "Finfish and Shellfish Products",
+    "items": [
+      {
+        "name": "Anchovies",
+        "foods": [
+          {
+            "foodCode": "2747652",
+            "indexCode": "0341",
+            "name": "canned in olive oil, with salt, drained",
+            "kcal": null,
+            "water": 44.4,
+            "protein": 26.9,
+            "fat": 9.85,
+            "carbohydrate": 2.41,
+            "fiber": null,
+            "ash": 16.4,
+            "sodium": 5400
+          }
+        ]
+      },
+      {
+        "name": "Cod",
+        "foods": [
+          {
+            "foodCode": "2747654",
+            "indexCode": "0343",
+            "name": "Pacific or Alaskan, frozen, wild caught",
+            "kcal": null,
+            "water": 83.5,
+            "protein": 14.2,
+            "fat": 0.216,
+            "carbohydrate": 0.524,
+            "fiber": null,
+            "ash": 1.53,
+            "sodium": 354
+          }
+        ]
+      },
+      {
+        "name": "Crustaceans",
+        "foods": [
+          {
+            "foodCode": "2684443",
+            "indexCode": "0269",
+            "name": "shrimp, farm raised, raw",
+            "kcal": null,
+            "water": 81.3,
+            "protein": 15.6,
+            "fat": 0.801,
+            "carbohydrate": 0.485,
+            "fiber": null,
+            "ash": 1.86,
+            "sodium": 475
+          },
+          {
+            "foodCode": "2684446",
+            "indexCode": "0272",
+            "name": "crab, blue swimming, lump, pasteurized, refrigerated",
+            "kcal": null,
+            "water": 78.9,
+            "protein": 18.6,
+            "fat": 0.808,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.88,
+            "sodium": 331
+          }
+        ]
+      },
+      {
+        "name": "Fish",
+        "foods": [
+          {
+            "foodCode": "2684440",
+            "indexCode": "0266",
+            "name": "salmon, sockeye, wild caught, raw",
+            "kcal": null,
+            "water": 72.5,
+            "protein": 22.3,
+            "fat": 4.94,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.16,
+            "sodium": 53.3
+          },
+          {
+            "foodCode": "2684441",
+            "indexCode": "0267",
+            "name": "salmon, Atlantic, farm raised, raw",
+            "kcal": null,
+            "water": 65.8,
+            "protein": 20.3,
+            "fat": 13.1,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.22,
+            "sodium": 49.5
+          },
+          {
+            "foodCode": "2684442",
+            "indexCode": "0268",
+            "name": "tilapia, farm raised, raw",
+            "kcal": null,
+            "water": 78.3,
+            "protein": 19,
+            "fat": 2.48,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.15,
+            "sodium": 93.7
+          },
+          {
+            "foodCode": "2684444",
+            "indexCode": "0270",
+            "name": "cod, Atlantic, wild caught, raw",
+            "kcal": null,
+            "water": 82.9,
+            "protein": 16.1,
+            "fat": 0.668,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.48,
+            "sodium": 299
+          },
+          {
+            "foodCode": "2684445",
+            "indexCode": "0271",
+            "name": "catfish, farm raised, raw",
+            "kcal": null,
+            "water": 75.9,
+            "protein": 16.5,
+            "fat": 7.31,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.967,
+            "sodium": 60.5
+          },
+          {
+            "foodCode": "333374",
+            "indexCode": "0038",
+            "name": "haddock, raw",
+            "kcal": 74,
+            "water": 83.4,
+            "protein": 16.3,
+            "fat": 0.45,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.28,
+            "sodium": 213
+          },
+          {
+            "foodCode": "333476",
+            "indexCode": "0039",
+            "name": "pollock, raw",
+            "kcal": 56,
+            "water": 86.7,
+            "protein": 12.3,
+            "fat": 0.41,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.36,
+            "sodium": 333
+          },
+          {
+            "foodCode": "334194",
+            "indexCode": "0040",
+            "name": "tuna, light, canned in water, drained solids",
+            "kcal": 90,
+            "water": 79,
+            "protein": 19,
+            "fat": 0.94,
+            "carbohydrate": 0.08,
+            "fiber": null,
+            "ash": 0.98,
+            "sodium": 219
+          }
+        ]
+      },
+      {
+        "name": "Halibut",
+        "foods": [
+          {
+            "foodCode": "2747656",
+            "indexCode": "0345",
+            "name": "frozen, wild caught",
+            "kcal": null,
+            "water": 79,
+            "protein": 19.1,
+            "fat": 0.592,
+            "carbohydrate": -0.06,
+            "fiber": null,
+            "ash": 1.37,
+            "sodium": 108
+          }
+        ]
+      },
+      {
+        "name": "Lobster",
+        "foods": [
+          {
+            "foodCode": "2747657",
+            "indexCode": "0346",
+            "name": "tail only, frozen, wild caught",
+            "kcal": null,
+            "water": 83.7,
+            "protein": 13,
+            "fat": 0.367,
+            "carbohydrate": 0.886,
+            "fiber": null,
+            "ash": 2.06,
+            "sodium": 509
+          }
+        ]
+      },
+      {
+        "name": "Mahi mahi",
+        "foods": [
+          {
+            "foodCode": "2747658",
+            "indexCode": "0347",
+            "name": "frozen, wild caught",
+            "kcal": null,
+            "water": 78.3,
+            "protein": 19.8,
+            "fat": 0.377,
+            "carbohydrate": 0.287,
+            "fiber": null,
+            "ash": 1.24,
+            "sodium": 51.9
+          }
+        ]
+      },
+      {
+        "name": "Scallops",
+        "foods": [
+          {
+            "foodCode": "2747666",
+            "indexCode": "0355",
+            "name": "bay, Patagonian, frozen, wild caught",
+            "kcal": null,
+            "water": 79.4,
+            "protein": 16.4,
+            "fat": 0.419,
+            "carbohydrate": 2.28,
+            "fiber": null,
+            "ash": 1.48,
+            "sodium": 252
+          },
+          {
+            "foodCode": "2747667",
+            "indexCode": "0356",
+            "name": "sea, frozen, wild caught",
+            "kcal": null,
+            "water": 82.5,
+            "protein": 13.5,
+            "fat": 0.493,
+            "carbohydrate": 1.97,
+            "fiber": null,
+            "ash": 1.49,
+            "sodium": 313
+          }
+        ]
+      },
+      {
+        "name": "Sea bass",
+        "foods": [
+          {
+            "foodCode": "2747668",
+            "indexCode": "0357",
+            "name": "Chilean, frozen, wild caught",
+            "kcal": null,
+            "water": 67.5,
+            "protein": 14.9,
+            "fat": 16.6,
+            "carbohydrate": 0.139,
+            "fiber": null,
+            "ash": 0.906,
+            "sodium": 109
+          }
+        ]
+      },
+      {
+        "name": "Snapper",
+        "foods": [
+          {
+            "foodCode": "2747669",
+            "indexCode": "0358",
+            "name": "frozen, wild caught",
+            "kcal": null,
+            "water": 77.2,
+            "protein": 20.7,
+            "fat": 0.569,
+            "carbohydrate": 0.441,
+            "fiber": null,
+            "ash": 1.17,
+            "sodium": 93.1
+          }
+        ]
+      },
+      {
+        "name": "Snow crab",
+        "foods": [
+          {
+            "foodCode": "2747670",
+            "indexCode": "0359",
+            "name": "legs only, frozen",
+            "kcal": null,
+            "water": 80.3,
+            "protein": 15.5,
+            "fat": 0.294,
+            "carbohydrate": 1.11,
+            "fiber": null,
+            "ash": 2.72,
+            "sodium": 728
+          }
+        ]
+      },
+      {
+        "name": "Squid (calamari)",
+        "foods": [
+          {
+            "foodCode": "2747671",
+            "indexCode": "0360",
+            "name": "frozen, tubes only",
+            "kcal": null,
+            "water": 88.9,
+            "protein": 8.81,
+            "fat": 0.551,
+            "carbohydrate": 0.932,
+            "fiber": null,
+            "ash": 0.801,
+            "sodium": 272
+          }
+        ]
+      },
+      {
+        "name": "Swordfish",
+        "foods": [
+          {
+            "foodCode": "2747672",
+            "indexCode": "0361",
+            "name": "frozen, wild caught",
+            "kcal": null,
+            "water": 70.9,
+            "protein": 19.2,
+            "fat": 8.12,
+            "carbohydrate": 0.45,
+            "fiber": null,
+            "ash": 1.28,
+            "sodium": 56.9
+          }
+        ]
+      },
+      {
+        "name": "Tuna",
+        "foods": [
+          {
+            "foodCode": "2747673",
+            "indexCode": "0362",
+            "name": "ahi or yellowfin, frozen, wild caught",
+            "kcal": null,
+            "water": 73.5,
+            "protein": 24.7,
+            "fat": 0.388,
+            "carbohydrate": -0.104,
+            "fiber": null,
+            "ash": 1.52,
+            "sodium": 94.4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "08",
+    "categoryName": "Fruits and Fruit Juices",
+    "items": [
+      {
+        "name": "Apple juice",
+        "foods": [
+          {
+            "foodCode": "2003590",
+            "indexCode": "0144",
+            "name": "with added vitamin C, from concentrate, shelf stable",
+            "kcal": null,
+            "water": 88.1,
+            "protein": 0.086,
+            "fat": 0.286,
+            "carbohydrate": 11.4,
+            "fiber": null,
+            "ash": 0.124,
+            "sodium": 4.87
+          }
+        ]
+      },
+      {
+        "name": "Apples",
+        "foods": [
+          {
+            "foodCode": "1750339",
+            "indexCode": "0122",
+            "name": "red delicious, with skin, raw",
+            "kcal": null,
+            "water": 84.7,
+            "protein": 0.188,
+            "fat": 0.212,
+            "carbohydrate": 14.8,
+            "fiber": 2.04,
+            "ash": 0.148,
+            "sodium": 0
+          },
+          {
+            "foodCode": "1750340",
+            "indexCode": "0123",
+            "name": "fuji, with skin, raw",
+            "kcal": null,
+            "water": 83.6,
+            "protein": 0.148,
+            "fat": 0.162,
+            "carbohydrate": 15.7,
+            "fiber": 2.08,
+            "ash": 0.428,
+            "sodium": 1.01
+          },
+          {
+            "foodCode": "1750341",
+            "indexCode": "0124",
+            "name": "gala, with skin, raw",
+            "kcal": null,
+            "water": 84.6,
+            "protein": 0.133,
+            "fat": 0.15,
+            "carbohydrate": 14.8,
+            "fiber": 2.11,
+            "ash": 0.299,
+            "sodium": 0.279
+          },
+          {
+            "foodCode": "1750342",
+            "indexCode": "0125",
+            "name": "granny smith, with skin, raw",
+            "kcal": null,
+            "water": 85.1,
+            "protein": 0.266,
+            "fat": 0.138,
+            "carbohydrate": 14.1,
+            "fiber": 2.51,
+            "ash": 0.314,
+            "sodium": 0
+          },
+          {
+            "foodCode": "1750343",
+            "indexCode": "0126",
+            "name": "honeycrisp, with skin, raw",
+            "kcal": null,
+            "water": 85,
+            "protein": 0.102,
+            "fat": 0.1,
+            "carbohydrate": 14.7,
+            "fiber": 1.72,
+            "ash": 0.086,
+            "sodium": 0.138
+          }
+        ]
+      },
+      {
+        "name": "Applesauce",
+        "foods": [
+          {
+            "foodCode": "2346414",
+            "indexCode": "0210",
+            "name": "unsweetened, with added vitamin C",
+            "kcal": null,
+            "water": 87.1,
+            "protein": 0.273,
+            "fat": 0.162,
+            "carbohydrate": 12.3,
+            "fiber": null,
+            "ash": 0.202,
+            "sodium": 0.504
+          }
+        ]
+      },
+      {
+        "name": "Apricot",
+        "foods": [
+          {
+            "foodCode": "2710815",
+            "indexCode": "0288",
+            "name": "with skin, raw",
+            "kcal": null,
+            "water": 87.9,
+            "protein": 0.961,
+            "fat": 0.405,
+            "carbohydrate": 10.2,
+            "fiber": 1.51,
+            "ash": 0.515,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Avocado",
+        "foods": [
+          {
+            "foodCode": "2710824",
+            "indexCode": "0297",
+            "name": "Hass, peeled, raw",
+            "kcal": null,
+            "water": 67,
+            "protein": 1.81,
+            "fat": 20.3,
+            "carbohydrate": 8.32,
+            "fiber": null,
+            "ash": 2.55,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Bananas",
+        "foods": [
+          {
+            "foodCode": "1105073",
+            "indexCode": "0120",
+            "name": "overripe, raw",
+            "kcal": 85,
+            "water": 78.3,
+            "protein": 0.73,
+            "fat": 0.22,
+            "carbohydrate": 20.1,
+            "fiber": 1.7,
+            "ash": 0.67,
+            "sodium": null
+          },
+          {
+            "foodCode": "1105314",
+            "indexCode": "0121",
+            "name": "ripe and slightly ripe, raw",
+            "kcal": 97,
+            "water": 75.3,
+            "protein": 0.74,
+            "fat": 0.29,
+            "carbohydrate": 23,
+            "fiber": 1.7,
+            "ash": 0.7,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Blackberries",
+        "foods": [
+          {
+            "foodCode": "2727581",
+            "indexCode": "0332",
+            "name": "raw",
+            "kcal": null,
+            "water": 86.4,
+            "protein": 1.53,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 5.3,
+            "ash": 0.424,
+            "sodium": 1.55
+          }
+        ]
+      },
+      {
+        "name": "Blueberries",
+        "foods": [
+          {
+            "foodCode": "2346411",
+            "indexCode": "0207",
+            "name": "raw",
+            "kcal": null,
+            "water": 84.2,
+            "protein": 0.703,
+            "fat": 0.306,
+            "carbohydrate": 14.6,
+            "fiber": null,
+            "ash": 0.229,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Cherries",
+        "foods": [
+          {
+            "foodCode": "2346399",
+            "indexCode": "0195",
+            "name": "sweet, dark red, raw",
+            "kcal": null,
+            "water": 82.2,
+            "protein": 1.04,
+            "fat": 0.192,
+            "carbohydrate": 16.2,
+            "fiber": null,
+            "ash": 0.425,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Cranberry juice",
+        "foods": [
+          {
+            "foodCode": "2003594",
+            "indexCode": "0148",
+            "name": "not fortified, from concentrate, shelf stable",
+            "kcal": null,
+            "water": 92.3,
+            "protein": 0,
+            "fat": 0.338,
+            "carbohydrate": 7.26,
+            "fiber": null,
+            "ash": 0.099,
+            "sodium": 6.34
+          }
+        ]
+      },
+      {
+        "name": "Figs",
+        "foods": [
+          {
+            "foodCode": "746768",
+            "indexCode": "0055",
+            "name": "dried, uncooked",
+            "kcal": 249,
+            "water": 30,
+            "protein": 3.3,
+            "fat": 0.92,
+            "carbohydrate": 63.9,
+            "fiber": 9.8,
+            "ash": 1.86,
+            "sodium": 10
+          }
+        ]
+      },
+      {
+        "name": "Grape juice",
+        "foods": [
+          {
+            "foodCode": "2003592",
+            "indexCode": "0146",
+            "name": "purple, with added vitamin C, from concentrate, shelf stable",
+            "kcal": null,
+            "water": 83.7,
+            "protein": 0.258,
+            "fat": 0.288,
+            "carbohydrate": 15.6,
+            "fiber": null,
+            "ash": 0.122,
+            "sodium": 4.02
+          },
+          {
+            "foodCode": "2003593",
+            "indexCode": "0147",
+            "name": "white, with added vitamin C, from concentrate, shelf stable",
+            "kcal": null,
+            "water": 83.7,
+            "protein": 0.094,
+            "fat": 0.265,
+            "carbohydrate": 15.8,
+            "fiber": null,
+            "ash": 0.138,
+            "sodium": 7.19
+          }
+        ]
+      },
+      {
+        "name": "Grapefruit juice",
+        "foods": [
+          {
+            "foodCode": "2003595",
+            "indexCode": "0149",
+            "name": "red, not fortified, not from concentrate, refrigerated",
+            "kcal": null,
+            "water": 89.8,
+            "protein": 0.57,
+            "fat": 0.267,
+            "carbohydrate": 9.1,
+            "fiber": null,
+            "ash": 0.221,
+            "sodium": 1.03
+          },
+          {
+            "foodCode": "325287",
+            "indexCode": "0014",
+            "name": "white, canned or bottled, unsweetened",
+            "kcal": 37,
+            "water": 90.9,
+            "protein": 0.55,
+            "fat": 0.7,
+            "carbohydrate": 7.59,
+            "fiber": 0.2,
+            "ash": 0.29,
+            "sodium": 1
+          }
+        ]
+      },
+      {
+        "name": "Grapes",
+        "foods": [
+          {
+            "foodCode": "2346412",
+            "indexCode": "0208",
+            "name": "red, seedless, raw",
+            "kcal": null,
+            "water": 78.2,
+            "protein": 0.914,
+            "fat": 0.164,
+            "carbohydrate": 20.2,
+            "fiber": null,
+            "ash": 0.535,
+            "sodium": 7
+          },
+          {
+            "foodCode": "2346413",
+            "indexCode": "0209",
+            "name": "green, seedless, raw",
+            "kcal": null,
+            "water": 79.9,
+            "protein": 0.899,
+            "fat": 0.232,
+            "carbohydrate": 18.6,
+            "fiber": null,
+            "ash": 0.385,
+            "sodium": 3.17
+          }
+        ]
+      },
+      {
+        "name": "Juice",
+        "foods": [
+          {
+            "foodCode": "2727587",
+            "indexCode": "0338",
+            "name": "prune, shelf-stable",
+            "kcal": null,
+            "water": 81.3,
+            "protein": 0.423,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": 0.461,
+            "sodium": 10.3
+          },
+          {
+            "foodCode": "2727588",
+            "indexCode": "0339",
+            "name": "pomegranate, from concentrate, shelf-stable",
+            "kcal": null,
+            "water": 84.1,
+            "protein": 0,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": 0.401,
+            "sodium": 4.04
+          },
+          {
+            "foodCode": "2727589",
+            "indexCode": "0340",
+            "name": "tart cherry, from concentrate, shelf-stable",
+            "kcal": null,
+            "water": 85.7,
+            "protein": 0.147,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": 0.422,
+            "sodium": 1.36
+          }
+        ]
+      },
+      {
+        "name": "Kiwifruit",
+        "foods": [
+          {
+            "foodCode": "327046",
+            "indexCode": "0020",
+            "name": "green, raw",
+            "kcal": 58,
+            "water": 83.9,
+            "protein": 1.06,
+            "fat": 0.44,
+            "carbohydrate": 14,
+            "fiber": 3,
+            "ash": 0.63,
+            "sodium": 5
+          }
+        ]
+      },
+      {
+        "name": "Kiwifruit (kiwi)",
+        "foods": [
+          {
+            "foodCode": "2710831",
+            "indexCode": "0304",
+            "name": "green, peeled, raw",
+            "kcal": null,
+            "water": 83.8,
+            "protein": 1.01,
+            "fat": 0.64,
+            "carbohydrate": 13.8,
+            "fiber": 2.13,
+            "ash": 0.704,
+            "sodium": 2.28
+          }
+        ]
+      },
+      {
+        "name": "Mandarin",
+        "foods": [
+          {
+            "foodCode": "2710832",
+            "indexCode": "0305",
+            "name": "seedless, peeled, raw",
+            "kcal": null,
+            "water": 84.6,
+            "protein": 1.04,
+            "fat": 0.458,
+            "carbohydrate": 13.4,
+            "fiber": 1.33,
+            "ash": 0.431,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Mango",
+        "foods": [
+          {
+            "foodCode": "2710833",
+            "indexCode": "0306",
+            "name": "Tommy Atkins, peeled, raw",
+            "kcal": null,
+            "water": 83.2,
+            "protein": 0.562,
+            "fat": 0.572,
+            "carbohydrate": 15.3,
+            "fiber": 1.75,
+            "ash": 0.4,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2710834",
+            "indexCode": "0307",
+            "name": "Ataulfo, peeled, raw",
+            "kcal": null,
+            "water": 80.8,
+            "protein": 0.688,
+            "fat": 0.681,
+            "carbohydrate": 17.4,
+            "fiber": 1.29,
+            "ash": 0.445,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Melons",
+        "foods": [
+          {
+            "foodCode": "2710816",
+            "indexCode": "0289",
+            "name": "honeydew, raw",
+            "kcal": null,
+            "water": 90.6,
+            "protein": 0.531,
+            "fat": 0.216,
+            "carbohydrate": 8.15,
+            "fiber": null,
+            "ash": 0.512,
+            "sodium": 21.2
+          },
+          {
+            "foodCode": "746770",
+            "indexCode": "0057",
+            "name": "cantaloupe, raw",
+            "kcal": 34,
+            "water": 90.2,
+            "protein": 0.82,
+            "fat": 0.18,
+            "carbohydrate": 8.16,
+            "fiber": 0.8,
+            "ash": 0.63,
+            "sodium": 30
+          }
+        ]
+      },
+      {
+        "name": "Nectarines",
+        "foods": [
+          {
+            "foodCode": "327357",
+            "indexCode": "0021",
+            "name": "raw",
+            "kcal": 39,
+            "water": 89,
+            "protein": 1.06,
+            "fat": 0.28,
+            "carbohydrate": 9.18,
+            "fiber": 1.5,
+            "ash": 0.48,
+            "sodium": 13
+          }
+        ]
+      },
+      {
+        "name": "Olives",
+        "foods": [
+          {
+            "foodCode": "332791",
+            "indexCode": "0035",
+            "name": "green, Manzanilla, stuffed with pimiento",
+            "kcal": 130,
+            "water": 76.7,
+            "protein": 1.15,
+            "fat": 12.9,
+            "carbohydrate": 4.96,
+            "fiber": 4,
+            "ash": 4.29,
+            "sodium": 1620
+          }
+        ]
+      },
+      {
+        "name": "Orange juice",
+        "foods": [
+          {
+            "foodCode": "2003591",
+            "indexCode": "0145",
+            "name": "no pulp, not fortified, from concentrate, refrigerated",
+            "kcal": null,
+            "water": 88.2,
+            "protein": 0.734,
+            "fat": 0.325,
+            "carbohydrate": 10.3,
+            "fiber": null,
+            "ash": 0.35,
+            "sodium": 5.23
+          },
+          {
+            "foodCode": "2003597",
+            "indexCode": "0151",
+            "name": "no pulp, not fortified, not from concentrate, refrigerated",
+            "kcal": null,
+            "water": 88.5,
+            "protein": 0.812,
+            "fat": 0.356,
+            "carbohydrate": 10,
+            "fiber": null,
+            "ash": 0.339,
+            "sodium": 0.075
+          }
+        ]
+      },
+      {
+        "name": "Oranges",
+        "foods": [
+          {
+            "foodCode": "746771",
+            "indexCode": "0058",
+            "name": "raw, navels",
+            "kcal": 47,
+            "water": 86.7,
+            "protein": 0.91,
+            "fat": 0.15,
+            "carbohydrate": 11.8,
+            "fiber": 2,
+            "ash": 0.43,
+            "sodium": 9
+          }
+        ]
+      },
+      {
+        "name": "Pawpaw",
+        "foods": [
+          {
+            "foodCode": "2727577",
+            "indexCode": "0328",
+            "name": "peeled, seeded, raw",
+            "kcal": null,
+            "water": 76.2,
+            "protein": 1.15,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 3.3,
+            "ash": 0.484,
+            "sodium": 0.351
+          }
+        ]
+      },
+      {
+        "name": "Peaches",
+        "foods": [
+          {
+            "foodCode": "325430",
+            "indexCode": "0015",
+            "name": "yellow, raw",
+            "kcal": 42,
+            "water": 88.3,
+            "protein": 0.91,
+            "fat": 0.27,
+            "carbohydrate": 10.1,
+            "fiber": 1.5,
+            "ash": 0.43,
+            "sodium": 13
+          }
+        ]
+      },
+      {
+        "name": "Pear",
+        "foods": [
+          {
+            "foodCode": "2710836",
+            "indexCode": "0309",
+            "name": "Anjou, green, with skin, raw",
+            "kcal": null,
+            "water": 84.3,
+            "protein": 0.312,
+            "fat": 0.371,
+            "carbohydrate": 14.8,
+            "fiber": 2.64,
+            "ash": 0.279,
+            "sodium": 0.398
+          }
+        ]
+      },
+      {
+        "name": "Pears",
+        "foods": [
+          {
+            "foodCode": "746773",
+            "indexCode": "0060",
+            "name": "raw, bartlett",
+            "kcal": 57,
+            "water": 84.1,
+            "protein": 0.38,
+            "fat": 0.16,
+            "carbohydrate": 15.1,
+            "fiber": 3.1,
+            "ash": 0.3,
+            "sodium": 7
+          }
+        ]
+      },
+      {
+        "name": "Pineapple",
+        "foods": [
+          {
+            "foodCode": "2346398",
+            "indexCode": "0194",
+            "name": "raw",
+            "kcal": null,
+            "water": 85,
+            "protein": 0.461,
+            "fat": 0.211,
+            "carbohydrate": 14.1,
+            "fiber": 0.935,
+            "ash": 0.246,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Plantains",
+        "foods": [
+          {
+            "foodCode": "2710817",
+            "indexCode": "0290",
+            "name": "ripe, raw",
+            "kcal": null,
+            "water": 66.1,
+            "protein": 1.16,
+            "fat": 0.893,
+            "carbohydrate": 31,
+            "fiber": 2.12,
+            "ash": 0.938,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2710818",
+            "indexCode": "0291",
+            "name": "underripe, raw",
+            "kcal": null,
+            "water": 63.6,
+            "protein": 1.23,
+            "fat": 0.685,
+            "carbohydrate": 33.6,
+            "fiber": 2.53,
+            "ash": 0.908,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2710843",
+            "indexCode": "0316",
+            "name": "overripe, raw",
+            "kcal": null,
+            "water": 67.7,
+            "protein": 1.17,
+            "fat": 0.99,
+            "carbohydrate": 29.2,
+            "fiber": 1.79,
+            "ash": 0.942,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Plum",
+        "foods": [
+          {
+            "foodCode": "2710837",
+            "indexCode": "0310",
+            "name": "black, with skin, raw",
+            "kcal": null,
+            "water": 84.9,
+            "protein": 0.578,
+            "fat": 0.282,
+            "carbohydrate": 13.5,
+            "fiber": 1.35,
+            "ash": 0.744,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Raspberries",
+        "foods": [
+          {
+            "foodCode": "2346410",
+            "indexCode": "0206",
+            "name": "raw",
+            "kcal": null,
+            "water": 85.6,
+            "protein": 1.01,
+            "fat": 0.188,
+            "carbohydrate": 12.9,
+            "fiber": null,
+            "ash": 0.35,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Strawberries",
+        "foods": [
+          {
+            "foodCode": "2346409",
+            "indexCode": "0205",
+            "name": "raw",
+            "kcal": null,
+            "water": 90.8,
+            "protein": 0.641,
+            "fat": 0.22,
+            "carbohydrate": 7.96,
+            "fiber": null,
+            "ash": 0.345,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Watermelon",
+        "foods": [
+          {
+            "foodCode": "2747675",
+            "indexCode": "0364",
+            "name": "seedless, flesh only, raw",
+            "kcal": null,
+            "water": 90.9,
+            "protein": 0.871,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": 0.265,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2747676",
+            "indexCode": "0365",
+            "name": "seedless, rind only, raw",
+            "kcal": null,
+            "water": 94.7,
+            "protein": 0.531,
+            "fat": 0.966,
+            "carbohydrate": 3.27,
+            "fiber": 1.54,
+            "ash": 0.572,
+            "sodium": 3.76
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "09",
+    "categoryName": "Lamb, Veal, and Game Products",
+    "items": [
+      {
+        "name": "Bison",
+        "foods": [
+          {
+            "foodCode": "2727571",
+            "indexCode": "0322",
+            "name": "ground, raw",
+            "kcal": null,
+            "water": 70.4,
+            "protein": 19.9,
+            "fat": 8.88,
+            "carbohydrate": -0.15,
+            "fiber": null,
+            "ash": 0.948,
+            "sodium": 55.7
+          }
+        ]
+      },
+      {
+        "name": "Lamb",
+        "foods": [
+          {
+            "foodCode": "2727570",
+            "indexCode": "0321",
+            "name": "ground, raw",
+            "kcal": null,
+            "water": 63.3,
+            "protein": 17.5,
+            "fat": 18.6,
+            "carbohydrate": -0.251,
+            "fiber": null,
+            "ash": 0.858,
+            "sodium": 53.4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "10",
+    "categoryName": "Legumes and Legume Products",
+    "items": [
+      {
+        "name": "Beans",
+        "foods": [
+          {
+            "foodCode": "2644281",
+            "indexCode": "0237",
+            "name": "cannellini, dry",
+            "kcal": null,
+            "water": 12.3,
+            "protein": 21.6,
+            "fat": 2.2,
+            "carbohydrate": 59.8,
+            "fiber": null,
+            "ash": 4.14,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2644285",
+            "indexCode": "0241",
+            "name": "black, canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 70.8,
+            "protein": 6.91,
+            "fat": 1.27,
+            "carbohydrate": 19.8,
+            "fiber": null,
+            "ash": 1.21,
+            "sodium": 218
+          },
+          {
+            "foodCode": "2644286",
+            "indexCode": "0242",
+            "name": "navy, canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 71,
+            "protein": 6.57,
+            "fat": 1.4,
+            "carbohydrate": 20,
+            "fiber": null,
+            "ash": 1.09,
+            "sodium": 190
+          },
+          {
+            "foodCode": "2644287",
+            "indexCode": "0243",
+            "name": "cannellini, canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 71.5,
+            "protein": 7.41,
+            "fat": 1.17,
+            "carbohydrate": 18.8,
+            "fiber": null,
+            "ash": 1.07,
+            "sodium": 164
+          },
+          {
+            "foodCode": "2644289",
+            "indexCode": "0245",
+            "name": "kidney, dark red, canned, sodium added, sugar added, drained and rinsed",
+            "kcal": null,
+            "water": 68.8,
+            "protein": 7.8,
+            "fat": 1.26,
+            "carbohydrate": 21,
+            "fiber": null,
+            "ash": 1.09,
+            "sodium": 172
+          },
+          {
+            "foodCode": "2644290",
+            "indexCode": "0246",
+            "name": "kidney, light red, canned, sodium added, sugar added, drained and rinsed",
+            "kcal": null,
+            "water": 68.9,
+            "protein": 7.31,
+            "fat": 1.3,
+            "carbohydrate": 21.4,
+            "fiber": null,
+            "ash": 1.02,
+            "sodium": 158
+          },
+          {
+            "foodCode": "2644292",
+            "indexCode": "0248",
+            "name": "pinto, canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 71.3,
+            "protein": 6.69,
+            "fat": 1.27,
+            "carbohydrate": 19.6,
+            "fiber": null,
+            "ash": 1.11,
+            "sodium": 202
+          },
+          {
+            "foodCode": "2644294",
+            "indexCode": "0250",
+            "name": "great northern, canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 71.2,
+            "protein": 7.03,
+            "fat": 1.27,
+            "carbohydrate": 19.3,
+            "fiber": null,
+            "ash": 1.21,
+            "sodium": 223
+          },
+          {
+            "foodCode": "747430",
+            "indexCode": "0075",
+            "name": "Dry, Medium Red (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 25.5,
+            "fat": 1.04,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747431",
+            "indexCode": "0076",
+            "name": "Dry, Red (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 21.3,
+            "fat": 1.16,
+            "carbohydrate": null,
+            "fiber": 4,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747432",
+            "indexCode": "0077",
+            "name": "Dry, Flor de Mayo (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 23.3,
+            "fat": 0.86,
+            "carbohydrate": null,
+            "fiber": 4,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747433",
+            "indexCode": "0078",
+            "name": "Dry, Brown (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 25.6,
+            "fat": 1.12,
+            "carbohydrate": null,
+            "fiber": 4.1,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747434",
+            "indexCode": "0079",
+            "name": "Dry, Tan (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 26.8,
+            "fat": 1.14,
+            "carbohydrate": null,
+            "fiber": 4.4,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747435",
+            "indexCode": "0080",
+            "name": "Dry, Light Tan (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 24.6,
+            "fat": 1.28,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747436",
+            "indexCode": "0081",
+            "name": "Dry, Carioca (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 25.2,
+            "fat": 1.44,
+            "carbohydrate": null,
+            "fiber": 4.5,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747437",
+            "indexCode": "0082",
+            "name": "Dry, Cranberry (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 24.4,
+            "fat": 1.23,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747438",
+            "indexCode": "0083",
+            "name": "Dry, Light Red Kidney (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 25,
+            "fat": 1.03,
+            "carbohydrate": null,
+            "fiber": 4.5,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747439",
+            "indexCode": "0084",
+            "name": "Dry, Pink (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 23.4,
+            "fat": 1.2,
+            "carbohydrate": null,
+            "fiber": 4.1,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747440",
+            "indexCode": "0085",
+            "name": "Dry, Dark Red Kidney (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 25.9,
+            "fat": 1.31,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747441",
+            "indexCode": "0086",
+            "name": "Dry, Navy (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 24.1,
+            "fat": 1.51,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747442",
+            "indexCode": "0087",
+            "name": "Dry, Small White (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 24.5,
+            "fat": 1.32,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747443",
+            "indexCode": "0088",
+            "name": "Dry, Small Red (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 23.5,
+            "fat": 1.28,
+            "carbohydrate": null,
+            "fiber": 4.1,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747444",
+            "indexCode": "0089",
+            "name": "Dry, Black (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 24.4,
+            "fat": 1.45,
+            "carbohydrate": null,
+            "fiber": 4.2,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747445",
+            "indexCode": "0090",
+            "name": "Dry, Pinto (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 23.7,
+            "fat": 1.24,
+            "carbohydrate": null,
+            "fiber": 4.1,
+            "ash": null,
+            "sodium": null
+          },
+          {
+            "foodCode": "747446",
+            "indexCode": "0091",
+            "name": "Dry, Great Northern (0% moisture)",
+            "kcal": null,
+            "water": 0,
+            "protein": 24.7,
+            "fat": 1.24,
+            "carbohydrate": null,
+            "fiber": 4.3,
+            "ash": null,
+            "sodium": null
+          }
+        ]
+      },
+      {
+        "name": "Blackeye pea",
+        "foods": [
+          {
+            "foodCode": "2644284",
+            "indexCode": "0240",
+            "name": "dry",
+            "kcal": null,
+            "water": 11,
+            "protein": 21.2,
+            "fat": 2.42,
+            "carbohydrate": 61.8,
+            "fiber": null,
+            "ash": 3.51,
+            "sodium": 3.46
+          },
+          {
+            "foodCode": "2644293",
+            "indexCode": "0249",
+            "name": "canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 71.6,
+            "protein": 6.92,
+            "fat": 1.3,
+            "carbohydrate": 19.2,
+            "fiber": null,
+            "ash": 0.993,
+            "sodium": 227
+          }
+        ]
+      },
+      {
+        "name": "Chickpeas",
+        "foods": [
+          {
+            "foodCode": "2644282",
+            "indexCode": "0238",
+            "name": "(garbanzo beans, bengal gram), dry",
+            "kcal": null,
+            "water": 8.77,
+            "protein": 21.3,
+            "fat": 6.27,
+            "carbohydrate": 60.4,
+            "fiber": null,
+            "ash": 3.32,
+            "sodium": 8.78
+          }
+        ]
+      },
+      {
+        "name": "Chickpeas (garbanzo beans",
+        "foods": [
+          {
+            "foodCode": "2644288",
+            "indexCode": "0244",
+            "name": "bengal gram), canned, sodium added, drained and rinsed",
+            "kcal": null,
+            "water": 68.6,
+            "protein": 7.02,
+            "fat": 3.1,
+            "carbohydrate": 20.3,
+            "fiber": null,
+            "ash": 0.975,
+            "sodium": 202
+          }
+        ]
+      },
+      {
+        "name": "Flour",
+        "foods": [
+          {
+            "foodCode": "1104705",
+            "indexCode": "0114",
+            "name": "soy, defatted",
+            "kcal": 366,
+            "water": 6.24,
+            "protein": 51.1,
+            "fat": 3.33,
+            "carbohydrate": 32.9,
+            "fiber": null,
+            "ash": 6.45,
+            "sodium": 2
+          },
+          {
+            "foodCode": "1104766",
+            "indexCode": "0115",
+            "name": "soy, full-fat",
+            "kcal": 452,
+            "water": 7.85,
+            "protein": 38.6,
+            "fat": 20.7,
+            "carbohydrate": 27.9,
+            "fiber": null,
+            "ash": 4.92,
+            "sodium": 2
+          }
+        ]
+      },
+      {
+        "name": "Hummus",
+        "foods": [
+          {
+            "foodCode": "321358",
+            "indexCode": "0001",
+            "name": "commercial",
+            "kcal": 229,
+            "water": 58.7,
+            "protein": 7.35,
+            "fat": 17.1,
+            "carbohydrate": 14.9,
+            "fiber": 5.4,
+            "ash": 1.97,
+            "sodium": 438
+          }
+        ]
+      },
+      {
+        "name": "Lentils",
+        "foods": [
+          {
+            "foodCode": "2644283",
+            "indexCode": "0239",
+            "name": "dry",
+            "kcal": null,
+            "water": 9.45,
+            "protein": 23.6,
+            "fat": 1.92,
+            "carbohydrate": 62.2,
+            "fiber": null,
+            "ash": 2.88,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Peanut butter",
+        "foods": [
+          {
+            "foodCode": "2262072",
+            "indexCode": "0176",
+            "name": "creamy",
+            "kcal": null,
+            "water": 1.1,
+            "protein": 24,
+            "fat": 49.4,
+            "carbohydrate": 22.7,
+            "fiber": 6.32,
+            "ash": 2.77,
+            "sodium": 221
+          }
+        ]
+      },
+      {
+        "name": "Peanuts",
+        "foods": [
+          {
+            "foodCode": "2515376",
+            "indexCode": "0230",
+            "name": "raw",
+            "kcal": null,
+            "water": 4.82,
+            "protein": 23.2,
+            "fat": 43.3,
+            "carbohydrate": 26.5,
+            "fiber": 8.01,
+            "ash": 2.2,
+            "sodium": 1.49
+          }
+        ]
+      },
+      {
+        "name": "Soy milk",
+        "foods": [
+          {
+            "foodCode": "1999630",
+            "indexCode": "0135",
+            "name": "unsweetened, plain, shelf stable",
+            "kcal": null,
+            "water": 92.4,
+            "protein": 3.55,
+            "fat": 2.12,
+            "carbohydrate": 1.29,
+            "fiber": 0,
+            "ash": 0.635,
+            "sodium": 34.3
+          },
+          {
+            "foodCode": "2257044",
+            "indexCode": "0159",
+            "name": "sweetened, plain, refrigerated",
+            "kcal": null,
+            "water": 91.5,
+            "protein": 2.78,
+            "fat": 1.96,
+            "carbohydrate": 3,
+            "fiber": 0,
+            "ash": 0.75,
+            "sodium": 39.4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "11",
+    "categoryName": "Nut and Seed Products",
+    "items": [
+      {
+        "name": "Almond butter",
+        "foods": [
+          {
+            "foodCode": "2262074",
+            "indexCode": "0178",
+            "name": "creamy",
+            "kcal": null,
+            "water": 1.75,
+            "protein": 20.8,
+            "fat": 53,
+            "carbohydrate": 21.2,
+            "fiber": 9.72,
+            "ash": 3.18,
+            "sodium": 0.996
+          }
+        ]
+      },
+      {
+        "name": "Flaxseed",
+        "foods": [
+          {
+            "foodCode": "2262075",
+            "indexCode": "0179",
+            "name": "ground",
+            "kcal": null,
+            "water": 6.8,
+            "protein": 18,
+            "fat": 37.3,
+            "carbohydrate": 34.4,
+            "fiber": 23.1,
+            "ash": 3.52,
+            "sodium": 36.7
+          }
+        ]
+      },
+      {
+        "name": "Flour",
+        "foods": [
+          {
+            "foodCode": "2261420",
+            "indexCode": "0173",
+            "name": "almond",
+            "kcal": null,
+            "water": 4.32,
+            "protein": 26.2,
+            "fat": 50.2,
+            "carbohydrate": 16.2,
+            "fiber": 9.27,
+            "ash": 2.96,
+            "sodium": 0.894
+          },
+          {
+            "foodCode": "2515377",
+            "indexCode": "0231",
+            "name": "chestnut",
+            "kcal": null,
+            "water": 7.33,
+            "protein": 5.29,
+            "fat": 4.64,
+            "carbohydrate": 80.5,
+            "fiber": 8.71,
+            "ash": 2.3,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2515382",
+            "indexCode": "0236",
+            "name": "coconut",
+            "kcal": null,
+            "water": 4.69,
+            "protein": 16.1,
+            "fat": 15.3,
+            "carbohydrate": 58.9,
+            "fiber": 34.2,
+            "ash": 4.99,
+            "sodium": 46.9
+          }
+        ]
+      },
+      {
+        "name": "Nuts",
+        "foods": [
+          {
+            "foodCode": "2346392",
+            "indexCode": "0188",
+            "name": "pine nuts, raw",
+            "kcal": null,
+            "water": 1.92,
+            "protein": 15.7,
+            "fat": 61.3,
+            "carbohydrate": 18.6,
+            "fiber": 3.94,
+            "ash": 2.51,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2346393",
+            "indexCode": "0189",
+            "name": "almonds, whole, raw",
+            "kcal": null,
+            "water": 4.26,
+            "protein": 21.5,
+            "fat": 51.1,
+            "carbohydrate": 20,
+            "fiber": 10.8,
+            "ash": 3.16,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2346394",
+            "indexCode": "0190",
+            "name": "walnuts, English, halves, raw",
+            "kcal": null,
+            "water": 3.14,
+            "protein": 14.6,
+            "fat": 69.7,
+            "carbohydrate": 10.9,
+            "fiber": 5.21,
+            "ash": 1.64,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2346395",
+            "indexCode": "0191",
+            "name": "pecans, halves, raw",
+            "kcal": null,
+            "water": 2.62,
+            "protein": 9.96,
+            "fat": 73.3,
+            "carbohydrate": 12.7,
+            "fiber": 5.79,
+            "ash": 1.44,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2515373",
+            "indexCode": "0227",
+            "name": "brazilnuts, raw",
+            "kcal": null,
+            "water": 2.26,
+            "protein": 15,
+            "fat": 57.4,
+            "carbohydrate": 21.6,
+            "fiber": 5.98,
+            "ash": 3.63,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2515374",
+            "indexCode": "0228",
+            "name": "cashew nuts, raw",
+            "kcal": null,
+            "water": 4.81,
+            "protein": 17.4,
+            "fat": 38.9,
+            "carbohydrate": 36.3,
+            "fiber": 4.1,
+            "ash": 2.6,
+            "sodium": 4.76
+          },
+          {
+            "foodCode": "2515375",
+            "indexCode": "0229",
+            "name": "hazelnuts or filberts, raw",
+            "kcal": null,
+            "water": 4.31,
+            "protein": 13.5,
+            "fat": 53.5,
+            "carbohydrate": 26.5,
+            "fiber": 8.41,
+            "ash": 2.21,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2515378",
+            "indexCode": "0232",
+            "name": "macadamia nuts, raw",
+            "kcal": null,
+            "water": 1.83,
+            "protein": 7.79,
+            "fat": 64.9,
+            "carbohydrate": 24.1,
+            "fiber": 7.56,
+            "ash": 1.36,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2515379",
+            "indexCode": "0233",
+            "name": "pistachio nuts, raw",
+            "kcal": null,
+            "water": 3.95,
+            "protein": 20.5,
+            "fat": 45,
+            "carbohydrate": 27.7,
+            "fiber": 6.97,
+            "ash": 2.83,
+            "sodium": 0
+          },
+          {
+            "foodCode": "323294",
+            "indexCode": "0005",
+            "name": "almonds, dry roasted, with salt added",
+            "kcal": 620,
+            "water": 2.2,
+            "protein": 20.4,
+            "fat": 57.8,
+            "carbohydrate": 16.2,
+            "fiber": 11,
+            "ash": 3.47,
+            "sodium": 256
+          }
+        ]
+      },
+      {
+        "name": "Seeds",
+        "foods": [
+          {
+            "foodCode": "2515380",
+            "indexCode": "0234",
+            "name": "pumpkin seeds (pepitas), raw",
+            "kcal": null,
+            "water": 6.62,
+            "protein": 29.9,
+            "fat": 40,
+            "carbohydrate": 18.7,
+            "fiber": 5.08,
+            "ash": 4.77,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2515381",
+            "indexCode": "0235",
+            "name": "sunflower seed, kernel, raw",
+            "kcal": null,
+            "water": 4.87,
+            "protein": 18.9,
+            "fat": 48.4,
+            "carbohydrate": 24.5,
+            "fiber": 7.22,
+            "ash": 3.31,
+            "sodium": 0
+          },
+          {
+            "foodCode": "325524",
+            "indexCode": "0016",
+            "name": "sunflower seed kernels, dry roasted, with salt added",
+            "kcal": 612,
+            "water": 1.5,
+            "protein": 21,
+            "fat": 56.1,
+            "carbohydrate": 17.1,
+            "fiber": 10.3,
+            "ash": 4.3,
+            "sodium": 532
+          }
+        ]
+      },
+      {
+        "name": "Sesame butter",
+        "foods": [
+          {
+            "foodCode": "2262073",
+            "indexCode": "0177",
+            "name": "creamy",
+            "kcal": null,
+            "water": 0.606,
+            "protein": 19.7,
+            "fat": 62.4,
+            "carbohydrate": 14.2,
+            "fiber": 8.37,
+            "ash": 3.11,
+            "sodium": 63.6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "12",
+    "categoryName": "Pork Products",
+    "items": [
+      {
+        "name": "Ham",
+        "foods": [
+          {
+            "foodCode": "746952",
+            "indexCode": "0073",
+            "name": "sliced, restaurant",
+            "kcal": 121,
+            "water": 70.7,
+            "protein": 19.6,
+            "fat": 3.68,
+            "carbohydrate": 2.36,
+            "fiber": null,
+            "ash": 3.63,
+            "sodium": 1030
+          }
+        ]
+      },
+      {
+        "name": "Pork",
+        "foods": [
+          {
+            "foodCode": "2514745",
+            "indexCode": "0224",
+            "name": "ground, raw",
+            "kcal": null,
+            "water": 63.9,
+            "protein": 17.8,
+            "fat": 17.5,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.924,
+            "sodium": 53.6
+          },
+          {
+            "foodCode": "2646168",
+            "indexCode": "0251",
+            "name": "loin, boneless, raw",
+            "kcal": null,
+            "water": 68.8,
+            "protein": 21.1,
+            "fat": 9.47,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.07,
+            "sodium": 40.2
+          },
+          {
+            "foodCode": "2646169",
+            "indexCode": "0252",
+            "name": "loin, tenderloin, boneless, raw",
+            "kcal": null,
+            "water": 73.9,
+            "protein": 21.6,
+            "fat": 3.9,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.18,
+            "sodium": 41.4
+          },
+          {
+            "foodCode": "2727575",
+            "indexCode": "0326",
+            "name": "chop, center cut, raw",
+            "kcal": null,
+            "water": 71.2,
+            "protein": 22.8,
+            "fat": 5.48,
+            "carbohydrate": -0.562,
+            "fiber": null,
+            "ash": 1.1,
+            "sodium": 39.3
+          },
+          {
+            "foodCode": "2727576",
+            "indexCode": "0327",
+            "name": "belly, with skin, raw",
+            "kcal": null,
+            "water": 49,
+            "protein": 15.2,
+            "fat": 35.8,
+            "carbohydrate": -0.705,
+            "fiber": null,
+            "ash": 0.655,
+            "sodium": 49.7
+          },
+          {
+            "foodCode": "749420",
+            "indexCode": "0101",
+            "name": "cured, bacon, cooked, restaurant",
+            "kcal": 500,
+            "water": 14.2,
+            "protein": 40.9,
+            "fat": 36.5,
+            "carbohydrate": 2.1,
+            "fiber": null,
+            "ash": 6.33,
+            "sodium": 1830
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "13",
+    "categoryName": "Poultry Products",
+    "items": [
+      {
+        "name": "Chicken",
+        "foods": [
+          {
+            "foodCode": "2514746",
+            "indexCode": "0225",
+            "name": "ground, with additives, raw",
+            "kcal": null,
+            "water": 74.7,
+            "protein": 17.9,
+            "fat": 7.16,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.969,
+            "sodium": 63
+          },
+          {
+            "foodCode": "2646170",
+            "indexCode": "0253",
+            "name": "breast, boneless, skinless, raw",
+            "kcal": null,
+            "water": 74.8,
+            "protein": 22.5,
+            "fat": 1.93,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.13,
+            "sodium": 65.8
+          },
+          {
+            "foodCode": "2646171",
+            "indexCode": "0254",
+            "name": "thigh, boneless, skinless, raw",
+            "kcal": null,
+            "water": 72.9,
+            "protein": 18.6,
+            "fat": 7.92,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.958,
+            "sodium": 62.3
+          },
+          {
+            "foodCode": "2727566",
+            "indexCode": "0317",
+            "name": "drumstick, meat and skin, raw",
+            "kcal": null,
+            "water": 75.3,
+            "protein": 18.4,
+            "fat": 5.94,
+            "carbohydrate": -0.475,
+            "fiber": null,
+            "ash": 0.889,
+            "sodium": 91
+          },
+          {
+            "foodCode": "2727567",
+            "indexCode": "0318",
+            "name": "thigh, meat and skin, raw",
+            "kcal": null,
+            "water": 68.9,
+            "protein": 17.1,
+            "fat": 13.4,
+            "carbohydrate": -0.173,
+            "fiber": null,
+            "ash": 0.846,
+            "sodium": 63.6
+          },
+          {
+            "foodCode": "2727568",
+            "indexCode": "0319",
+            "name": "wing, meat and skin, raw",
+            "kcal": null,
+            "water": 70.7,
+            "protein": 18.4,
+            "fat": 10.6,
+            "carbohydrate": -0.459,
+            "fiber": null,
+            "ash": 0.752,
+            "sodium": 84.1
+          },
+          {
+            "foodCode": "2727569",
+            "indexCode": "0320",
+            "name": "breast, meat and skin, raw",
+            "kcal": null,
+            "water": 73.2,
+            "protein": 21.4,
+            "fat": 4.78,
+            "carbohydrate": -0.428,
+            "fiber": null,
+            "ash": 1.04,
+            "sodium": 48.1
+          },
+          {
+            "foodCode": "331897",
+            "indexCode": "0031",
+            "name": "broilers or fryers, drumstick, meat only, cooked, braised",
+            "kcal": 156,
+            "water": 69.9,
+            "protein": 23.9,
+            "fat": 5.95,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.98,
+            "sodium": 117
+          },
+          {
+            "foodCode": "331960",
+            "indexCode": "0032",
+            "name": "broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+            "kcal": 166,
+            "water": 65.3,
+            "protein": 32.1,
+            "fat": 3.24,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.19,
+            "sodium": 47
+          }
+        ]
+      },
+      {
+        "name": "Turkey",
+        "foods": [
+          {
+            "foodCode": "2514747",
+            "indexCode": "0226",
+            "name": "ground, 93% lean/ 7% fat, raw",
+            "kcal": null,
+            "water": 72.9,
+            "protein": 17.3,
+            "fat": 9.59,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 0.945,
+            "sodium": 80.2
+          },
+          {
+            "foodCode": "746785",
+            "indexCode": "0072",
+            "name": "ground, 93% lean, 7% fat, pan-broiled crumbles",
+            "kcal": 220,
+            "water": 61.1,
+            "protein": 27.1,
+            "fat": 11.6,
+            "carbohydrate": 0,
+            "fiber": null,
+            "ash": 1.27,
+            "sodium": 90
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "14",
+    "categoryName": "Restaurant Foods",
+    "items": [
+      {
+        "name": "Restaurant",
+        "foods": [
+          {
+            "foodCode": "334536",
+            "indexCode": "0041",
+            "name": "Chinese, fried rice, without meat",
+            "kcal": 174,
+            "water": 59.3,
+            "protein": 3.84,
+            "fat": 3.19,
+            "carbohydrate": 32.5,
+            "fiber": null,
+            "ash": 1.13,
+            "sodium": 361
+          },
+          {
+            "foodCode": "334628",
+            "indexCode": "0042",
+            "name": "Latino, tamale, pork",
+            "kcal": 174,
+            "water": 66,
+            "protein": 7.38,
+            "fat": 9.04,
+            "carbohydrate": 15.8,
+            "fiber": 2.4,
+            "ash": 1.82,
+            "sodium": 473
+          },
+          {
+            "foodCode": "334720",
+            "indexCode": "0043",
+            "name": "Latino, pupusas con frijoles (pupusas, bean)",
+            "kcal": 229,
+            "water": 52.2,
+            "protein": 5.59,
+            "fat": 9.01,
+            "carbohydrate": 31.5,
+            "fiber": 5.8,
+            "ash": 1.74,
+            "sodium": 305
+          },
+          {
+            "foodCode": "746774",
+            "indexCode": "0061",
+            "name": "Chinese, sweet and sour pork",
+            "kcal": 260,
+            "water": 50.8,
+            "protein": 8.88,
+            "fat": 13.6,
+            "carbohydrate": 25.5,
+            "fiber": 1,
+            "ash": 1.25,
+            "sodium": 304
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "15",
+    "categoryName": "Sausages and Luncheon Meats",
+    "items": [
+      {
+        "name": "Frankfurter",
+        "foods": [
+          {
+            "foodCode": "323121",
+            "indexCode": "0004",
+            "name": "beef, unheated",
+            "kcal": 314,
+            "water": 54.6,
+            "protein": 11.7,
+            "fat": 28,
+            "carbohydrate": 2.89,
+            "fiber": null,
+            "ash": 2.74,
+            "sodium": 872
+          }
+        ]
+      },
+      {
+        "name": "Ham",
+        "foods": [
+          {
+            "foodCode": "332397",
+            "indexCode": "0034",
+            "name": "sliced, pre-packaged, deli meat (96%fat free, water added)",
+            "kcal": 106,
+            "water": 75.7,
+            "protein": 16.7,
+            "fat": 3.73,
+            "carbohydrate": 0.27,
+            "fiber": null,
+            "ash": 3.61,
+            "sodium": 1040
+          }
+        ]
+      },
+      {
+        "name": "Sausage",
+        "foods": [
+          {
+            "foodCode": "746779",
+            "indexCode": "0066",
+            "name": "breakfast sausage, beef, pre-cooked, unprepared",
+            "kcal": 328,
+            "water": 51.7,
+            "protein": 13.3,
+            "fat": 28.7,
+            "carbohydrate": 3.37,
+            "fiber": null,
+            "ash": 2.97,
+            "sodium": 866
+          },
+          {
+            "foodCode": "746780",
+            "indexCode": "0067",
+            "name": "Italian, pork, mild, cooked, pan-fried",
+            "kcal": 322,
+            "water": 50.9,
+            "protein": 18.2,
+            "fat": 26.2,
+            "carbohydrate": 2.15,
+            "fiber": null,
+            "ash": 2.63,
+            "sodium": 766
+          },
+          {
+            "foodCode": "746781",
+            "indexCode": "0068",
+            "name": "pork, chorizo, link or ground, cooked, pan-fried",
+            "kcal": 346,
+            "water": 46.3,
+            "protein": 19.3,
+            "fat": 28.1,
+            "carbohydrate": 2.63,
+            "fiber": null,
+            "ash": 3.66,
+            "sodium": 983
+          },
+          {
+            "foodCode": "746783",
+            "indexCode": "0070",
+            "name": "turkey, breakfast links, mild, raw",
+            "kcal": 169,
+            "water": 69.6,
+            "protein": 16.7,
+            "fat": 10.4,
+            "carbohydrate": 0.93,
+            "fiber": null,
+            "ash": 2.37,
+            "sodium": 599
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "16",
+    "categoryName": "Soups, Sauces, and Gravies",
+    "items": [
+      {
+        "name": "Sauce",
+        "foods": [
+          {
+            "foodCode": "332282",
+            "indexCode": "0033",
+            "name": "pasta, spaghetti/marinara, ready-to-serve",
+            "kcal": 45,
+            "water": 87.4,
+            "protein": 1.41,
+            "fat": 1.48,
+            "carbohydrate": 8.05,
+            "fiber": 1.8,
+            "ash": 1.66,
+            "sodium": 419
+          },
+          {
+            "foodCode": "746777",
+            "indexCode": "0064",
+            "name": "salsa, ready-to-serve",
+            "kcal": 29,
+            "water": 89.3,
+            "protein": 1.44,
+            "fat": 0.19,
+            "carbohydrate": 6.74,
+            "fiber": 1.8,
+            "ash": 2.3,
+            "sodium": 656
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "17",
+    "categoryName": "Spices and Herbs",
+    "items": [
+      {
+        "name": "Mustard",
+        "foods": [
+          {
+            "foodCode": "326698",
+            "indexCode": "0019",
+            "name": "prepared, yellow",
+            "kcal": 61,
+            "water": 83.7,
+            "protein": 4.25,
+            "fat": 3.38,
+            "carbohydrate": 5.3,
+            "fiber": 4.3,
+            "ash": 3.37,
+            "sodium": 1100
+          }
+        ]
+      },
+      {
+        "name": "Salt",
+        "foods": [
+          {
+            "foodCode": "746775",
+            "indexCode": "0062",
+            "name": "table, iodized",
+            "kcal": null,
+            "water": 0.42,
+            "protein": null,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": null,
+            "ash": 99,
+            "sodium": 38700
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "18",
+    "categoryName": "Sweets",
+    "items": [
+      {
+        "name": "Sugars",
+        "foods": [
+          {
+            "foodCode": "746784",
+            "indexCode": "0071",
+            "name": "granulated",
+            "kcal": 385,
+            "water": 0.02,
+            "protein": 0,
+            "fat": 0.32,
+            "carbohydrate": 99.6,
+            "fiber": null,
+            "ash": 0.07,
+            "sodium": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryCode": "19",
+    "categoryName": "Vegetables and Vegetable Products",
+    "items": [
+      {
+        "name": "Arugula",
+        "foods": [
+          {
+            "foodCode": "2710822",
+            "indexCode": "0295",
+            "name": "baby, raw",
+            "kcal": null,
+            "water": 90.9,
+            "protein": 1.65,
+            "fat": 0.325,
+            "carbohydrate": 5.37,
+            "fiber": 2.28,
+            "ash": 1.72,
+            "sodium": 86.9
+          }
+        ]
+      },
+      {
+        "name": "Asparagus",
+        "foods": [
+          {
+            "foodCode": "2710823",
+            "indexCode": "0296",
+            "name": "green, raw",
+            "kcal": null,
+            "water": 92.6,
+            "protein": 1.44,
+            "fat": 0.216,
+            "carbohydrate": 5.1,
+            "fiber": 1.88,
+            "ash": 0.675,
+            "sodium": 2.46
+          }
+        ]
+      },
+      {
+        "name": "Beans",
+        "foods": [
+          {
+            "foodCode": "2346400",
+            "indexCode": "0196",
+            "name": "snap, green, raw",
+            "kcal": null,
+            "water": 89.7,
+            "protein": 1.97,
+            "fat": 0.275,
+            "carbohydrate": 7.41,
+            "fiber": 3.01,
+            "ash": 0.684,
+            "sodium": 0
+          },
+          {
+            "foodCode": "321611",
+            "indexCode": "0003",
+            "name": "snap, green, canned, regular pack, drained solids",
+            "kcal": 21,
+            "water": 93.6,
+            "protein": 1.04,
+            "fat": 0.39,
+            "carbohydrate": 4.11,
+            "fiber": null,
+            "ash": 0.89,
+            "sodium": 282
+          }
+        ]
+      },
+      {
+        "name": "Beet greens",
+        "foods": [
+          {
+            "foodCode": "2747653",
+            "indexCode": "0342",
+            "name": "raw",
+            "kcal": null,
+            "water": 91.9,
+            "protein": 1.61,
+            "fat": 0.144,
+            "carbohydrate": 4.66,
+            "fiber": 2.58,
+            "ash": 1.71,
+            "sodium": 280
+          }
+        ]
+      },
+      {
+        "name": "Beets",
+        "foods": [
+          {
+            "foodCode": "2685576",
+            "indexCode": "0281",
+            "name": "raw",
+            "kcal": null,
+            "water": 88.2,
+            "protein": 1.69,
+            "fat": 0.302,
+            "carbohydrate": 8.79,
+            "fiber": 3.12,
+            "ash": 1.06,
+            "sodium": 112
+          }
+        ]
+      },
+      {
+        "name": "Broccoli",
+        "foods": [
+          {
+            "foodCode": "747447",
+            "indexCode": "0092",
+            "name": "raw",
+            "kcal": 31,
+            "water": 90,
+            "protein": 2.57,
+            "fat": 0.34,
+            "carbohydrate": 6.27,
+            "fiber": 2.4,
+            "ash": 0.83,
+            "sodium": 36
+          }
+        ]
+      },
+      {
+        "name": "Brussels sprouts",
+        "foods": [
+          {
+            "foodCode": "2685575",
+            "indexCode": "0280",
+            "name": "raw",
+            "kcal": null,
+            "water": 84.6,
+            "protein": 3.98,
+            "fat": 0.565,
+            "carbohydrate": 9.62,
+            "fiber": 4.78,
+            "ash": 1.22,
+            "sodium": 25.7
+          }
+        ]
+      },
+      {
+        "name": "Cabbage",
+        "foods": [
+          {
+            "foodCode": "2346407",
+            "indexCode": "0203",
+            "name": "green, raw",
+            "kcal": null,
+            "water": 91.9,
+            "protein": 0.961,
+            "fat": 0.228,
+            "carbohydrate": 6.38,
+            "fiber": null,
+            "ash": 0.558,
+            "sodium": 16.1
+          },
+          {
+            "foodCode": "2346408",
+            "indexCode": "0204",
+            "name": "red, raw",
+            "kcal": null,
+            "water": 91.1,
+            "protein": 1.24,
+            "fat": 0.214,
+            "carbohydrate": 6.79,
+            "fiber": null,
+            "ash": 0.614,
+            "sodium": 11.7
+          },
+          {
+            "foodCode": "2685572",
+            "indexCode": "0277",
+            "name": "bok choy, raw",
+            "kcal": null,
+            "water": 94.5,
+            "protein": 1.02,
+            "fat": 0.234,
+            "carbohydrate": 3.51,
+            "fiber": 1.26,
+            "ash": 0.688,
+            "sodium": 14.3
+          },
+          {
+            "foodCode": "2727583",
+            "indexCode": "0334",
+            "name": "napa, leaf, destemmed, raw",
+            "kcal": null,
+            "water": 94.2,
+            "protein": 1.06,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 1.2,
+            "ash": 0.556,
+            "sodium": 12.6
+          }
+        ]
+      },
+      {
+        "name": "Carrots",
+        "foods": [
+          {
+            "foodCode": "2258586",
+            "indexCode": "0162",
+            "name": "mature, raw",
+            "kcal": null,
+            "water": 87.7,
+            "protein": 0.941,
+            "fat": 0.351,
+            "carbohydrate": 10.3,
+            "fiber": 3.1,
+            "ash": 0.721,
+            "sodium": 86.6
+          },
+          {
+            "foodCode": "2258587",
+            "indexCode": "0163",
+            "name": "baby, raw",
+            "kcal": null,
+            "water": 89.3,
+            "protein": 0.805,
+            "fat": 0.138,
+            "carbohydrate": 9.08,
+            "fiber": 2.69,
+            "ash": 0.679,
+            "sodium": 62.7
+          },
+          {
+            "foodCode": "746764",
+            "indexCode": "0051",
+            "name": "frozen, unprepared",
+            "kcal": 37,
+            "water": 90.1,
+            "protein": 0.81,
+            "fat": 0.47,
+            "carbohydrate": 7.92,
+            "fiber": 3.2,
+            "ash": 0.72,
+            "sodium": 66
+          }
+        ]
+      },
+      {
+        "name": "Cauliflower",
+        "foods": [
+          {
+            "foodCode": "2685573",
+            "indexCode": "0278",
+            "name": "raw",
+            "kcal": null,
+            "water": 92.7,
+            "protein": 1.64,
+            "fat": 0.238,
+            "carbohydrate": 4.72,
+            "fiber": 1.95,
+            "ash": 0.679,
+            "sodium": 20
+          }
+        ]
+      },
+      {
+        "name": "Celery",
+        "foods": [
+          {
+            "foodCode": "2346405",
+            "indexCode": "0201",
+            "name": "raw",
+            "kcal": null,
+            "water": 95.2,
+            "protein": 0.492,
+            "fat": 0.162,
+            "carbohydrate": 3.32,
+            "fiber": null,
+            "ash": 0.829,
+            "sodium": 97.2
+          }
+        ]
+      },
+      {
+        "name": "Collards",
+        "foods": [
+          {
+            "foodCode": "2685574",
+            "indexCode": "0279",
+            "name": "raw",
+            "kcal": null,
+            "water": 87.5,
+            "protein": 2.97,
+            "fat": 0.77,
+            "carbohydrate": 7.02,
+            "fiber": 3.82,
+            "ash": 1.73,
+            "sodium": 18.4
+          }
+        ]
+      },
+      {
+        "name": "Corn",
+        "foods": [
+          {
+            "foodCode": "2710826",
+            "indexCode": "0299",
+            "name": "sweet, yellow and white kernels,  fresh, raw",
+            "kcal": null,
+            "water": 80.2,
+            "protein": 2.79,
+            "fat": 1.63,
+            "carbohydrate": 14.7,
+            "fiber": 2.43,
+            "ash": 0.645,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Cucumber",
+        "foods": [
+          {
+            "foodCode": "2346406",
+            "indexCode": "0202",
+            "name": "with peel, raw",
+            "kcal": null,
+            "water": 95.9,
+            "protein": 0.625,
+            "fat": 0.178,
+            "carbohydrate": 2.95,
+            "fiber": null,
+            "ash": 0.375,
+            "sodium": 1.52
+          }
+        ]
+      },
+      {
+        "name": "Eggplant",
+        "foods": [
+          {
+            "foodCode": "2685577",
+            "indexCode": "0282",
+            "name": "raw",
+            "kcal": null,
+            "water": 93.1,
+            "protein": 0.852,
+            "fat": 0.12,
+            "carbohydrate": 5.4,
+            "fiber": 2.45,
+            "ash": 0.519,
+            "sodium": 0.442
+          }
+        ]
+      },
+      {
+        "name": "Fennel",
+        "foods": [
+          {
+            "foodCode": "2747655",
+            "indexCode": "0344",
+            "name": "bulb, raw",
+            "kcal": null,
+            "water": 92.6,
+            "protein": 0.922,
+            "fat": 0.14,
+            "carbohydrate": 5.49,
+            "fiber": 2.05,
+            "ash": 0.862,
+            "sodium": 49
+          }
+        ]
+      },
+      {
+        "name": "Flour",
+        "foods": [
+          {
+            "foodCode": "2261422",
+            "indexCode": "0175",
+            "name": "potato",
+            "kcal": null,
+            "water": 8.28,
+            "protein": 8.11,
+            "fat": 0.951,
+            "carbohydrate": 79.9,
+            "fiber": 5.4,
+            "ash": 2.71,
+            "sodium": 47.7
+          },
+          {
+            "foodCode": "2512377",
+            "indexCode": "0217",
+            "name": "cassava",
+            "kcal": null,
+            "water": 10.6,
+            "protein": 0.918,
+            "fat": 0.494,
+            "carbohydrate": 87.3,
+            "fiber": 4.83,
+            "ash": 0.715,
+            "sodium": 13.1
+          }
+        ]
+      },
+      {
+        "name": "Garlic",
+        "foods": [
+          {
+            "foodCode": "1104647",
+            "indexCode": "0113",
+            "name": "raw",
+            "kcal": 143,
+            "water": 63.1,
+            "protein": 6.62,
+            "fat": 0.38,
+            "carbohydrate": 28.2,
+            "fiber": 2.7,
+            "ash": 1.71,
+            "sodium": null
+          }
+        ]
+      },
+      {
+        "name": "Green onion",
+        "foods": [
+          {
+            "foodCode": "2727585",
+            "indexCode": "0336",
+            "name": "(scallion), bulb and greens, root removed, raw",
+            "kcal": null,
+            "water": 91.7,
+            "protein": 0.669,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 2.3,
+            "ash": 0.627,
+            "sodium": 9.95
+          }
+        ]
+      },
+      {
+        "name": "Kale",
+        "foods": [
+          {
+            "foodCode": "323505",
+            "indexCode": "0006",
+            "name": "raw",
+            "kcal": 35,
+            "water": 89.6,
+            "protein": 2.92,
+            "fat": 1.49,
+            "carbohydrate": 4.42,
+            "fiber": 4.1,
+            "ash": 1.54,
+            "sodium": 53
+          },
+          {
+            "foodCode": "326196",
+            "indexCode": "0018",
+            "name": "frozen, cooked, boiled, drained, without salt",
+            "kcal": 36,
+            "water": 89.8,
+            "protein": 2.94,
+            "fat": 1.21,
+            "carbohydrate": 5.3,
+            "fiber": null,
+            "ash": 0.73,
+            "sodium": 16
+          }
+        ]
+      },
+      {
+        "name": "Ketchup",
+        "foods": [
+          {
+            "foodCode": "747693",
+            "indexCode": "0093",
+            "name": "restaurant",
+            "kcal": 117,
+            "water": 68.5,
+            "protein": 1.11,
+            "fat": 0.55,
+            "carbohydrate": 26.8,
+            "fiber": null,
+            "ash": 3.02,
+            "sodium": 949
+          }
+        ]
+      },
+      {
+        "name": "Leeks",
+        "foods": [
+          {
+            "foodCode": "2727584",
+            "indexCode": "0335",
+            "name": "bulb and greens, root removed, raw",
+            "kcal": null,
+            "water": 87.4,
+            "protein": 1.47,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 3,
+            "ash": 0.819,
+            "sodium": 17.7
+          }
+        ]
+      },
+      {
+        "name": "Lettuce",
+        "foods": [
+          {
+            "foodCode": "2346388",
+            "indexCode": "0184",
+            "name": "iceberg, raw",
+            "kcal": null,
+            "water": 95.5,
+            "protein": 0.742,
+            "fat": 0.074,
+            "carbohydrate": 3.37,
+            "fiber": null,
+            "ash": 0.315,
+            "sodium": 16.1
+          },
+          {
+            "foodCode": "2346389",
+            "indexCode": "0185",
+            "name": "romaine, green, raw",
+            "kcal": null,
+            "water": 94.3,
+            "protein": 0.977,
+            "fat": 0.071,
+            "carbohydrate": 4.06,
+            "fiber": null,
+            "ash": 0.606,
+            "sodium": 23
+          },
+          {
+            "foodCode": "2346390",
+            "indexCode": "0186",
+            "name": "leaf, red, raw",
+            "kcal": null,
+            "water": 95,
+            "protein": 0.883,
+            "fat": 0.106,
+            "carbohydrate": 3.26,
+            "fiber": null,
+            "ash": 0.7,
+            "sodium": 24.9
+          },
+          {
+            "foodCode": "2346391",
+            "indexCode": "0187",
+            "name": "leaf, green, raw",
+            "kcal": null,
+            "water": 94,
+            "protein": 1.09,
+            "fat": 0.156,
+            "carbohydrate": 4.07,
+            "fiber": null,
+            "ash": 0.674,
+            "sodium": 28.9
+          },
+          {
+            "foodCode": "746769",
+            "indexCode": "0056",
+            "name": "cos or romaine, raw",
+            "kcal": 17,
+            "water": 94.7,
+            "protein": 1.24,
+            "fat": 0.26,
+            "carbohydrate": 3.24,
+            "fiber": 1.8,
+            "ash": 0.55,
+            "sodium": null
+          }
+        ]
+      },
+      {
+        "name": "Mushroom",
+        "foods": [
+          {
+            "foodCode": "1999626",
+            "indexCode": "0131",
+            "name": "lion's mane",
+            "kcal": null,
+            "water": 88.6,
+            "protein": 2.5,
+            "fat": 0.256,
+            "carbohydrate": 7.59,
+            "fiber": 4.38,
+            "ash": 1.08,
+            "sodium": 0.336
+          },
+          {
+            "foodCode": "1999627",
+            "indexCode": "0132",
+            "name": "oyster",
+            "kcal": null,
+            "water": 89.2,
+            "protein": 2.9,
+            "fat": 0.188,
+            "carbohydrate": 6.94,
+            "fiber": 2.85,
+            "ash": 0.732,
+            "sodium": 1.13
+          },
+          {
+            "foodCode": "2003598",
+            "indexCode": "0152",
+            "name": "portabella",
+            "kcal": null,
+            "water": 91.5,
+            "protein": 2.75,
+            "fat": 0.312,
+            "carbohydrate": 4.66,
+            "fiber": 1.88,
+            "ash": 0.8,
+            "sodium": 5.31
+          },
+          {
+            "foodCode": "2003599",
+            "indexCode": "0153",
+            "name": "king oyster",
+            "kcal": null,
+            "water": 88.1,
+            "protein": 2.41,
+            "fat": 0.308,
+            "carbohydrate": 8.5,
+            "fiber": 3.01,
+            "ash": 0.656,
+            "sodium": 0.771
+          },
+          {
+            "foodCode": "2003600",
+            "indexCode": "0154",
+            "name": "enoki",
+            "kcal": null,
+            "water": 88.3,
+            "protein": 2.42,
+            "fat": 0.245,
+            "carbohydrate": 8.14,
+            "fiber": 2.94,
+            "ash": 0.907,
+            "sodium": 0.417
+          },
+          {
+            "foodCode": "2003601",
+            "indexCode": "0155",
+            "name": "crimini",
+            "kcal": null,
+            "water": 91.8,
+            "protein": 3.09,
+            "fat": 0.197,
+            "carbohydrate": 4.01,
+            "fiber": 1.78,
+            "ash": 0.875,
+            "sodium": 4.57
+          },
+          {
+            "foodCode": "2003602",
+            "indexCode": "0156",
+            "name": "maitake",
+            "kcal": null,
+            "water": 90.4,
+            "protein": 2.2,
+            "fat": 0.265,
+            "carbohydrate": 6.6,
+            "fiber": 3.07,
+            "ash": 0.558,
+            "sodium": 0.345
+          },
+          {
+            "foodCode": "2003603",
+            "indexCode": "0157",
+            "name": "beech",
+            "kcal": null,
+            "water": 89.8,
+            "protein": 2.18,
+            "fat": 0.449,
+            "carbohydrate": 6.76,
+            "fiber": 3.14,
+            "ash": 0.761,
+            "sodium": 0.891
+          },
+          {
+            "foodCode": "2003604",
+            "indexCode": "0158",
+            "name": "pioppini",
+            "kcal": null,
+            "water": 89.6,
+            "protein": 3.5,
+            "fat": 0.24,
+            "carbohydrate": 5.76,
+            "fiber": 2.75,
+            "ash": 0.936,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Mushrooms",
+        "foods": [
+          {
+            "foodCode": "1999628",
+            "indexCode": "0133",
+            "name": "shiitake",
+            "kcal": null,
+            "water": 88.6,
+            "protein": 2.41,
+            "fat": 0.195,
+            "carbohydrate": 8.17,
+            "fiber": 4.17,
+            "ash": 0.62,
+            "sodium": 0.936
+          },
+          {
+            "foodCode": "1999629",
+            "indexCode": "0134",
+            "name": "white button",
+            "kcal": null,
+            "water": 91.8,
+            "protein": 2.89,
+            "fat": 0.371,
+            "carbohydrate": 4.08,
+            "fiber": 1.72,
+            "ash": 0.829,
+            "sodium": 6.44
+          }
+        ]
+      },
+      {
+        "name": "Onion rings",
+        "foods": [
+          {
+            "foodCode": "324317",
+            "indexCode": "0010",
+            "name": "breaded, par fried, frozen, prepared, heated in oven",
+            "kcal": 288,
+            "water": 43.4,
+            "protein": 4.52,
+            "fat": 14.4,
+            "carbohydrate": 36.3,
+            "fiber": 2.4,
+            "ash": 1.44,
+            "sodium": 374
+          }
+        ]
+      },
+      {
+        "name": "Onions",
+        "foods": [
+          {
+            "foodCode": "1104962",
+            "indexCode": "0119",
+            "name": "white, raw",
+            "kcal": 35,
+            "water": 91.3,
+            "protein": 0.89,
+            "fat": 0.13,
+            "carbohydrate": 7.68,
+            "fiber": 1.2,
+            "ash": 0,
+            "sodium": 2
+          },
+          {
+            "foodCode": "790577",
+            "indexCode": "0111",
+            "name": "red, raw",
+            "kcal": 44,
+            "water": 88.6,
+            "protein": 0.94,
+            "fat": 0.1,
+            "carbohydrate": 9.93,
+            "fiber": 2.2,
+            "ash": 0.43,
+            "sodium": 1
+          },
+          {
+            "foodCode": "790646",
+            "indexCode": "0112",
+            "name": "yellow, raw",
+            "kcal": 38,
+            "water": 90.1,
+            "protein": 0.83,
+            "fat": 0.05,
+            "carbohydrate": 8.61,
+            "fiber": 1.9,
+            "ash": 0.41,
+            "sodium": 1
+          }
+        ]
+      },
+      {
+        "name": "Parsnips",
+        "foods": [
+          {
+            "foodCode": "2747659",
+            "indexCode": "0348",
+            "name": "raw",
+            "kcal": null,
+            "water": 77.8,
+            "protein": 1.27,
+            "fat": 0.538,
+            "carbohydrate": 19.3,
+            "fiber": 5.35,
+            "ash": 1.15,
+            "sodium": 0.491
+          }
+        ]
+      },
+      {
+        "name": "Peas",
+        "foods": [
+          {
+            "foodCode": "2644291",
+            "indexCode": "0247",
+            "name": "green, sweet, canned, sodium added, sugar added, drained and rinsed",
+            "kcal": null,
+            "water": 80.5,
+            "protein": 4.73,
+            "fat": 1.15,
+            "carbohydrate": 12.7,
+            "fiber": null,
+            "ash": 0.875,
+            "sodium": 207
+          }
+        ]
+      },
+      {
+        "name": "Peppers",
+        "foods": [
+          {
+            "foodCode": "2258588",
+            "indexCode": "0164",
+            "name": "bell, green, raw",
+            "kcal": null,
+            "water": 94.1,
+            "protein": 0.715,
+            "fat": 0.106,
+            "carbohydrate": 4.78,
+            "fiber": 0.942,
+            "ash": 0.281,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2258589",
+            "indexCode": "0165",
+            "name": "bell, yellow, raw",
+            "kcal": null,
+            "water": 92.1,
+            "protein": 0.819,
+            "fat": 0.121,
+            "carbohydrate": 6.6,
+            "fiber": 1.07,
+            "ash": 0.378,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2258590",
+            "indexCode": "0166",
+            "name": "bell, red, raw",
+            "kcal": null,
+            "water": 91.9,
+            "protein": 0.896,
+            "fat": 0.126,
+            "carbohydrate": 6.65,
+            "fiber": 1.16,
+            "ash": 0.396,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2258591",
+            "indexCode": "0167",
+            "name": "bell, orange, raw",
+            "kcal": null,
+            "water": 91.9,
+            "protein": 0.882,
+            "fat": 0.156,
+            "carbohydrate": 6.7,
+            "fiber": 0.967,
+            "ash": 0.379,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2747660",
+            "indexCode": "0349",
+            "name": "banana or Hungarian wax, seeded, raw",
+            "kcal": null,
+            "water": 93.8,
+            "protein": 0.723,
+            "fat": 0.131,
+            "carbohydrate": 4.97,
+            "fiber": 1.79,
+            "ash": 0.379,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2747661",
+            "indexCode": "0350",
+            "name": "jalapeno, seeded, raw",
+            "kcal": null,
+            "water": 93.8,
+            "protein": 0.621,
+            "fat": 0.149,
+            "carbohydrate": 5.08,
+            "fiber": 1.72,
+            "ash": 0.354,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2747662",
+            "indexCode": "0351",
+            "name": "poblano, seeded, raw",
+            "kcal": null,
+            "water": 92.8,
+            "protein": 1.43,
+            "fat": 0.191,
+            "carbohydrate": 5.14,
+            "fiber": 2.07,
+            "ash": 0.411,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2747663",
+            "indexCode": "0352",
+            "name": "serrano, seeded, raw",
+            "kcal": null,
+            "water": 92.4,
+            "protein": 0.856,
+            "fat": 0.141,
+            "carbohydrate": 6.14,
+            "fiber": 2.52,
+            "ash": 0.488,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Pickles",
+        "foods": [
+          {
+            "foodCode": "324653",
+            "indexCode": "0011",
+            "name": "cucumber, dill or kosher dill",
+            "kcal": 12,
+            "water": 94.7,
+            "protein": 0.48,
+            "fat": 0.43,
+            "carbohydrate": 1.99,
+            "fiber": 1,
+            "ash": 2.44,
+            "sodium": 808
+          }
+        ]
+      },
+      {
+        "name": "Potatoes",
+        "foods": [
+          {
+            "foodCode": "2346401",
+            "indexCode": "0197",
+            "name": "russet, without skin, raw",
+            "kcal": null,
+            "water": 78.6,
+            "protein": 2.27,
+            "fat": 0.36,
+            "carbohydrate": 17.8,
+            "fiber": null,
+            "ash": 0.985,
+            "sodium": 2.74
+          },
+          {
+            "foodCode": "2346402",
+            "indexCode": "0198",
+            "name": "red, without skin, raw",
+            "kcal": null,
+            "water": 80.5,
+            "protein": 2.06,
+            "fat": 0.248,
+            "carbohydrate": 16.3,
+            "fiber": null,
+            "ash": 0.95,
+            "sodium": 2.86
+          },
+          {
+            "foodCode": "2346403",
+            "indexCode": "0199",
+            "name": "gold, without skin, raw",
+            "kcal": null,
+            "water": 81.1,
+            "protein": 1.81,
+            "fat": 0.264,
+            "carbohydrate": 16,
+            "fiber": null,
+            "ash": 0.891,
+            "sodium": 2.24
+          }
+        ]
+      },
+      {
+        "name": "Radicchio",
+        "foods": [
+          {
+            "foodCode": "2747664",
+            "indexCode": "0353",
+            "name": "raw",
+            "kcal": null,
+            "water": 92.8,
+            "protein": 1.31,
+            "fat": 0.143,
+            "carbohydrate": 4.96,
+            "fiber": 2.11,
+            "ash": 0.767,
+            "sodium": 8.08
+          }
+        ]
+      },
+      {
+        "name": "Radishes",
+        "foods": [
+          {
+            "foodCode": "2747665",
+            "indexCode": "0354",
+            "name": "red, raw",
+            "kcal": null,
+            "water": 94.7,
+            "protein": 0.656,
+            "fat": 0.083,
+            "carbohydrate": 4.06,
+            "fiber": 1.31,
+            "ash": 0.524,
+            "sodium": 51.2
+          }
+        ]
+      },
+      {
+        "name": "Rutabaga",
+        "foods": [
+          {
+            "foodCode": "2727580",
+            "indexCode": "0331",
+            "name": "peeled, raw",
+            "kcal": null,
+            "water": 88.6,
+            "protein": 0.888,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 2.9,
+            "ash": 0.632,
+            "sodium": 4.59
+          }
+        ]
+      },
+      {
+        "name": "Shallots",
+        "foods": [
+          {
+            "foodCode": "2727586",
+            "indexCode": "0337",
+            "name": "bulb, peeled, root removed, raw",
+            "kcal": null,
+            "water": 83.5,
+            "protein": 1.38,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 2.2,
+            "ash": 0.632,
+            "sodium": 3.64
+          }
+        ]
+      },
+      {
+        "name": "Spinach",
+        "foods": [
+          {
+            "foodCode": "1999632",
+            "indexCode": "0137",
+            "name": "baby",
+            "kcal": null,
+            "water": 92.5,
+            "protein": 2.85,
+            "fat": 0.619,
+            "carbohydrate": 2.41,
+            "fiber": 1.56,
+            "ash": 1.6,
+            "sodium": 111
+          },
+          {
+            "foodCode": "1999633",
+            "indexCode": "0138",
+            "name": "mature",
+            "kcal": null,
+            "water": 92.4,
+            "protein": 2.91,
+            "fat": 0.604,
+            "carbohydrate": 2.64,
+            "fiber": 1.59,
+            "ash": 1.42,
+            "sodium": 107
+          }
+        ]
+      },
+      {
+        "name": "Squash",
+        "foods": [
+          {
+            "foodCode": "2685568",
+            "indexCode": "0273",
+            "name": "summer, green, zucchini, includes skin, raw",
+            "kcal": null,
+            "water": 95,
+            "protein": 0.984,
+            "fat": 0.205,
+            "carbohydrate": 3.27,
+            "fiber": 0.752,
+            "ash": 0.54,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2685569",
+            "indexCode": "0274",
+            "name": "summer, yellow, includes skin, raw",
+            "kcal": null,
+            "water": 94,
+            "protein": 0.891,
+            "fat": 0.135,
+            "carbohydrate": 4.39,
+            "fiber": 0.956,
+            "ash": 0.528,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2685570",
+            "indexCode": "0275",
+            "name": "winter, butternut, raw",
+            "kcal": null,
+            "water": 87.3,
+            "protein": 1.15,
+            "fat": 0.168,
+            "carbohydrate": 10.5,
+            "fiber": 1.96,
+            "ash": 0.856,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2685571",
+            "indexCode": "0276",
+            "name": "winter, acorn, raw",
+            "kcal": null,
+            "water": 87.2,
+            "protein": 1.25,
+            "fat": 0.182,
+            "carbohydrate": 10.5,
+            "fiber": 2.64,
+            "ash": 0.868,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2727578",
+            "indexCode": "0329",
+            "name": "pie pumpkin, peeled, seeded, raw",
+            "kcal": null,
+            "water": 90.6,
+            "protein": 0.854,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 2.3,
+            "ash": 0.98,
+            "sodium": 0.312
+          },
+          {
+            "foodCode": "2727579",
+            "indexCode": "0330",
+            "name": "spaghetti, peeled, seeded, raw",
+            "kcal": null,
+            "water": 92.8,
+            "protein": 0.792,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 1.4,
+            "ash": 0.588,
+            "sodium": 0.312
+          }
+        ]
+      },
+      {
+        "name": "Sweet potatoes",
+        "foods": [
+          {
+            "foodCode": "2346404",
+            "indexCode": "0200",
+            "name": "orange flesh, without skin, raw",
+            "kcal": null,
+            "water": 79.5,
+            "protein": 1.58,
+            "fat": 0.375,
+            "carbohydrate": 17.3,
+            "fiber": null,
+            "ash": 1.18,
+            "sodium": 0
+          }
+        ]
+      },
+      {
+        "name": "Tomatillos",
+        "foods": [
+          {
+            "foodCode": "2727582",
+            "indexCode": "0333",
+            "name": "dehusked, raw",
+            "kcal": null,
+            "water": 92.6,
+            "protein": 1.06,
+            "fat": null,
+            "carbohydrate": null,
+            "fiber": 1.7,
+            "ash": 0.504,
+            "sodium": 0.311
+          }
+        ]
+      },
+      {
+        "name": "Tomato",
+        "foods": [
+          {
+            "foodCode": "1999634",
+            "indexCode": "0139",
+            "name": "roma",
+            "kcal": null,
+            "water": 94.7,
+            "protein": 0.696,
+            "fat": 0.425,
+            "carbohydrate": 3.84,
+            "fiber": 0.971,
+            "ash": 0.312,
+            "sodium": 0
+          },
+          {
+            "foodCode": "2685579",
+            "indexCode": "0284",
+            "name": "sauce, canned, with salt added",
+            "kcal": null,
+            "water": 90.2,
+            "protein": 1.35,
+            "fat": 0.382,
+            "carbohydrate": 6.33,
+            "fiber": 1.64,
+            "ash": 1.72,
+            "sodium": 417
+          },
+          {
+            "foodCode": "2685580",
+            "indexCode": "0285",
+            "name": "paste, canned, without salt added",
+            "kcal": null,
+            "water": 71.9,
+            "protein": 4.23,
+            "fat": 0.732,
+            "carbohydrate": 20.2,
+            "fiber": 4.7,
+            "ash": 2.92,
+            "sodium": 61.2
+          },
+          {
+            "foodCode": "2685582",
+            "indexCode": "0287",
+            "name": "puree, canned",
+            "kcal": null,
+            "water": 89.1,
+            "protein": 1.58,
+            "fat": 0.265,
+            "carbohydrate": 8.04,
+            "fiber": 1.97,
+            "ash": 1.01,
+            "sodium": 29.4
+          }
+        ]
+      },
+      {
+        "name": "Tomato juice",
+        "foods": [
+          {
+            "foodCode": "2003596",
+            "indexCode": "0150",
+            "name": "with added ingredients, from concentrate, shelf stable",
+            "kcal": null,
+            "water": 93.6,
+            "protein": 0.859,
+            "fat": 0.288,
+            "carbohydrate": 4.32,
+            "fiber": null,
+            "ash": 0.932,
+            "sodium": 236
+          }
+        ]
+      },
+      {
+        "name": "Tomatoes",
+        "foods": [
+          {
+            "foodCode": "2685578",
+            "indexCode": "0283",
+            "name": "whole, canned, solids and liquids, with salt added",
+            "kcal": null,
+            "water": 93.9,
+            "protein": 0.868,
+            "fat": 0.206,
+            "carbohydrate": 4.29,
+            "fiber": 0.872,
+            "ash": 0.709,
+            "sodium": 112
+          },
+          {
+            "foodCode": "2685581",
+            "indexCode": "0286",
+            "name": "crushed, canned",
+            "kcal": null,
+            "water": 89.9,
+            "protein": 1.44,
+            "fat": 0.398,
+            "carbohydrate": 7.14,
+            "fiber": 1.94,
+            "ash": 1.09,
+            "sodium": 140
+          },
+          {
+            "foodCode": "321360",
+            "indexCode": "0002",
+            "name": "grape, raw",
+            "kcal": 27,
+            "water": 92.5,
+            "protein": 0.83,
+            "fat": 0.63,
+            "carbohydrate": 5.51,
+            "fiber": 2.1,
+            "ash": 0.56,
+            "sodium": 6
+          },
+          {
+            "foodCode": "333281",
+            "indexCode": "0037",
+            "name": "canned, red, ripe, diced",
+            "kcal": 18,
+            "water": 94.6,
+            "protein": 0.84,
+            "fat": 0.5,
+            "carbohydrate": 3.32,
+            "fiber": null,
+            "ash": 0.74,
+            "sodium": 125
+          }
+        ]
+      },
+      {
+        "name": "Turnips",
+        "foods": [
+          {
+            "foodCode": "2747674",
+            "indexCode": "0363",
+            "name": "raw",
+            "kcal": null,
+            "water": 91,
+            "protein": 0.953,
+            "fat": 0.119,
+            "carbohydrate": 7.27,
+            "fiber": 1.92,
+            "ash": 0.633,
+            "sodium": 12.8
+          }
+        ]
+      }
+    ]
+  }
+]

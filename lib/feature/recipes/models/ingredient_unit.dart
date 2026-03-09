@@ -31,7 +31,7 @@ extension IngredientUnitE on IngredientUnit {
       case IngredientUnit.spoon:
         return AppStrings.spoon.tr;
       case IngredientUnit.cup:
-        return AppStrings.count.tr;
+        return AppStrings.cup.tr;
       case IngredientUnit.count:
         return AppStrings.count.tr;
       case IngredientUnit.pinch:

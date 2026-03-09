@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/feature/home/controller/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -11,20 +11,23 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        body: SafeArea(child: controller.body),
+        body: controller.body,
         bottomNavigationBar: NavigationBar(
           selectedIndex: controller.pageIdx,
           onDestinationSelected: controller.onDestinationSelected,
           destinations: [
             NavigationDestination(
               icon: Icon(FontAwesomeIcons.utensils),
-              label: '레시피',
+              label: AppStrings.recipe.tr,
             ),
             NavigationDestination(
-              icon: Icon(FontAwesomeIcons.bowlFood),
-              label: '재료',
+              icon: Icon(FontAwesomeIcons.shoppingBag),
+              label: AppStrings.shopping.tr,
             ),
-            NavigationDestination(icon: Icon(Icons.settings), label: '설정'),
+            NavigationDestination(
+              icon: Icon(FontAwesomeIcons.user),
+              label: AppStrings.myPage.tr,
+            ),
           ],
         ),
       ),
