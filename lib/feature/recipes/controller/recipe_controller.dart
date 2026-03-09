@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/image_service.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_category_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_repository.dart';
@@ -167,6 +168,10 @@ class RecipeController extends GetxController {
   void deleteRecipe(RecipeModel recipe) async {
     _isLoading.value = true;
     try {
+      await ImageService.deleteSavedFile(recipe.coverImagePath);
+      for (final step in recipe.steps) {
+        await ImageService.deleteSavedFile(step.imagePath);
+      }
       await _repository.deleteRecipe(recipe.id);
       await _fetchRecipes();
       Get.back();

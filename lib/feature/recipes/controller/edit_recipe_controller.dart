@@ -99,14 +99,16 @@ class EditRecipeController extends GetxController {
         descriptionTextCtrl.text = recipe.description;
         servingsTextCtrl.text = recipe.servings.toString();
         categoryTextCtrl.text = recipe.category;
-        if (recipe.category.isNotEmpty && !categories.contains(recipe.category)) {
+        if (recipe.category.isNotEmpty &&
+            !categories.contains(recipe.category)) {
           categories.add(recipe.category);
         }
         selectedCategory.value = recipe.category;
         isLiked.value = recipe.isLiked;
 
         ingredients.assignAll(recipe.ingredients);
-        if (recipe.coverImagePath != null && recipe.coverImagePath!.isNotEmpty) {
+        if (recipe.coverImagePath != null &&
+            recipe.coverImagePath!.isNotEmpty) {
           _coverImage.value = File(recipe.coverImagePath!);
         }
 
@@ -290,13 +292,22 @@ class EditRecipeController extends GetxController {
         await _categoryRepository.addCategory(category);
       }
 
-      final coverImagePath = coverImage?.path;
+      String? savedImageCoverPath;
+      if (coverImage != null) {
+        savedImageCoverPath = await ImageService.saveFile(coverImage!);
+      }
+      // final coverImagePath = coverImage?.path;
 
       List<CookingStepModel> cookingStepModels = [];
       for (final inputCookingStep in inputCookingSteps) {
         final instruction = inputCookingStep.descriptionTeCtrl.text.trim();
-        final imagePath = inputCookingStep.image?.path;
-        final hasImage = imagePath != null && imagePath.isNotEmpty;
+
+        String? savedImagePath;
+        if (inputCookingStep.image != null) {
+          savedImagePath = await ImageService.saveFile(inputCookingStep.image!);
+        }
+
+        final hasImage = savedImagePath != null && savedImagePath.isNotEmpty;
         final hasTimer = inputCookingStep.timer > 0;
         final isEmptyStep = instruction.isEmpty && !hasImage && !hasTimer;
         if (isEmptyStep) continue;
@@ -306,20 +317,11 @@ class EditRecipeController extends GetxController {
             id: inputCookingStep.id,
             order: cookingStepModels.length + 1,
             instruction: instruction,
-            imagePath: imagePath,
+            imagePath: savedImagePath,
             timerSec: hasTimer ? inputCookingStep.timer : null,
           ),
         );
       }
-      await _cleanupReplacedImages(
-        newCoverImagePath: coverImagePath,
-        newStepImagePaths:
-            cookingStepModels
-                .map((step) => step.imagePath)
-                .whereType<String>()
-                .where((path) => path.isNotEmpty)
-                .toSet(),
-      );
 
       final products = await _ingredientProductRepository.fetchProducts();
       final resolvedIngredients =
@@ -327,42 +329,42 @@ class EditRecipeController extends GetxController {
               .map((ingredient) => _applyProductInfo(products, ingredient))
               .toList();
 
-    final totalIngredientCost = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedCost ?? 0),
-    );
-    final totalKcal = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedKcal ?? 0),
-    );
-    final totalWater = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedWater ?? 0),
-    );
-    final totalProtein = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedProtein ?? 0),
-    );
-    final totalFat = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedFat ?? 0),
-    );
-    final totalCarbohydrate = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedCarbohydrate ?? 0),
-    );
-    final totalFiber = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedFiber ?? 0),
-    );
-    final totalAsh = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedAsh ?? 0),
-    );
-    final totalSodium = resolvedIngredients.fold<double>(
-      0,
-      (sum, ingredient) => sum + (ingredient.usedSodium ?? 0),
-    );
+      final totalIngredientCost = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedCost ?? 0),
+      );
+      final totalKcal = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedKcal ?? 0),
+      );
+      final totalWater = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedWater ?? 0),
+      );
+      final totalProtein = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedProtein ?? 0),
+      );
+      final totalFat = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedFat ?? 0),
+      );
+      final totalCarbohydrate = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedCarbohydrate ?? 0),
+      );
+      final totalFiber = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedFiber ?? 0),
+      );
+      final totalAsh = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedAsh ?? 0),
+      );
+      final totalSodium = resolvedIngredients.fold<double>(
+        0,
+        (sum, ingredient) => sum + (ingredient.usedSodium ?? 0),
+      );
 
       final recipeModel = RecipeModel(
         id: this.recipeModel?.id ?? Uuid().v4(),
@@ -382,7 +384,7 @@ class EditRecipeController extends GetxController {
         createdAt: this.recipeModel?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
         description: description,
-        coverImagePath: coverImagePath,
+        coverImagePath: savedImageCoverPath,
         ingredients: resolvedIngredients,
         steps: cookingStepModels,
       );
@@ -426,13 +428,7 @@ class EditRecipeController extends GetxController {
   }
 
   Future<void> _safeDeleteFile(String path) async {
-    try {
-      final file = File(path);
-      if (!await file.exists()) return;
-      await file.delete();
-    } catch (_) {
-      // 이미지 정리 실패는 저장 흐름을 막지 않는다.
-    }
+    await ImageService.deleteSavedFile(path);
   }
 
   IngredientProductModel? _findProductByName(

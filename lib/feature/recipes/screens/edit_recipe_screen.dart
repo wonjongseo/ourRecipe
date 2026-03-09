@@ -24,19 +24,23 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 12),
-                height: 55,
-                child: ElevatedButton.icon(
-                  onPressed:
-                      controller.isLoading
-                          ? null
-                          : () => controller.saveRecipeModel(),
-                  label: Text(
-                    controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+              Obx(
+                () => Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  height: 55,
+                  child: ElevatedButton.icon(
+                    onPressed:
+                        controller.isLoading
+                            ? null
+                            : () => controller.saveRecipeModel(),
+                    label: Text(
+                      controller.isEdit
+                          ? AppStrings.edit.tr
+                          : AppStrings.save.tr,
+                    ),
+                    icon: Icon(Icons.add),
                   ),
-                  icon: Icon(Icons.add),
                 ),
               ),
               const AdBannerBottomSheet(),
@@ -63,7 +67,10 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                 controller.isLoading
                     ? Center(child: CircularProgressIndicator.adaptive())
                     : SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 24,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

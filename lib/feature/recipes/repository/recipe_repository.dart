@@ -1,3 +1,5 @@
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
@@ -13,6 +15,7 @@ class RecipeRepository {
 
   Future<List<RecipeModel>> fetchRecipes() async {
     final db = await _database.db;
+    final docsPath = (await getApplicationDocumentsDirectory()).path;
     final rows = await db.query(
       RecipeDatabaseService.recipes,
       orderBy: 'updated_at DESC',
@@ -32,7 +35,7 @@ class RecipeRepository {
         whereArgs: [recipeId],
         orderBy: 'step_order ASC',
       );
-      recipes.add(_toRecipeModel(row, ingredientRows, stepRows));
+      recipes.add(_toRecipeModel(row, ingredientRows, stepRows, docsPath));
     }
     return recipes;
   }
@@ -173,13 +176,17 @@ class RecipeRepository {
     Map<String, Object?> row,
     List<Map<String, Object?>> ingredientRows,
     List<Map<String, Object?>> stepRows,
+    String docsPath,
   ) {
     return RecipeModel(
       id: row['id'] as String,
       name: row['name'] as String,
       description: (row['description'] as String?) ?? '',
       servings: (row['servings'] as int?) ?? 1,
-      coverImagePath: row['cover_image_path'] as String?,
+      coverImagePath: _resolveStoredImagePath(
+        row['cover_image_path'] as String?,
+        docsPath,
+      ),
       category: (row['category'] as String?) ?? '',
       isLiked: ((row['is_liked'] as int?) ?? 0) == 1,
       totalIngredientCost: (row['total_ingredient_cost'] as num?)?.toDouble() ?? 0,
@@ -198,7 +205,7 @@ class RecipeRepository {
           DateTime.tryParse((row['updated_at'] as String?) ?? '') ??
           DateTime.now(),
       ingredients: ingredientRows.map(_toIngredientModel).toList(),
-      steps: stepRows.map(_toStepModel).toList(),
+      steps: stepRows.map((row) => _toStepModel(row, docsPath)).toList(),
     );
   }
 
@@ -226,14 +233,22 @@ class RecipeRepository {
     );
   }
 
-  CookingStepModel _toStepModel(Map<String, Object?> row) {
+  CookingStepModel _toStepModel(Map<String, Object?> row, String docsPath) {
     return CookingStepModel(
       id: row['id'] as String,
       order: (row['step_order'] as int?) ?? 0,
       instruction: (row['instruction'] as String?) ?? '',
       timerSec: row['timer_sec'] as int?,
-      imagePath: row['image_path'] as String?,
+      imagePath: _resolveStoredImagePath(row['image_path'] as String?, docsPath),
     );
+  }
+
+  String? _resolveStoredImagePath(String? value, String docsPath) {
+    if (value == null) return null;
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) return null;
+    if (p.isAbsolute(trimmed) || trimmed.startsWith('/')) return trimmed;
+    return p.join(docsPath, trimmed);
   }
 
   IngredientUnit _unitFromName(String name) {

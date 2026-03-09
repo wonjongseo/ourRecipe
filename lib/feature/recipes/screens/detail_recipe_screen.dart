@@ -403,7 +403,6 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
             children: [
               Expanded(
                 child: CustomTextFormField(
-                  autoFocus: true,
                   height: 40,
                   borderRadius: 8,
                   keyboardType: TextInputType.number,

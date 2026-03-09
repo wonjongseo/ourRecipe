@@ -7,6 +7,7 @@ import 'package:our_recipe/core/common/app_functions.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ImageService {
   static Future<File?> openCameraOrLibarySheet(
@@ -55,66 +56,6 @@ class ImageService {
         ),
       ),
     );
-    return await showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              width: 100,
-              height: 5,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      try {
-                        onPickStart?.call();
-                        final image = await _pickImageFromCamera();
-                        Get.back(result: image);
-                      } catch (e) {
-                        LogManager.error('$e');
-                      } finally {
-                        onPickEnd?.call();
-                      }
-                    },
-                    icon: Icon(Icons.camera_alt_outlined, size: 30),
-                  ),
-                  SizedBox(width: 20),
-                  IconButton(
-                    onPressed: () async {
-                      try {
-                        onPickStart?.call();
-                        final image = await _getImageFromLibery();
-                        Get.back(result: image);
-                      } catch (e) {
-                        LogManager.error('$e');
-                      } finally {
-                        onPickEnd?.call();
-                      }
-                    },
-                    icon: Icon(Icons.folder_copy_outlined, size: 10 * 3),
-                  ),
-                  SizedBox(width: 10 * 2),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 10 * 5),
-          ],
-        );
-      },
-    );
   }
 
   static Future<File?> _pickImageFromCamera() async {
@@ -130,9 +71,9 @@ class ImageService {
       final selected =
           croppedFile == null ? File(image.path) : File(croppedFile.path);
 
-      return await _persistImage(selected);
+      return selected;
     } catch (e) {
-      print('e.toString : ${e.toString}');
+      LogManager.error("$e");
     }
     return null;
   }
@@ -161,6 +102,32 @@ class ImageService {
     );
   }
 
+  static Future<String> saveFile(File file) async {
+    String imageName = '${const Uuid().v4()}.png';
+    final directory = await getApplicationDocumentsDirectory();
+    final String path = '${directory.path}/$imageName';
+    await file.copy(path);
+    return path;
+  }
+
+  static Future<void> deleteSavedFile(String? pathOrName) async {
+    if (pathOrName == null) return;
+    final value = pathOrName.trim();
+    if (value.isEmpty) return;
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final target =
+          value.startsWith('/')
+              ? File(value)
+              : File('${directory.path}/$value');
+      if (await target.exists()) {
+        await target.delete();
+      }
+    } catch (e) {
+      LogManager.error('deleteSavedFile failed: $e');
+    }
+  }
+
   static Future<File?> _getImageFromLibery() async {
     try {
       final picker = ImagePicker();
@@ -171,7 +138,7 @@ class ImageService {
       final croppedFile = await _cropImage(image!);
       final selected =
           croppedFile == null ? File(image.path) : File(croppedFile.path);
-      return await _persistImage(selected);
+      return selected;
     } catch (e) {
       LogManager.error("$e");
     }
