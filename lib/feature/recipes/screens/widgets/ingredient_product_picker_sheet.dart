@@ -76,7 +76,7 @@ class _IngredientProductPickerSheetState
 
             SizedBox(height: 18),
             _searchForm(context),
-            SizedBox(height: 12),
+            SizedBox(height: 6),
             Expanded(
               child:
                   filteredGroups.isEmpty
@@ -102,22 +102,6 @@ class _IngredientProductPickerSheetState
       // padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
       padding: EdgeInsets.symmetric(horizontal: 12),
       children: [
-        _appDataOrUserData(context, AppStrings.userAddedIngredients.tr, null),
-        if (userAddedGroups.isEmpty)
-          _sectionEmpty(context)
-        else
-          IngredientProductGroupedExpansionList(
-            groups: userAddedGroups,
-            query: query,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            selectedProductId: widget.selectedProductId,
-            onTapProduct: (product) {
-              Navigator.of(context).pop(product);
-            },
-          ),
-        const SizedBox(height: 16),
         _appDataOrUserData(
           context,
           AppStrings.appProvidedIngredients.tr,
@@ -130,6 +114,23 @@ class _IngredientProductPickerSheetState
         else
           IngredientProductGroupedExpansionList(
             groups: appProvidedGroups,
+            query: query,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            selectedProductId: widget.selectedProductId,
+            onTapProduct: (product) {
+              Navigator.of(context).pop(product);
+            },
+          ),
+
+        const SizedBox(height: 16),
+        _appDataOrUserData(context, AppStrings.userAddedIngredients.tr, null),
+        if (userAddedGroups.isEmpty)
+          _sectionEmpty(context)
+        else
+          IngredientProductGroupedExpansionList(
+            groups: userAddedGroups,
             query: query,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

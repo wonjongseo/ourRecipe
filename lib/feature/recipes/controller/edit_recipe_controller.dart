@@ -39,8 +39,10 @@ class EditRecipeController extends GetxController {
 
   TextEditingController recipeNameTextCtrl = TextEditingController();
   TextEditingController descriptionTextCtrl = TextEditingController();
+  TextEditingController websiteLinkTextCtrl = TextEditingController();
   TextEditingController servingsTextCtrl = TextEditingController();
   TextEditingController categoryTextCtrl = TextEditingController();
+  final ScrollController formScrollController = ScrollController();
 
   final Rxn<File> _coverImage = Rxn();
   File? get coverImage => _coverImage.value;
@@ -67,7 +69,9 @@ class EditRecipeController extends GetxController {
       onPickStart: () => _isPickingImage.value = true,
       onPickEnd: () => _isPickingImage.value = false,
     );
-    _coverImage.value = image;
+    if (image != null) {
+      _coverImage.value = image;
+    }
   }
 
   @override
@@ -85,7 +89,7 @@ class EditRecipeController extends GetxController {
 
       if (recipeModel == null) {
         isLiked.value = false;
-
+        servingsTextCtrl.text = '2';
         if (inputCookingSteps.isEmpty) {
           inputCookingSteps.add(InputCookingStep());
         }
@@ -93,6 +97,7 @@ class EditRecipeController extends GetxController {
         final recipe = recipeModel!;
         recipeNameTextCtrl.text = recipe.name;
         descriptionTextCtrl.text = recipe.description;
+        websiteLinkTextCtrl.text = recipe.websiteLink;
         servingsTextCtrl.text = recipe.servings.toString();
         categoryTextCtrl.text = recipe.category;
         if (recipe.category.isNotEmpty &&
@@ -158,6 +163,18 @@ class EditRecipeController extends GetxController {
     inputCookingSteps.add(InputCookingStep());
   }
 
+  void addCookingStepAndScrollToBottom() {
+    addCookingStep();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!formScrollController.hasClients) return;
+      formScrollController.animateTo(
+        formScrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 260),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
+
   Future<void> addCategory(String category) async {
     final value = category.trim();
     if (value.isEmpty) return;
@@ -216,8 +233,10 @@ class EditRecipeController extends GetxController {
   void onClose() {
     recipeNameTextCtrl.dispose();
     descriptionTextCtrl.dispose();
+    websiteLinkTextCtrl.dispose();
     servingsTextCtrl.dispose();
     categoryTextCtrl.dispose();
+    formScrollController.dispose();
 
     for (var inputCookingStep in inputCookingSteps) {
       inputCookingStep.descriptionTeCtrl.dispose();
@@ -286,10 +305,21 @@ class EditRecipeController extends GetxController {
       SnackBarHelper.showErrorSnackBar(AppStrings.recipeNameRequired.tr);
       return;
     }
+    final servings = servingsTextCtrl.text.trim();
+    final servingsAsInt = int.tryParse(servings);
+    if (servingsAsInt == null) {
+      SnackBarHelper.showErrorSnackBar('인분을 입력해주세요.');
+      return;
+    }
+    if (servingsAsInt < 1) {
+      SnackBarHelper.showErrorSnackBar('1인분 이상을 입력해주세요.');
+      return;
+    }
 
     _isLoading.value = true;
     try {
       final description = descriptionTextCtrl.text.trim();
+      final websiteLink = websiteLinkTextCtrl.text.trim();
       final category = selectedCategory.value.trim();
       if (category.isNotEmpty) {
         await _categoryRepository.addCategory(category);
@@ -374,10 +404,10 @@ class EditRecipeController extends GetxController {
         name: recipeName,
         category: category,
         isLiked: isLiked.value,
-
         totalIngredientCost: totalIngredientCost,
         totalKcal: totalKcal,
         totalWater: totalWater,
+        servings: servingsAsInt,
         totalProtein: totalProtein,
         totalFat: totalFat,
         totalCarbohydrate: totalCarbohydrate,
@@ -387,6 +417,7 @@ class EditRecipeController extends GetxController {
         createdAt: this.recipeModel?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
         description: description,
+        websiteLink: websiteLink,
         coverImagePath: savedImageCoverPath,
         ingredients: resolvedIngredients,
         steps: cookingStepModels,
@@ -398,40 +429,6 @@ class EditRecipeController extends GetxController {
     } finally {
       _isLoading.value = false;
     }
-  }
-
-  Future<void> _cleanupReplacedImages({
-    required String? newCoverImagePath,
-    required Set<String> newStepImagePaths,
-  }) async {
-    final oldRecipe = recipeModel;
-    if (oldRecipe == null) return;
-
-    final oldCoverImagePath = oldRecipe.coverImagePath;
-    if (_shouldDeleteOldPath(oldCoverImagePath, newCoverImagePath)) {
-      await _safeDeleteFile(oldCoverImagePath!);
-    }
-
-    final oldStepImagePaths =
-        oldRecipe.steps
-            .map((step) => step.imagePath)
-            .whereType<String>()
-            .where((path) => path.isNotEmpty)
-            .toSet();
-    for (final oldPath in oldStepImagePaths) {
-      if (newStepImagePaths.contains(oldPath)) continue;
-      await _safeDeleteFile(oldPath);
-    }
-  }
-
-  bool _shouldDeleteOldPath(String? oldPath, String? newPath) {
-    if (oldPath == null || oldPath.isEmpty) return false;
-    if (oldPath == newPath) return false;
-    return true;
-  }
-
-  Future<void> _safeDeleteFile(String path) async {
-    await ImageService.deleteSavedFile(path);
   }
 
   IngredientProductModel? _findProductByName(

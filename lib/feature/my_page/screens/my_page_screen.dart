@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
@@ -16,7 +14,6 @@ class MyPageScreen extends GetView<MyPageController> {
     final borderColor = Theme.of(context).colorScheme.outline;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.secondartColor,
         centerTitle: true,
         title: Text(
           AppStrings.myPage.tr,
@@ -207,6 +204,18 @@ class MyPageScreen extends GetView<MyPageController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionHeader(AppStrings.settingsGeneral.tr),
+        _card(
+          cardColor: cardColor,
+          borderColor: borderColor,
+          child: ListTile(
+            onTap: controller.goToICloudSyncSettings,
+            leading: const Icon(Icons.cloud_sync_outlined),
+            title: Text(AppStrings.iCloudSync.tr),
+            subtitle: Text(AppStrings.iCloudSyncDescription.tr),
+            trailing: const Icon(Icons.chevron_right),
+          ),
+        ),
+        const SizedBox(height: 8),
         _card(
           cardColor: cardColor,
           borderColor: borderColor,

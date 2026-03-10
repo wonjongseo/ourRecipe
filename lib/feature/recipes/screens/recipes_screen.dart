@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
+import 'package:our_recipe/core/widgets/app_refresh_indicator.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/recipes/screens/widgets/custom_search_bar.dart';
@@ -82,17 +83,35 @@ class RecipesScreen extends GetView<RecipeController> {
                           SizedBox(height: 10),
                           Obx(
                             () => Expanded(
-                              child: ListView.separated(
-                                separatorBuilder:
-                                    (context, index) => SizedBox(height: 12),
-                                shrinkWrap: false,
-                                itemCount: controller.recipes.length,
-                                itemBuilder: (context, index) {
-                                  final recipe = controller.recipes[index];
+                              child:
+                                  controller.recipes.isEmpty
+                                      ? Center(
+                                        child: Text(
+                                          '등록된 레시피가 없습니다',
+                                          style: TextStyle(
+                                            color:
+                                                AppColors.noRegisteredItemColor,
+                                          ),
+                                        ),
+                                      )
+                                      : AppRefreshIndicator(
+                                        onRefresh: controller.reloadAll,
+                                        child: ListView.separated(
+                                          physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                          separatorBuilder:
+                                              (context, index) =>
+                                                  SizedBox(height: 12),
+                                          shrinkWrap: false,
+                                          itemCount: controller.recipes.length,
+                                          itemBuilder: (context, index) {
+                                            final recipe =
+                                                controller.recipes[index];
 
-                                  return recipeListTIle(recipe);
-                                },
-                              ),
+                                            return recipeListTIle(recipe);
+                                          },
+                                        ),
+                                      ),
                             ),
                           ),
                         ],
@@ -172,6 +191,12 @@ class RecipesScreen extends GetView<RecipeController> {
 
   Widget recipeListTIle(RecipeModel recipe) {
     final isDark = Theme.of(Get.context!).brightness == Brightness.dark;
+    final coverPath = recipe.coverImagePath;
+    final hasValidCoverImage =
+        coverPath != null &&
+        coverPath.isNotEmpty &&
+        File(coverPath).existsSync() &&
+        File(coverPath).lengthSync() > 0;
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () => controller.goToDetailScreen(recipe),
@@ -204,15 +229,15 @@ class RecipesScreen extends GetView<RecipeController> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image:
-                          recipe.coverImagePath == null
+                          !hasValidCoverImage
                               ? null
                               : DecorationImage(
                                 fit: BoxFit.cover,
-                                image: FileImage(File(recipe.coverImagePath!)),
+                                image: FileImage(File(coverPath!)),
                               ),
                     ),
                     child:
-                        recipe.coverImagePath == null
+                        !hasValidCoverImage
                             ? Icon(FontAwesomeIcons.utensils)
                             : null,
                   ),

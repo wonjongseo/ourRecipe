@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
+import 'package:our_recipe/core/services/app_data_path_service.dart';
 
 class RecipeDatabaseService {
+  /// 앱 실행 중 중복 open을 피하기 위한 DB 캐시.
   static Database? _cachedDb;
 
   static const String recipes = 'recipes';
@@ -19,8 +23,8 @@ class RecipeDatabaseService {
     final cached = _cachedDb;
     if (cached != null) return cached;
 
-    final dbPath = await getDatabasesPath();
-    final fullPath = path.join(dbPath, 'our_recipe_data.db');
+    // iOS에서는 iCloud 경로, 그 외에는 로컬 경로를 사용해 DB 파일 경로를 계산한다.
+    final fullPath = await _resolveDatabaseFilePath();
     _cachedDb = await openDatabase(
       fullPath,
       version: 1,
@@ -33,6 +37,7 @@ class RecipeDatabaseService {
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
             description TEXT NOT NULL DEFAULT '',
+            website_link TEXT NOT NULL DEFAULT '',
             servings INTEGER NOT NULL DEFAULT 1,
             cover_image_path TEXT,
             category TEXT NOT NULL DEFAULT '',
@@ -147,4 +152,94 @@ class RecipeDatabaseService {
     );
     return _cachedDb!;
   }
+
+  static Future<void> reset() async {
+    final cached = _cachedDb;
+    if (cached != null) {
+      await cached.close();
+    }
+    _cachedDb = null;
+  }
+
+  /// 현재 플랫폼/설정 기준으로 최종 DB 파일 경로를 결정한다.
+  Future<String> _resolveDatabaseFilePath() async {
+    final localDbDir = await getDatabasesPath();
+    final localDbPath = path.join(localDbDir, 'our_recipe_data.db');
+    final appDataDir = await AppDataPathService.getAppDataDirectoryPath();
+    final targetDbPath = path.join(appDataDir, 'our_recipe_data.db');
+    await _migrateLocalDatabaseIfNeeded(
+      localDbPath: localDbPath,
+      targetDbPath: targetDbPath,
+    );
+    return targetDbPath;
+  }
+
+  /// iOS에서 저장 위치가 변경될 때(로컬<->iCloud) 기존 DB를 1회 복사한다.
+  Future<void> _migrateLocalDatabaseIfNeeded({
+    required String localDbPath,
+    required String targetDbPath,
+  }) async {
+    if (!Platform.isIOS) return;
+    final iCloudDir = await AppDataPathService.getICloudDirectoryPathIfAvailable();
+    final iCloudDbPath =
+        iCloudDir == null ? null : path.join(iCloudDir, 'our_recipe_data.db');
+
+    String? sourceDbPath;
+    if (localDbPath == targetDbPath) {
+      sourceDbPath = iCloudDbPath;
+    } else {
+      sourceDbPath = localDbPath;
+    }
+    if (sourceDbPath == null || sourceDbPath == targetDbPath) return;
+
+    final localDb = File(sourceDbPath);
+    final targetDb = File(targetDbPath);
+    if (!await localDb.exists()) return;
+    if (await targetDb.exists()) return;
+
+    await targetDb.parent.create(recursive: true);
+    await localDb.copy(targetDbPath);
+    await _copyIfExists('$sourceDbPath-wal', '$targetDbPath-wal');
+    await _copyIfExists('$sourceDbPath-shm', '$targetDbPath-shm');
+    await _copyImageAssetsIfNeeded(
+      sourceDirPath: path.dirname(sourceDbPath),
+      targetDirPath: path.dirname(targetDbPath),
+    );
+  }
+
+  /// SQLite 보조 파일(wal/shm)이 있을 때만 함께 복사한다.
+  Future<void> _copyIfExists(String sourcePath, String targetPath) async {
+    final source = File(sourcePath);
+    if (!await source.exists()) return;
+    await source.copy(targetPath);
+  }
+
+  Future<void> _copyImageAssetsIfNeeded({
+    required String sourceDirPath,
+    required String targetDirPath,
+  }) async {
+    if (sourceDirPath == targetDirPath) return;
+    final sourceDir = Directory(sourceDirPath);
+    if (!await sourceDir.exists()) return;
+    final targetDir = Directory(targetDirPath);
+    await targetDir.create(recursive: true);
+
+    await for (final entity in sourceDir.list(followLinks: false)) {
+      if (entity is! File) continue;
+      final ext = path.extension(entity.path).toLowerCase();
+      if (!_imageExtensions.contains(ext)) continue;
+      final targetPath = path.join(targetDir.path, path.basename(entity.path));
+      final targetFile = File(targetPath);
+      if (await targetFile.exists()) continue;
+      await entity.copy(targetPath);
+    }
+  }
+
+  static const Set<String> _imageExtensions = {
+    '.png',
+    '.jpg',
+    '.jpeg',
+    '.heic',
+    '.webp',
+  };
 }

@@ -6,6 +6,7 @@ import 'package:our_recipe/core/common/app_dropdown_styles.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
+import 'package:our_recipe/core/widgets/custom_bottom_button.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/controller/edit_recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/screens/widgets/editable_cooking_step_list_tile.dart';
@@ -25,48 +26,30 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Obx(
-                () => Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 12),
-                  height: 55,
-                  child: ElevatedButton.icon(
-                    onPressed:
-                        controller.isLoading
-                            ? null
-                            : () => controller.saveRecipeModel(),
-                    label: Text(
+                () => CustomBottomButton(
+                  label:
                       controller.isEdit
                           ? AppStrings.edit.tr
                           : AppStrings.save.tr,
-                    ),
-                    icon: Icon(Icons.add),
-                  ),
+                  icon: controller.isEdit ? Icons.edit : Icons.add,
+                  onPressed:
+                      controller.isLoading
+                          ? null
+                          : () => controller.saveRecipeModel(),
                 ),
               ),
               const AdBannerBottomSheet(),
             ],
           ),
         ),
-        appBar: AppBar(
-          title: Text(AppStrings.addRecipe.tr),
-          actions: [
-            TextButton(
-              onPressed:
-                  controller.isLoading
-                      ? null
-                      : () => controller.saveRecipeModel(),
-              child: Text(
-                controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
-              ),
-            ),
-          ],
-        ),
+        appBar: AppBar(title: Text(AppStrings.addRecipe.tr)),
         body: SafeArea(
           child: Obx(
             () =>
                 controller.isLoading
                     ? Center(child: CircularProgressIndicator.adaptive())
                     : SingleChildScrollView(
+                      controller: controller.formScrollController,
                       padding: EdgeInsets.symmetric(
                         vertical: 8,
                         horizontal: 24,
@@ -84,24 +67,29 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                           ),
                           SizedBox(height: 12),
                           CustomTextFormField(
-                            label: AppStrings.description.tr,
-                            maxLine: 3,
-                            controller: controller.descriptionTextCtrl,
-                          ),
-                          SizedBox(height: 12),
-                          CustomTextFormField(
                             label: AppStrings.servings.tr,
                             controller: controller.servingsTextCtrl,
                             keyboardType: TextInputType.number,
                             hintText: AppStrings.servingsExample.tr,
                             suffixText: AppStrings.servingsUnit.tr,
                           ),
+                          SizedBox(height: 12),
+                          CustomTextFormField(
+                            label: AppStrings.description.tr,
+                            maxLine: 3,
+                            controller: controller.descriptionTextCtrl,
+                          ),
 
                           SizedBox(height: 24),
                           _ingredients(),
                           SizedBox(height: 24),
                           _cookingSteps(),
-
+                          SizedBox(height: 24),
+                          CustomTextFormField(
+                            label: AppStrings.websiteLink.tr,
+                            controller: controller.websiteLinkTextCtrl,
+                            keyboardType: TextInputType.url,
+                          ),
                           SizedBox(height: 30),
                         ],
                       ),
@@ -223,7 +211,7 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: () => controller.addCookingStep(),
+            onPressed: controller.addCookingStepAndScrollToBottom,
             label: Text(AppStrings.addStep.tr),
             icon: Icon(Icons.add),
           ),

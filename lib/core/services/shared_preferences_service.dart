@@ -22,8 +22,16 @@ class SharedPreferencesService {
     return (await _prefs).getDouble(key);
   }
 
+  Future<bool?> getBool(String key) async {
+    return (await _prefs).getBool(key);
+  }
+
   Future<bool> setDouble(String key, double value) async {
     return (await _prefs).setDouble(key, value);
+  }
+
+  Future<bool> setBool(String key, bool value) async {
+    return (await _prefs).setBool(key, value);
   }
 
   Future<bool> remove(String key) async {

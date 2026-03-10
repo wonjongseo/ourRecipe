@@ -5,6 +5,7 @@ import 'package:our_recipe/core/common/app_dropdown_styles.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
+import 'package:our_recipe/core/widgets/custom_bottom_button.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/controller/ingredient_edit_controller.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
@@ -34,7 +35,22 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
       () => GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          bottomNavigationBar: const AdBannerBottomSheet(),
+          bottomNavigationBar: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomBottomButton(
+                  label:
+                      controller.isEdit
+                          ? AppStrings.edit.tr
+                          : AppStrings.save.tr,
+                  onPressed: controller.save,
+                  icon: controller.isEdit ? Icons.edit : Icons.add,
+                ),
+                const AdBannerBottomSheet(),
+              ],
+            ),
+          ),
           appBar: _appBar(),
           body: SafeArea(
             child:
@@ -287,6 +303,47 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
     );
   }
 
+  Future<void> _confirmDelete() async {
+    final showICloudWarning = await controller.isICloudDeleteWarningVisible();
+    final confirmed = await showAdaptiveDialog<bool>(
+      context: context,
+      builder:
+          (context) => AlertDialog.adaptive(
+            title: Text(AppStrings.delete.tr),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(AppStrings.deleteIngredientConfirmMessage.tr),
+                if (showICloudWarning) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    AppStrings.deleteIngredientICloudWarning.tr,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(AppStrings.cancel.tr),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(AppStrings.delete.tr),
+              ),
+            ],
+          ),
+    );
+    if (confirmed == true) {
+      await controller.delete();
+    }
+  }
+
   Widget _nutritionRow({required Widget left, required Widget right}) {
     return Row(
       children: [
@@ -351,15 +408,9 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
       actions: [
         if (controller.isEdit)
           IconButton(
-            onPressed: controller.delete,
+            onPressed: _confirmDelete,
             icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
           ),
-        TextButton(
-          onPressed: controller.save,
-          child: Text(
-            controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
-          ),
-        ),
       ],
     );
   }

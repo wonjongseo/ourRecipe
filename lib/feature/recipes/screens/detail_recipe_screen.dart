@@ -6,13 +6,16 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
 import 'package:our_recipe/core/services/share_service.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
+import 'package:our_recipe/core/widgets/custom_bottom_button.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/start_cooking/screen/start_cooking_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailRecipeScreen extends StatefulWidget {
   const DetailRecipeScreen({super.key, required this.recipeModel});
@@ -60,22 +63,12 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SafeArea(
-              top: false,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton.icon(
-                    onPressed: _canStartCooking ? _goToStartCooking : null,
-                    icon: const Icon(Icons.play_arrow_rounded),
-                    label: Text(AppStrings.startCooking.tr),
-                    iconAlignment: IconAlignment.end,
-                  ),
-                ),
-              ),
+            CustomBottomButton(
+              onPressed: _canStartCooking ? _goToStartCooking : null,
+              label: AppStrings.startCooking.tr,
+              icon: Icons.play_arrow_rounded,
             ),
+
             const AdBannerBottomSheet(),
           ],
         ),
@@ -102,6 +95,32 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                       Text(
                         recipeModel.description,
                         style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                    if (recipeModel.websiteLink.trim().isNotEmpty) ...[
+                      const SizedBox(height: 10),
+                      InkWell(
+                        onTap: _openWebsite,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.open_in_new_rounded,
+                              size: 16,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                recipeModel.websiteLink.trim(),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                     const SizedBox(height: 12),
@@ -180,7 +199,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                                           SizedBox(height: 6),
                                           Text(step.instruction),
                                           SizedBox(height: 12),
-                                          if (step.imagePath != null)
+                                          if (_hasValidImageFile(step.imagePath))
                                             Image.file(File(step.imagePath!)),
 
                                           if (index !=
@@ -562,7 +581,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
               _editRecipe();
               break;
             case 'delete':
-              controller.deleteRecipe(recipeModel);
+              _confirmDeleteRecipe();
               break;
           }
         },
@@ -696,6 +715,68 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
       return;
     }
     Get.toNamed(StartCookingScreen.name, arguments: recipeModel);
+  }
+
+  Future<void> _openWebsite() async {
+    final raw = recipeModel.websiteLink.trim();
+    if (raw.isEmpty) return;
+    final normalized =
+        raw.startsWith('http://') || raw.startsWith('https://')
+            ? raw
+            : 'https://$raw';
+    final uri = Uri.tryParse(normalized);
+    if (uri == null) {
+      SnackBarHelper.showErrorSnackBar(AppStrings.invalidWebsiteLink.tr);
+      return;
+    }
+    final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!launched) {
+      SnackBarHelper.showErrorSnackBar(AppStrings.openWebsiteFailed.tr);
+    }
+  }
+
+  bool _hasValidImageFile(String? filePath) {
+    if (filePath == null || filePath.isEmpty) return false;
+    final file = File(filePath);
+    if (!file.existsSync()) return false;
+    return file.lengthSync() > 0;
+  }
+
+  Future<void> _confirmDeleteRecipe() async {
+    final isICloudEnabled = await ICloudSyncSettingsService().isEnabled();
+    final shouldDelete = await Get.dialog<bool>(
+      AlertDialog.adaptive(
+        title: Text(AppStrings.delete.tr),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(AppStrings.deleteRecipeConfirmMessage.tr),
+            if (isICloudEnabled) ...[
+              const SizedBox(height: 8),
+              Text(
+                AppStrings.deleteRecipeICloudWarning.tr,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: false),
+            child: Text(AppStrings.cancel.tr),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            onPressed: () => Get.back(result: true),
+            child: Text(AppStrings.delete.tr),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldDelete != true) return;
+    controller.deleteRecipe(recipeModel);
   }
 }
 

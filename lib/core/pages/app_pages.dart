@@ -21,6 +21,7 @@ import 'package:our_recipe/feature/recipes/screens/ingredient_category_managemen
 import 'package:our_recipe/feature/recipes/screens/ingredient_edit_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
 import 'package:our_recipe/feature/my_page/controller/my_page_controller.dart';
+import 'package:our_recipe/feature/my_page/screens/icloud_sync_settings_screen.dart';
 import 'package:our_recipe/feature/splash/controller/splash_controller.dart';
 import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
 import 'package:our_recipe/feature/start_cooking/controller/start_cooking_controller.dart';
@@ -116,6 +117,10 @@ class AppPages {
         final recipeModel = Get.arguments as RecipeModel;
         return StartCookingController(recipeModel);
       }),
+    ),
+    GetPage(
+      name: ICloudSyncSettingsScreen.name,
+      page: () => const ICloudSyncSettingsScreen(),
     ),
   ];
 }

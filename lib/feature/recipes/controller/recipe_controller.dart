@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/core/services/image_service.dart';
+import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_category_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_repository.dart';
@@ -50,6 +52,7 @@ class RecipeController extends GetxController {
   final RecipeRepository _repository;
   final RecipeCategoryRepository _categoryRepository;
   RecipeController(this._repository, this._categoryRepository);
+  final ICloudSyncService _iCloudSync = ICloudSyncService();
 
   final _recipes = <RecipeModel>[].obs;
   final _filteredRecipes = <RecipeModel>[].obs;
@@ -78,17 +81,27 @@ class RecipeController extends GetxController {
     _setUp();
   }
 
-  void _setUp() async {
+  Future<void> _setUp() async {
     _isLoading.value = true;
     try {
+      await _syncFromICloudIfEnabled();
       await _fetchCategories();
       await _fetchRecipes();
     } catch (e, s) {
+      _recipes.clear();
+      _filteredRecipes.clear();
       LogManager.error('Recipe setup failed', error: e, stackTrace: s);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  Future<void> reloadAll() async {
+    // iCloud에서 외부 변경된 SQLite 파일을 반영하기 위해
+    // 기존 연결 캐시를 닫고 다시 연다.
+    await RecipeDatabaseService.reset();
+    await _setUp();
   }
 
   Future<void> _fetchRecipes() async {
@@ -140,6 +153,7 @@ class RecipeController extends GetxController {
       await _fetchCategories();
       if (result is! RecipeModel) return null;
       await _repository.saveRecipe(result);
+      await _syncPushPullIfEnabled();
       await _fetchRecipes();
       return result;
     } catch (e, s) {
@@ -155,6 +169,7 @@ class RecipeController extends GetxController {
     await Get.toNamed(DetailRecipeScreen.name, arguments: recipeModel);
     _isLoading.value = true;
     try {
+      await _syncFromICloudIfEnabled();
       await _fetchCategories();
       await _fetchRecipes();
     } catch (e, s) {
@@ -168,11 +183,17 @@ class RecipeController extends GetxController {
   void deleteRecipe(RecipeModel recipe) async {
     _isLoading.value = true;
     try {
+      final shouldDeleteICloud = await _isICloudEnabledOnIOS();
+      if (shouldDeleteICloud) {
+        await _iCloudSync.deleteRecipeIfEnabled(recipe.id);
+      }
+
       await ImageService.deleteSavedFile(recipe.coverImagePath);
       for (final step in recipe.steps) {
         await ImageService.deleteSavedFile(step.imagePath);
       }
       await _repository.deleteRecipe(recipe.id);
+      await _syncFromICloudIfEnabled();
       await _fetchRecipes();
       Get.back();
     } catch (e, s) {
@@ -188,10 +209,14 @@ class RecipeController extends GetxController {
     if (index == -1) return;
 
     final recipe = _recipes[index];
-    final toggled = recipe.copyWith(isLiked: !recipe.isLiked);
+    final toggled = recipe.copyWith(
+      isLiked: !recipe.isLiked,
+      updatedAt: DateTime.now(),
+    );
     _isLoading.value = true;
     try {
       await _repository.saveRecipe(toggled);
+      await _syncPushPullIfEnabled();
       await _fetchRecipes();
     } catch (e, s) {
       LogManager.error('Toggle bookmark failed', error: e, stackTrace: s);
@@ -247,5 +272,17 @@ class RecipeController extends GetxController {
 
   void goToStartCooking(RecipeModel recipeModel) {
     Get.toNamed(StartCookingScreen.name, arguments: recipeModel);
+  }
+
+  Future<void> _syncPushPullIfEnabled() async {
+    await _iCloudSync.pushPullIfEnabled();
+  }
+
+  Future<void> _syncFromICloudIfEnabled() async {
+    await _iCloudSync.pullIfEnabled();
+  }
+
+  Future<bool> _isICloudEnabledOnIOS() async {
+    return _iCloudSync.isEnabledOnIOS();
   }
 }

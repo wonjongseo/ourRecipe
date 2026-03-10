@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:our_recipe/core/services/recipe_database_service.dart';
@@ -279,6 +280,159 @@ class IngredientProductRepository {
     });
   }
 
+  Future<void> syncRecipeIngredientsForProduct({
+    required IngredientProductModel product,
+    String? previousName,
+  }) async {
+    final db = await _database.db;
+    final candidateNames = <String>{
+      product.name.trim(),
+      if (previousName != null && previousName.trim().isNotEmpty)
+        previousName.trim(),
+    };
+    if (candidateNames.isEmpty) return;
+
+    await db.transaction((txn) async {
+      final placeholders = List.filled(candidateNames.length, '?').join(', ');
+      final matchedRows = await txn.query(
+        RecipeDatabaseService.recipeIngredients,
+        where: 'name IN ($placeholders)',
+        whereArgs: candidateNames.toList(),
+      );
+      if (matchedRows.isEmpty) return;
+
+      final affectedRecipeIds = <String>{};
+      for (final row in matchedRows) {
+        final ingredientId = row['id'] as String?;
+        final recipeId = row['recipe_id'] as String?;
+        if (ingredientId == null || recipeId == null) continue;
+        affectedRecipeIds.add(recipeId);
+        await txn.update(
+          RecipeDatabaseService.recipeIngredients,
+          {
+            'name': product.name,
+            'price': product.price,
+            'product_amount': product.baseGram > 0 ? product.baseGram : null,
+            'product_unit':
+                product.baseGram > 0 ? IngredientUnit.gram.name : null,
+            'kcal': product.kcal,
+            'water': product.water,
+            'protein': product.protein,
+            'fat': product.fat,
+            'carbohydrate': product.carbohydrate,
+            'fiber': product.fiber,
+            'ash': product.ash,
+            'sodium': product.sodium,
+          },
+          where: 'id = ?',
+          whereArgs: [ingredientId],
+        );
+      }
+
+      for (final recipeId in affectedRecipeIds) {
+        final ingredientRows = await txn.query(
+          RecipeDatabaseService.recipeIngredients,
+          where: 'recipe_id = ?',
+          whereArgs: [recipeId],
+        );
+
+        var totalIngredientCost = 0.0;
+        var totalKcal = 0.0;
+        var totalWater = 0.0;
+        var totalProtein = 0.0;
+        var totalFat = 0.0;
+        var totalCarbohydrate = 0.0;
+        var totalFiber = 0.0;
+        var totalAsh = 0.0;
+        var totalSodium = 0.0;
+
+        for (final row in ingredientRows) {
+          totalIngredientCost += _scaledValue(
+            value: (row['price'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalKcal += _scaledValue(
+            value: (row['kcal'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalWater += _scaledValue(
+            value: (row['water'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalProtein += _scaledValue(
+            value: (row['protein'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalFat += _scaledValue(
+            value: (row['fat'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalCarbohydrate += _scaledValue(
+            value: (row['carbohydrate'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalFiber += _scaledValue(
+            value: (row['fiber'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalAsh += _scaledValue(
+            value: (row['ash'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+          totalSodium += _scaledValue(
+            value: (row['sodium'] as num?)?.toDouble(),
+            baseAmount: (row['product_amount'] as num?)?.toDouble(),
+            amount: (row['amount'] as num?)?.toDouble() ?? 0,
+            unitName: row['unit'] as String?,
+            productUnitName: row['product_unit'] as String?,
+          );
+        }
+
+        await txn.update(
+          RecipeDatabaseService.recipes,
+          {
+            'total_ingredient_cost': totalIngredientCost,
+            'total_kcal': totalKcal,
+            'total_water': totalWater,
+            'total_protein': totalProtein,
+            'total_fat': totalFat,
+            'total_carbohydrate': totalCarbohydrate,
+            'total_fiber': totalFiber,
+            'total_ash': totalAsh,
+            'total_sodium': totalSodium,
+            'updated_at': DateTime.now().toIso8601String(),
+          },
+          where: 'id = ?',
+          whereArgs: [recipeId],
+        );
+      }
+    });
+  }
+
   Future<void> deleteProduct(String productId) async {
     final db = await _database.db;
     final deleted = await db.delete(
@@ -335,6 +489,20 @@ class IngredientProductRepository {
       'sodium': product.sodium,
       'is_default': isDefault ? 1 : 0,
     };
+  }
+
+  double _scaledValue({
+    required double? value,
+    required double? baseAmount,
+    required double amount,
+    required String? unitName,
+    required String? productUnitName,
+  }) {
+    if (value == null || baseAmount == null || baseAmount <= 0) return 0;
+    final unit = (unitName ?? '').trim();
+    final productUnit = (productUnitName ?? unit).trim();
+    if (unit.isEmpty || unit != productUnit) return 0;
+    return (value / baseAmount) * amount;
   }
 }
 

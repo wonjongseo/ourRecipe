@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
+import 'package:our_recipe/core/services/app_data_path_service.dart';
 import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
@@ -15,7 +17,7 @@ class RecipeRepository {
 
   Future<List<RecipeModel>> fetchRecipes() async {
     final db = await _database.db;
-    final docsPath = (await getApplicationDocumentsDirectory()).path;
+    final docsPath = await AppDataPathService.getAppDataDirectoryPath();
     final rows = await db.query(
       RecipeDatabaseService.recipes,
       orderBy: 'updated_at DESC',
@@ -116,6 +118,7 @@ class RecipeRepository {
       'id': recipe.id,
       'name': recipe.name,
       'description': recipe.description,
+      'website_link': recipe.websiteLink,
       'servings': recipe.servings,
       'cover_image_path': recipe.coverImagePath,
       'category': recipe.category,
@@ -182,6 +185,7 @@ class RecipeRepository {
       id: row['id'] as String,
       name: row['name'] as String,
       description: (row['description'] as String?) ?? '',
+      websiteLink: (row['website_link'] as String?) ?? '',
       servings: (row['servings'] as int?) ?? 1,
       coverImagePath: _resolveStoredImagePath(
         row['cover_image_path'] as String?,
@@ -247,7 +251,12 @@ class RecipeRepository {
     if (value == null) return null;
     final trimmed = value.trim();
     if (trimmed.isEmpty) return null;
-    if (p.isAbsolute(trimmed) || trimmed.startsWith('/')) return trimmed;
+    if (p.isAbsolute(trimmed) || trimmed.startsWith('/')) {
+      if (File(trimmed).existsSync()) return trimmed;
+      final fallback = p.join(docsPath, p.basename(trimmed));
+      if (File(fallback).existsSync()) return fallback;
+      return fallback;
+    }
     return p.join(docsPath, trimmed);
   }
 

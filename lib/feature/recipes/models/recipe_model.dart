@@ -12,6 +12,9 @@ class RecipeModel {
   /// 레시피 설명(메모, 소개).
   final String description;
 
+  /// 참고 웹사이트 링크.
+  final String websiteLink;
+
   /// 기준 인분 수.
   final int servings;
 
@@ -51,6 +54,7 @@ class RecipeModel {
     required this.id,
     required this.name,
     this.description = '',
+    this.websiteLink = '',
     this.servings = 1,
     this.coverImagePath,
     this.ingredients = const [],
@@ -74,6 +78,7 @@ class RecipeModel {
     String? id,
     String? name,
     String? description,
+    String? websiteLink,
     int? servings,
     String? coverImagePath,
     List<IngredientModel>? ingredients,
@@ -96,6 +101,7 @@ class RecipeModel {
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      websiteLink: websiteLink ?? this.websiteLink,
       servings: servings ?? this.servings,
       coverImagePath: coverImagePath ?? this.coverImagePath,
       ingredients: ingredients ?? this.ingredients,
@@ -121,6 +127,7 @@ class RecipeModel {
       'id': id,
       'name': name,
       'description': description,
+      'websiteLink': websiteLink,
       'servings': servings,
       'coverImagePath': coverImagePath,
       'ingredients': ingredients.map((item) => item.toJson()).toList(),
@@ -146,6 +153,7 @@ class RecipeModel {
       id: json['id'] as String,
       name: json['name'] as String,
       description: (json['description'] as String?) ?? '',
+      websiteLink: (json['websiteLink'] as String?) ?? '',
       servings: (json['servings'] as int?) ?? 1,
       coverImagePath: json['coverImagePath'] as String?,
       ingredients:

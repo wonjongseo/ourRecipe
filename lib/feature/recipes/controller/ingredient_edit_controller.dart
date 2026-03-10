@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_category_repository.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_product_repository.dart';
+import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_category_management_screen.dart';
 import 'package:uuid/uuid.dart';
 
@@ -23,6 +25,7 @@ class IngredientEditController extends GetxController {
   final IngredientProductModel? product;
   final IngredientProductRepository _productRepository;
   final IngredientCategoryRepository _categoryRepository;
+  final ICloudSyncService _iCloudSync = ICloudSyncService();
 
   late final TextEditingController nameCtrl;
   late final TextEditingController manufacturerCtrl;
@@ -89,6 +92,7 @@ class IngredientEditController extends GetxController {
   Future<void> _loadCategories() async {
     try {
       _isLoading.value = true;
+      await _syncFromICloudIfEnabled();
       final values = await _categoryRepository.fetchAllCategories();
       final custom = <String>[];
       final defaults = <String>[];
@@ -127,6 +131,10 @@ class IngredientEditController extends GetxController {
     await _loadCategories();
   }
 
+  Future<bool> isICloudDeleteWarningVisible() async {
+    return _iCloudSync.isEnabledOnIOS();
+  }
+
   double? _toDouble(TextEditingController ctrl) {
     final value = ctrl.text.trim();
     if (value.isEmpty) return null;
@@ -145,6 +153,7 @@ class IngredientEditController extends GetxController {
   }
 
   Future<void> save() async {
+    final previousName = product?.name;
     final name = nameCtrl.text.trim();
     final manufacturer = manufacturerCtrl.text.trim();
     final category = IngredientCategoryCatalog.normalizeDefaultId(
@@ -166,7 +175,7 @@ class IngredientEditController extends GetxController {
     //   SnackBarHelper.showErrorSnackBar(AppStrings.requiredFieldError.tr);
     //   return;
     // }
-    bool result = false;
+    bool result = true;
     if (isNutritionAllEmpty()) {
       result = await Get.dialog(
         barrierDismissible: false,
@@ -185,6 +194,7 @@ class IngredientEditController extends GetxController {
         ),
       );
     }
+
     if (!result) return;
 
     final saved = IngredientProductModel(
@@ -207,6 +217,13 @@ class IngredientEditController extends GetxController {
     try {
       _isLoading.value = true;
       await _productRepository.saveProduct(saved);
+      await _productRepository.syncRecipeIngredientsForProduct(
+        product: saved,
+        previousName: previousName,
+      );
+      await _saveIngredientToICloudIfEnabled(saved);
+      await _syncFromICloudIfEnabled();
+      await _reloadRecipeCacheIfNeeded();
       Get.back(result: true);
     } catch (e, s) {
       LogManager.error('Save ingredient failed', error: e, stackTrace: s);
@@ -221,7 +238,12 @@ class IngredientEditController extends GetxController {
     if (target == null) return;
     try {
       _isLoading.value = true;
+      if (!target.isDefault) {
+        await _deleteIngredientFromICloudIfEnabled(target.id);
+      }
       await _productRepository.deleteProduct(target.id);
+      await _syncFromICloudIfEnabled();
+      await _reloadRecipeCacheIfNeeded();
       Get.back(result: true);
     } catch (e, s) {
       LogManager.error('Delete ingredient failed', error: e, stackTrace: s);
@@ -229,5 +251,28 @@ class IngredientEditController extends GetxController {
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  Future<void> _syncPushPullIfEnabled() async {
+    await _iCloudSync.pushPullIfEnabled();
+  }
+
+  Future<void> _saveIngredientToICloudIfEnabled(
+    IngredientProductModel product,
+  ) async {
+    await _iCloudSync.upsertIngredientIfEnabled(product);
+  }
+
+  Future<void> _deleteIngredientFromICloudIfEnabled(String productId) async {
+    await _iCloudSync.deleteIngredientIfEnabled(productId);
+  }
+
+  Future<void> _syncFromICloudIfEnabled() async {
+    await _iCloudSync.pullIfEnabled();
+  }
+
+  Future<void> _reloadRecipeCacheIfNeeded() async {
+    if (!Get.isRegistered<RecipeController>()) return;
+    await Get.find<RecipeController>().reloadAll();
   }
 }

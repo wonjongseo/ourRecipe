@@ -53,7 +53,9 @@ class NutritionDetailScreen extends StatelessWidget {
       (sum, item) => sum + _nutritionValue(item),
     );
     final perServingTotal = total / servings;
-    final outline = Theme.of(context).colorScheme.outline.withValues(alpha: 0.35);
+    final outline = Theme.of(
+      context,
+    ).colorScheme.outline.withValues(alpha: 0.35);
     final surface = Theme.of(context).colorScheme.surface;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     final primary = Theme.of(context).colorScheme.primary;
@@ -107,9 +109,9 @@ class NutritionDetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(14),
                         child: Table(
                           columnWidths: const {
-                            0: FlexColumnWidth(4),
-                            1: FlexColumnWidth(1),
-                            2: FlexColumnWidth(1),
+                            0: FlexColumnWidth(5),
+                            1: FlexColumnWidth(2),
+                            2: FlexColumnWidth(2),
                           },
                           defaultVerticalAlignment:
                               TableCellVerticalAlignment.middle,
@@ -136,7 +138,9 @@ class NutritionDetailScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            ...List.generate(recipe.ingredients.length, (index) {
+                            ...List.generate(recipe.ingredients.length, (
+                              index,
+                            ) {
                               final ingredient = recipe.ingredients[index];
                               final value = _nutritionValue(ingredient);
                               final perServing = value / servings;
@@ -190,7 +194,9 @@ class NutritionDetailScreen extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 11,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.75),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.75),
             ),
           ),
           const SizedBox(height: 4),

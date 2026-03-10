@@ -69,6 +69,15 @@ class AppStrings extends Translations {
       AppStrings.settingsGeneral: AppStrings.settingsGeneralJp,
       AppStrings.settingsAppearance: AppStrings.settingsAppearanceJp,
       AppStrings.settingsManagement: AppStrings.settingsManagementJp,
+      AppStrings.iCloudSync: AppStrings.iCloudSyncJp,
+      AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionJp,
+      AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleJp,
+      AppStrings.iCloudConflictDescription:
+          AppStrings.iCloudConflictDescriptionJp,
+      AppStrings.iCloudMerge: AppStrings.iCloudMergeJp,
+      AppStrings.iCloudOverwrite: AppStrings.iCloudOverwriteJp,
+      AppStrings.iCloudSyncChanged: AppStrings.iCloudSyncChangedJp,
+      AppStrings.loading: AppStrings.loadingJp,
       AppStrings.categoryManagement: AppStrings.categoryManagementJp,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementJp,
       AppStrings.settings: AppStrings.settingsJp,
@@ -82,8 +91,7 @@ class AppStrings extends Translations {
       AppStrings.categoryName: AppStrings.categoryNameJp,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryJp,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientJp,
-      AppStrings.noRegisteredCookingStep:
-          AppStrings.noRegisteredCookingStepJp,
+      AppStrings.noRegisteredCookingStep: AppStrings.noRegisteredCookingStepJp,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredJp,
       AppStrings.appProvidedUnitFixedGuide:
           AppStrings.appProvidedUnitFixedGuideJp,
@@ -103,6 +111,14 @@ class AppStrings extends Translations {
       AppStrings.languageKorean: AppStrings.languageKoreanJp,
       AppStrings.languageEnglish: AppStrings.languageEnglishJp,
       AppStrings.delete: AppStrings.deleteJp,
+      AppStrings.deleteRecipeConfirmMessage:
+          AppStrings.deleteRecipeConfirmMessageJp,
+      AppStrings.deleteRecipeICloudWarning:
+          AppStrings.deleteRecipeICloudWarningJp,
+      AppStrings.deleteIngredientConfirmMessage:
+          AppStrings.deleteIngredientConfirmMessageJp,
+      AppStrings.deleteIngredientICloudWarning:
+          AppStrings.deleteIngredientICloudWarningJp,
       AppStrings.share: AppStrings.shareJp,
       AppStrings.theme: AppStrings.themeJp,
       AppStrings.font: AppStrings.fontJp,
@@ -133,7 +149,15 @@ class AppStrings extends Translations {
       AppStrings.appTitle: AppStrings.appTitleJp,
       AppStrings.dbLoadFailed: AppStrings.dbLoadFailedJp,
       AppStrings.dbSaveFailed: AppStrings.dbSaveFailedJp,
+      AppStrings.iCloudSettingsGuide: AppStrings.iCloudSettingsGuideJp,
+      AppStrings.pleaseCheckSettings: AppStrings.pleaseCheckSettingsJp,
+      AppStrings.deleteAllICloudData: AppStrings.deleteAllICloudDataJp,
+      AppStrings.deleteAllICloudDataDescription:
+          AppStrings.deleteAllICloudDataDescriptionJp,
       AppStrings.recipeName: AppStrings.recipeNameJp,
+      AppStrings.websiteLink: AppStrings.websiteLinkJp,
+      AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkJp,
+      AppStrings.openWebsiteFailed: AppStrings.openWebsiteFailedJp,
       AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenJp,
     },
     'ko_KR': {
@@ -202,6 +226,15 @@ class AppStrings extends Translations {
       AppStrings.settingsGeneral: AppStrings.settingsGeneralKr,
       AppStrings.settingsAppearance: AppStrings.settingsAppearanceKr,
       AppStrings.settingsManagement: AppStrings.settingsManagementKr,
+      AppStrings.iCloudSync: AppStrings.iCloudSyncKr,
+      AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionKr,
+      AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleKr,
+      AppStrings.iCloudConflictDescription:
+          AppStrings.iCloudConflictDescriptionKr,
+      AppStrings.iCloudMerge: AppStrings.iCloudMergeKr,
+      AppStrings.iCloudOverwrite: AppStrings.iCloudOverwriteKr,
+      AppStrings.iCloudSyncChanged: AppStrings.iCloudSyncChangedKr,
+      AppStrings.loading: AppStrings.loadingKr,
       AppStrings.categoryManagement: AppStrings.categoryManagementKr,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementKr,
       AppStrings.settings: AppStrings.settingsKr,
@@ -215,8 +248,7 @@ class AppStrings extends Translations {
       AppStrings.categoryName: AppStrings.categoryNameKr,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryKr,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientKr,
-      AppStrings.noRegisteredCookingStep:
-          AppStrings.noRegisteredCookingStepKr,
+      AppStrings.noRegisteredCookingStep: AppStrings.noRegisteredCookingStepKr,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredKr,
       AppStrings.appProvidedUnitFixedGuide:
           AppStrings.appProvidedUnitFixedGuideKr,
@@ -236,6 +268,14 @@ class AppStrings extends Translations {
       AppStrings.languageKorean: AppStrings.languageKoreanKr,
       AppStrings.languageEnglish: AppStrings.languageEnglishKr,
       AppStrings.delete: AppStrings.deleteKr,
+      AppStrings.deleteRecipeConfirmMessage:
+          AppStrings.deleteRecipeConfirmMessageKr,
+      AppStrings.deleteRecipeICloudWarning:
+          AppStrings.deleteRecipeICloudWarningKr,
+      AppStrings.deleteIngredientConfirmMessage:
+          AppStrings.deleteIngredientConfirmMessageKr,
+      AppStrings.deleteIngredientICloudWarning:
+          AppStrings.deleteIngredientICloudWarningKr,
       AppStrings.share: AppStrings.shareKr,
       AppStrings.theme: AppStrings.themeKr,
       AppStrings.font: AppStrings.fontKr,
@@ -266,7 +306,15 @@ class AppStrings extends Translations {
       AppStrings.appTitle: AppStrings.appTitleKr,
       AppStrings.dbLoadFailed: AppStrings.dbLoadFailedKr,
       AppStrings.dbSaveFailed: AppStrings.dbSaveFailedKr,
+      AppStrings.iCloudSettingsGuide: AppStrings.iCloudSettingsGuideKr,
+      AppStrings.pleaseCheckSettings: AppStrings.pleaseCheckSettingsKr,
+      AppStrings.deleteAllICloudData: AppStrings.deleteAllICloudDataKr,
+      AppStrings.deleteAllICloudDataDescription:
+          AppStrings.deleteAllICloudDataDescriptionKr,
       AppStrings.recipeName: AppStrings.recipeNameKr,
+      AppStrings.websiteLink: AppStrings.websiteLinkKr,
+      AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkKr,
+      AppStrings.openWebsiteFailed: AppStrings.openWebsiteFailedKr,
       AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenKr,
     },
 
@@ -336,6 +384,15 @@ class AppStrings extends Translations {
       AppStrings.settingsGeneral: AppStrings.settingsGeneralEn,
       AppStrings.settingsAppearance: AppStrings.settingsAppearanceEn,
       AppStrings.settingsManagement: AppStrings.settingsManagementEn,
+      AppStrings.iCloudSync: AppStrings.iCloudSyncEn,
+      AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionEn,
+      AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleEn,
+      AppStrings.iCloudConflictDescription:
+          AppStrings.iCloudConflictDescriptionEn,
+      AppStrings.iCloudMerge: AppStrings.iCloudMergeEn,
+      AppStrings.iCloudOverwrite: AppStrings.iCloudOverwriteEn,
+      AppStrings.iCloudSyncChanged: AppStrings.iCloudSyncChangedEn,
+      AppStrings.loading: AppStrings.loadingEn,
       AppStrings.categoryManagement: AppStrings.categoryManagementEn,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementEn,
       AppStrings.settings: AppStrings.settingsEn,
@@ -349,8 +406,7 @@ class AppStrings extends Translations {
       AppStrings.categoryName: AppStrings.categoryNameEn,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryEn,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientEn,
-      AppStrings.noRegisteredCookingStep:
-          AppStrings.noRegisteredCookingStepEn,
+      AppStrings.noRegisteredCookingStep: AppStrings.noRegisteredCookingStepEn,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredEn,
       AppStrings.appProvidedUnitFixedGuide:
           AppStrings.appProvidedUnitFixedGuideEn,
@@ -370,6 +426,14 @@ class AppStrings extends Translations {
       AppStrings.languageKorean: AppStrings.languageKoreanEn,
       AppStrings.languageEnglish: AppStrings.languageEnglishEn,
       AppStrings.delete: AppStrings.deleteEn,
+      AppStrings.deleteRecipeConfirmMessage:
+          AppStrings.deleteRecipeConfirmMessageEn,
+      AppStrings.deleteRecipeICloudWarning:
+          AppStrings.deleteRecipeICloudWarningEn,
+      AppStrings.deleteIngredientConfirmMessage:
+          AppStrings.deleteIngredientConfirmMessageEn,
+      AppStrings.deleteIngredientICloudWarning:
+          AppStrings.deleteIngredientICloudWarningEn,
       AppStrings.share: AppStrings.shareEn,
       AppStrings.theme: AppStrings.themeEn,
       AppStrings.font: AppStrings.fontEn,
@@ -400,7 +464,15 @@ class AppStrings extends Translations {
       AppStrings.appTitle: AppStrings.appTitleEn,
       AppStrings.dbLoadFailed: AppStrings.dbLoadFailedEn,
       AppStrings.dbSaveFailed: AppStrings.dbSaveFailedEn,
+      AppStrings.iCloudSettingsGuide: AppStrings.iCloudSettingsGuideEn,
+      AppStrings.pleaseCheckSettings: AppStrings.pleaseCheckSettingsEn,
+      AppStrings.deleteAllICloudData: AppStrings.deleteAllICloudDataEn,
+      AppStrings.deleteAllICloudDataDescription:
+          AppStrings.deleteAllICloudDataDescriptionEn,
       AppStrings.recipeName: AppStrings.recipeNameEn,
+      AppStrings.websiteLink: AppStrings.websiteLinkEn,
+      AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkEn,
+      AppStrings.openWebsiteFailed: AppStrings.openWebsiteFailedEn,
       AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenEn,
     },
   };
@@ -601,6 +673,49 @@ class AppStrings extends Translations {
   static String settingsManagementJp = "管理";
   static String settingsManagementEn = "Management";
 
+  static String iCloudSync = "iCloudSyncTr";
+  static String iCloudSyncKr = "iCloud 공유";
+  static String iCloudSyncJp = "iCloud共有";
+  static String iCloudSyncEn = "iCloud Sync";
+
+  static String iCloudSyncDescription = "iCloudSyncDescriptionTr";
+  static String iCloudSyncDescriptionKr = "레시피와 사진을 iCloud와 동기화";
+  static String iCloudSyncDescriptionJp = "レシピと画像をiCloudに同期";
+  static String iCloudSyncDescriptionEn = "Sync recipes and images with iCloud";
+
+  static String iCloudConflictTitle = "iCloudConflictTitleTr";
+  static String iCloudConflictTitleKr = "기존 데이터가 있어요";
+  static String iCloudConflictTitleJp = "既存データがあります";
+  static String iCloudConflictTitleEn = "Existing Data Found";
+
+  static String iCloudConflictDescription = "iCloudConflictDescriptionTr";
+  static String iCloudConflictDescriptionKr =
+      "대상 저장소에 이미 데이터가 있습니다.\n덮어쓰기 또는 병합 방식을 선택하세요.";
+  static String iCloudConflictDescriptionJp =
+      "保存先に既存データがあります。\n上書きまたはマージを選択してください。";
+  static String iCloudConflictDescriptionEn =
+      "Data already exists in destination storage.\nChoose overwrite or merge.";
+
+  static String iCloudMerge = "iCloudMergeTr";
+  static String iCloudMergeKr = "병합";
+  static String iCloudMergeJp = "マージ";
+  static String iCloudMergeEn = "Merge";
+
+  static String iCloudOverwrite = "iCloudOverwriteTr";
+  static String iCloudOverwriteKr = "덮어쓰기";
+  static String iCloudOverwriteJp = "上書き";
+  static String iCloudOverwriteEn = "Overwrite";
+
+  static String iCloudSyncChanged = "iCloudSyncChangedTr";
+  static String iCloudSyncChangedKr = "iCloud 공유 설정이 변경되었습니다.";
+  static String iCloudSyncChangedJp = "iCloud共有設定を変更しました。";
+  static String iCloudSyncChangedEn = "iCloud sync setting has been changed.";
+
+  static String loading = "loadingTr";
+  static String loadingKr = "처리 중...";
+  static String loadingJp = "処理中...";
+  static String loadingEn = "Processing...";
+
   static String categoryManagement = "categoryManagementTr";
   static String categoryManagementKr = "카테고리 관리";
   static String categoryManagementJp = "カテゴリー管理";
@@ -677,10 +792,8 @@ class AppStrings extends Translations {
   static String priceNotRegisteredEn = "Price is not registered.";
 
   static String appProvidedUnitFixedGuide = "appProvidedUnitFixedGuideTr";
-  static String appProvidedUnitFixedGuideKr =
-      "앱 제공 재료는 단위가 g(그램)으로 고정됩니다.";
-  static String appProvidedUnitFixedGuideJp =
-      "アプリ提供食材は単位がg(グラム)に固定されます。";
+  static String appProvidedUnitFixedGuideKr = "앱 제공 재료는 단위가 g(그램)으로 고정됩니다.";
+  static String appProvidedUnitFixedGuideJp = "アプリ提供食材は単位がg(グラム)に固定されます。";
   static String appProvidedUnitFixedGuideEn =
       "App-provided ingredients use a fixed unit: g (gram).";
 
@@ -754,6 +867,34 @@ class AppStrings extends Translations {
   static String deleteKr = "삭제";
   static String deleteJp = "削除";
   static String deleteEn = "Delete";
+
+  static String deleteRecipeConfirmMessage = "deleteRecipeConfirmMessageTr";
+  static String deleteRecipeConfirmMessageKr = "이 레시피를 삭제할까요?";
+  static String deleteRecipeConfirmMessageJp = "このレシピを削除しますか？";
+  static String deleteRecipeConfirmMessageEn = "Delete this recipe?";
+
+  static String deleteRecipeICloudWarning = "deleteRecipeICloudWarningTr";
+  static String deleteRecipeICloudWarningKr =
+      "iCloud 공유가 켜져 있어\n다른 기기에서도 반영될 수 있습니다.";
+  static String deleteRecipeICloudWarningJp =
+      "iCloud共有がONのため、\n他のデバイスにも反映される可能性があります。";
+  static String deleteRecipeICloudWarningEn =
+      "iCloud sync is ON,\nso this may affect other devices.";
+
+  static String deleteIngredientConfirmMessage =
+      "deleteIngredientConfirmMessageTr";
+  static String deleteIngredientConfirmMessageKr = "이 재료를 삭제할까요?";
+  static String deleteIngredientConfirmMessageJp = "この材料を削除しますか？";
+  static String deleteIngredientConfirmMessageEn = "Delete this ingredient?";
+
+  static String deleteIngredientICloudWarning =
+      "deleteIngredientICloudWarningTr";
+  static String deleteIngredientICloudWarningKr =
+      "iCloud 공유가 켜져 있어\n다른 기기에서도 반영될 수 있습니다.";
+  static String deleteIngredientICloudWarningJp =
+      "iCloud共有がONのため、\n他のデバイスにも反映される可能性があります。";
+  static String deleteIngredientICloudWarningEn =
+      "iCloud sync is ON,\nso this may affect other devices.";
 
   static String share = "shareTr";
   static String shareKr = "공유";
@@ -842,8 +983,7 @@ class AppStrings extends Translations {
 
   static String nutritionPer100gGuide = "nutritionPer100gGuideTr";
   static String nutritionPer100gGuideKr = "앱 제공 재료의 영양성분은 100g 기준입니다.";
-  static String nutritionPer100gGuideJp =
-      "アプリ提供の材料の栄養成分は100gあたり基準です。";
+  static String nutritionPer100gGuideJp = "アプリ提供の材料の栄養成分は100gあたり基準です。";
   static String nutritionPer100gGuideEn =
       "Nutrition values for app-provided ingredients are based on 100g.";
 
@@ -902,6 +1042,21 @@ class AppStrings extends Translations {
   static String recipeNameJp = "レシピ名";
   static String recipeNameEn = "Recipe Name";
 
+  static String websiteLink = "websiteLinkTr";
+  static String websiteLinkKr = "웹사이트 링크";
+  static String websiteLinkJp = "Webサイトリンク";
+  static String websiteLinkEn = "Website Link";
+
+  static String invalidWebsiteLink = "invalidWebsiteLinkTr";
+  static String invalidWebsiteLinkKr = "유효한 웹사이트 주소를 입력해주세요.";
+  static String invalidWebsiteLinkJp = "有効なWebサイトURLを入力してください。";
+  static String invalidWebsiteLinkEn = "Please enter a valid website URL.";
+
+  static String openWebsiteFailed = "openWebsiteFailedTr";
+  static String openWebsiteFailedKr = "웹사이트를 열 수 없습니다.";
+  static String openWebsiteFailedJp = "Webサイトを開けません。";
+  static String openWebsiteFailedEn = "Could not open the website.";
+
   static String ingredientManageScreen = "ingredientManageScreenTr";
   static String ingredientManageScreenKr = "재료 관리 화면";
   static String ingredientManageScreenJp = "材料管理画面";
@@ -916,6 +1071,33 @@ class AppStrings extends Translations {
   static String dbSaveFailedKr = "데이터 저장에 실패했어요. 다시 시도해주세요.";
   static String dbSaveFailedJp = "データの保存に失敗しました。再試行してください。";
   static String dbSaveFailedEn = "Failed to save data. Please try again.";
+
+  static String iCloudSettingsGuide = "iCloudSettingsGuideTr";
+  static String iCloudSettingsGuideKr =
+      "iCloud 설정을 확인해주세요.\n설정 > [Apple ID] > iCloud > iCloud Drive ON,\n같은 화면의 Our Recipe 토글 ON";
+  static String iCloudSettingsGuideJp =
+      "iCloud設定を確認してください。\n設定 > [Apple ID] > iCloud > iCloud Drive をON、\n同じ画面で Our Recipe をON";
+  static String iCloudSettingsGuideEn =
+      "Check iCloud settings.\nSettings > [Apple ID] > iCloud > iCloud Drive ON,\nand turn ON Our Recipe in the same screen.";
+
+  static String pleaseCheckSettings = "pleaseCheckSettingsTr";
+  static String pleaseCheckSettingsKr = "설정을 확인해주세요.";
+  static String pleaseCheckSettingsJp = "設定を確認してください。";
+  static String pleaseCheckSettingsEn = "Please check your settings.";
+
+  static String deleteAllICloudData = "deleteAllICloudDataTr";
+  static String deleteAllICloudDataKr = "iCloud 데이터 모두 삭제";
+  static String deleteAllICloudDataJp = "iCloudデータをすべて削除";
+  static String deleteAllICloudDataEn = "Delete all iCloud data";
+
+  static String deleteAllICloudDataDescription =
+      "deleteAllICloudDataDescriptionTr";
+  static String deleteAllICloudDataDescriptionKr =
+      "iCloud에 저장된 레시피와 이미지를 모두 삭제합니다.";
+  static String deleteAllICloudDataDescriptionJp =
+      "iCloudに保存されたレシピと画像をすべて削除します。";
+  static String deleteAllICloudDataDescriptionEn =
+      "Delete all recipes and images stored in iCloud.";
 
   static String memo = "memoTr";
   static String memoKr = "메모";
