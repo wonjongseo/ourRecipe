@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
-import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
@@ -10,9 +9,12 @@ import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/repository/recipe_category_repository.dart';
 
 class CategoryManagementScreen extends StatefulWidget {
-  const CategoryManagementScreen({super.key});
+  const CategoryManagementScreen({
+    super.key,
+    required this.isCameToEditRecipeScreen,
+  });
   static String name = '/category_management';
-
+  final bool isCameToEditRecipeScreen;
   @override
   State<CategoryManagementScreen> createState() =>
       _CategoryManagementScreenState();
@@ -42,7 +44,11 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
           ..addAll(values);
       });
     } catch (e, s) {
-      LogManager.error('Load recipe categories failed', error: e, stackTrace: s);
+      LogManager.error(
+        'Load recipe categories failed',
+        error: e,
+        stackTrace: s,
+      );
       SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -136,6 +142,10 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                         itemBuilder: (_, index) {
                           final category = _categories[index];
                           return ListTile(
+                            onTap:
+                                widget.isCameToEditRecipeScreen
+                                    ? () => Get.back(result: category)
+                                    : null,
                             tileColor: Theme.of(context).cardColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),

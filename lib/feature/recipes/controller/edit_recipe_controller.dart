@@ -84,10 +84,6 @@ class EditRecipeController extends GetxController {
       categories.assignAll(savedCategories);
 
       if (recipeModel == null) {
-        if (categories.isNotEmpty) {
-          selectedCategory.value = categories.first;
-          categoryTextCtrl.text = categories.first;
-        }
         isLiked.value = false;
 
         if (inputCookingSteps.isEmpty) {
@@ -194,7 +190,14 @@ class EditRecipeController extends GetxController {
   }
 
   Future<void> goToCategoryManagement() async {
-    await Get.toNamed(CategoryManagementScreen.name);
+    final result = await Get.toNamed(
+      CategoryManagementScreen.name,
+      arguments: true,
+    );
+    if (result != null && result.runtimeType == String) {
+      selectedCategory.value = result;
+    }
+
     await refreshCategories();
   }
 

@@ -72,7 +72,12 @@ class AppPages {
     ),
     GetPage(
       name: CategoryManagementScreen.name,
-      page: () => const CategoryManagementScreen(),
+      page: () {
+        final isCameToEditRecipeScreen = Get.arguments as bool;
+        return CategoryManagementScreen(
+          isCameToEditRecipeScreen: isCameToEditRecipeScreen,
+        );
+      },
     ),
     GetPage(
       name: IngredientManagementScreen.name,

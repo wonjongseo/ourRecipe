@@ -133,6 +133,17 @@ class IngredientEditController extends GetxController {
     return double.tryParse(value);
   }
 
+  bool isNutritionAllEmpty() {
+    return kcalCtrl.text.isEmpty &&
+        waterCtrl.text.isEmpty &&
+        proteinCtrl.text.isEmpty &&
+        fatCtrl.text.isEmpty &&
+        carbohydrateCtrl.text.isEmpty &&
+        fiberCtrl.text.isEmpty &&
+        ashCtrl.text.isEmpty &&
+        sodiumCtrl.text.isEmpty;
+  }
+
   Future<void> save() async {
     final name = nameCtrl.text.trim();
     final manufacturer = manufacturerCtrl.text.trim();
@@ -142,22 +153,47 @@ class IngredientEditController extends GetxController {
     final price = _toDouble(priceCtrl);
     final baseGram = _toDouble(baseGramCtrl);
 
-    if (name.isEmpty ||
-        manufacturer.isEmpty ||
-        category.isEmpty ||
-        price == null ||
-        baseGram == null) {
-      SnackBarHelper.showErrorSnackBar(AppStrings.requiredFieldError.tr);
+    if (name.isEmpty) {
+      SnackBarHelper.showErrorSnackBar('재료명을 입력해주세요');
       return;
     }
+    if (category.isEmpty) {
+      SnackBarHelper.showErrorSnackBar('재료 카테고리를 선택해주세요.');
+      return;
+    }
+
+    // if (name.isEmpty || category.isEmpty || price == null || baseGram == null) {
+    //   SnackBarHelper.showErrorSnackBar(AppStrings.requiredFieldError.tr);
+    //   return;
+    // }
+    bool result = false;
+    if (isNutritionAllEmpty()) {
+      result = await Get.dialog(
+        barrierDismissible: false,
+        AlertDialog.adaptive(
+          content: Text('영양 성분의 정보 없습니다.\n저장하시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(result: false),
+              child: Text('아니요'),
+            ),
+            TextButton(
+              onPressed: () => Get.back(result: true),
+              child: Text('예'),
+            ),
+          ],
+        ),
+      );
+    }
+    if (!result) return;
 
     final saved = IngredientProductModel(
       id: product?.id ?? const Uuid().v4(),
       name: name,
       category: category,
       manufacturer: manufacturer,
-      price: price,
-      baseGram: baseGram,
+      price: price ?? 0,
+      baseGram: baseGram ?? 0,
       kcal: _toDouble(kcalCtrl),
       water: _toDouble(waterCtrl),
       protein: _toDouble(proteinCtrl),

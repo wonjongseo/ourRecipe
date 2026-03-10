@@ -31,233 +31,257 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
   Widget build(BuildContext context) {
     const gap = SizedBox(height: 12);
     return Obx(
-      () => Scaffold(
-        bottomNavigationBar: const AdBannerBottomSheet(),
-        appBar: _appBar(),
-        body: SafeArea(
-          child:
-              controller.isLoading
-                  ? Center(child: CircularProgressIndicator.adaptive())
-                  : ListView(
-                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
-                    children: [
-                      _sectionCard(
-                        context: context,
-                        title: AppStrings.ingredient.tr,
-                        icon: Icons.inventory_2_outlined,
-                        child: Column(
-                          children: [
-                            CustomTextFormField(
-                              label: AppStrings.ingredientName.tr,
-                              controller: controller.nameCtrl,
-                            ),
-                            gap,
-                            SizedBox(
-                              height: UiConstants.formFieldHeight,
-                              child: DropdownButtonFormField2<String>(
-                                value: controller.selectedCategory.value,
-                                isExpanded: true,
-                                buttonStyleData:
-                                    AppDropdownStyles.dropdown2ButtonStyle(
-                                      height: UiConstants.formFieldHeight,
-                                      padding: const EdgeInsets.only(
-                                        left: 2,
-                                        right: 8,
-                                      ),
+      () => GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          bottomNavigationBar: const AdBannerBottomSheet(),
+          appBar: _appBar(),
+          body: SafeArea(
+            child:
+                controller.isLoading
+                    ? Center(child: CircularProgressIndicator.adaptive())
+                    : ListView(
+                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
+                      children: [
+                        _sectionCard(
+                          context: context,
+                          title: AppStrings.ingredient.tr,
+                          icon: Icons.inventory_2_outlined,
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                label: AppStrings.ingredientName.tr,
+                                controller: controller.nameCtrl,
+                              ),
+                              // gap,
+                              Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: TextButton.icon(
+                                      onPressed:
+                                          () =>
+                                              controller
+                                                  .goToCategoryManagement(),
+                                      label: Text('재료 카테고리 추가'),
+                                      icon: Icon(Icons.add),
                                     ),
-                                dropdownStyleData:
-                                    AppDropdownStyles.dropdown2MenuStyle(
-                                      context,
-                                      maxHeight: 400,
-                                    ),
-                                menuItemStyleData:
-                                    AppDropdownStyles.dropdown2ItemStyle(),
-                                decoration:
-                                    AppDropdownStyles.formFieldDecoration(
-                                      context,
-                                      labelText:
-                                          AppStrings.ingredientCategory.tr,
-                                      suffixIcon: IconButton(
-                                        onPressed:
-                                            controller.goToCategoryManagement,
-                                        icon: const Icon(
-                                          Icons.settings_outlined,
-                                          size: 18,
-                                        ),
-                                      ),
-                                    ),
-                                dropdownSearchData: DropdownSearchData(
-                                  searchController: _categorySearchCtrl,
-                                  searchInnerWidgetHeight: 56,
-                                  searchInnerWidget: SizedBox(
-                                    height: 56,
-                                    child: TextFormField(
-                                      controller: _categorySearchCtrl,
-                                      expands: true,
-                                      maxLines: null,
+                                  ),
+                                  SizedBox(
+                                    height: UiConstants.formFieldHeight,
+                                    child: DropdownButtonFormField2<String>(
+                                      value: controller.selectedCategory.value,
+                                      isExpanded: true,
+                                      buttonStyleData:
+                                          AppDropdownStyles.dropdown2ButtonStyle(
+                                            height: UiConstants.formFieldHeight,
+                                            padding: const EdgeInsets.only(
+                                              left: 2,
+                                              right: 8,
+                                            ),
+                                          ),
+                                      dropdownStyleData:
+                                          AppDropdownStyles.dropdown2MenuStyle(
+                                            context,
+                                            maxHeight: 400,
+                                          ),
+                                      menuItemStyleData:
+                                          AppDropdownStyles.dropdown2ItemStyle(),
                                       decoration:
                                           AppDropdownStyles.formFieldDecoration(
                                             context,
-                                            hintText: AppStrings.search.tr,
+                                            labelText:
+                                                AppStrings
+                                                    .ingredientCategory
+                                                    .tr,
+                                            // suffixIcon: IconButton(
+                                            //   onPressed:
+                                            //       controller.goToCategoryManagement,
+                                            //   icon: const Icon(
+                                            //     Icons.settings_outlined,
+                                            //     size: 18,
+                                            //   ),
+                                            // ),
                                           ),
-                                    ),
-                                  ),
-                                  searchMatchFn: (item, searchValue) {
-                                    final value = item.value ?? '';
-                                    final query = searchValue.trim();
-                                    if (query.isEmpty) return true;
-                                    return IngredientCategoryCatalog.displayName(
-                                          value,
-                                          controller.languageCode,
-                                        ).toLowerCase().contains(
-                                          query.toLowerCase(),
-                                        ) ||
-                                        value.toLowerCase().contains(
-                                          query.toLowerCase(),
-                                        );
-                                  },
-                                ),
-                                items: [
-                                  ...controller.categories.map(
-                                    (category) => DropdownMenuItem<String>(
-                                      value: category,
-                                      child: Text(
-                                        IngredientCategoryCatalog.displayName(
-                                          category,
-                                          controller.languageCode,
+                                      dropdownSearchData: DropdownSearchData(
+                                        searchController: _categorySearchCtrl,
+                                        searchInnerWidgetHeight: 56,
+                                        searchInnerWidget: SizedBox(
+                                          height: 56,
+                                          child: TextFormField(
+                                            controller: _categorySearchCtrl,
+                                            expands: true,
+                                            maxLines: null,
+                                            decoration:
+                                                AppDropdownStyles.formFieldDecoration(
+                                                  context,
+                                                  hintText:
+                                                      AppStrings.search.tr,
+                                                ),
+                                          ),
                                         ),
+                                        searchMatchFn: (item, searchValue) {
+                                          final value = item.value ?? '';
+                                          final query = searchValue.trim();
+                                          if (query.isEmpty) return true;
+                                          return IngredientCategoryCatalog.displayName(
+                                                value,
+                                                controller.languageCode,
+                                              ).toLowerCase().contains(
+                                                query.toLowerCase(),
+                                              ) ||
+                                              value.toLowerCase().contains(
+                                                query.toLowerCase(),
+                                              );
+                                        },
                                       ),
+                                      items: [
+                                        ...controller.categories.map(
+                                          (
+                                            category,
+                                          ) => DropdownMenuItem<String>(
+                                            value: category,
+                                            child: Text(
+                                              IngredientCategoryCatalog.displayName(
+                                                category,
+                                                controller.languageCode,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      onChanged: controller.setSelectedCategory,
+                                      onMenuStateChange: (isOpen) {
+                                        if (!isOpen)
+                                          _categorySearchCtrl.clear();
+                                      },
                                     ),
                                   ),
                                 ],
-                                onChanged: controller.setSelectedCategory,
-                                onMenuStateChange: (isOpen) {
-                                  if (!isOpen) _categorySearchCtrl.clear();
-                                },
                               ),
-                            ),
-                            gap,
-                            CustomTextFormField(
-                              label: AppStrings.manufacturerName.tr,
-                              controller: controller.manufacturerCtrl,
-                            ),
-                            gap,
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomTextFormField(
-                                    label: AppStrings.price.tr,
-                                    controller: controller.priceCtrl,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                          decimal: true,
-                                        ),
+                              gap,
+                              CustomTextFormField(
+                                label: AppStrings.manufacturerName.tr,
+                                controller: controller.manufacturerCtrl,
+                              ),
+                              gap,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomTextFormField(
+                                      label: AppStrings.price.tr,
+                                      controller: controller.priceCtrl,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                            decimal: true,
+                                          ),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: CustomTextFormField(
-                                    label: AppStrings.productGram.tr,
-                                    controller: controller.baseGramCtrl,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                          decimal: true,
-                                        ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: CustomTextFormField(
+                                      label: AppStrings.productGram.tr,
+                                      controller: controller.baseGramCtrl,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                            decimal: true,
+                                          ),
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        _sectionCard(
+                          context: context,
+                          title: AppStrings.nutrition.tr,
+                          icon: Icons.monitor_heart_outlined,
+                          child: Column(
+                            children: [
+                              _nutritionRow(
+                                left: CustomTextFormField(
+                                  label: AppStrings.kcal.tr,
+                                  controller: controller.kcalCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
                                 ),
-                              ],
-                            ),
-                          ],
+                                right: CustomTextFormField(
+                                  label: AppStrings.water.tr,
+                                  controller: controller.waterCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                              ),
+                              gap,
+                              _nutritionRow(
+                                left: CustomTextFormField(
+                                  label: AppStrings.protein.tr,
+                                  controller: controller.proteinCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                                right: CustomTextFormField(
+                                  label: AppStrings.fat.tr,
+                                  controller: controller.fatCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                              ),
+                              gap,
+                              _nutritionRow(
+                                left: CustomTextFormField(
+                                  label: AppStrings.carbohydrate.tr,
+                                  controller: controller.carbohydrateCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                                right: CustomTextFormField(
+                                  label: AppStrings.fiber.tr,
+                                  controller: controller.fiberCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                              ),
+                              gap,
+                              _nutritionRow(
+                                left: CustomTextFormField(
+                                  label: AppStrings.ash.tr,
+                                  controller: controller.ashCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                                right: CustomTextFormField(
+                                  label: AppStrings.sodium.tr,
+                                  controller: controller.sodiumCtrl,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      _sectionCard(
-                        context: context,
-                        title: AppStrings.nutrition.tr,
-                        icon: Icons.monitor_heart_outlined,
-                        child: Column(
-                          children: [
-                            _nutritionRow(
-                              left: CustomTextFormField(
-                                label: AppStrings.kcal.tr,
-                                controller: controller.kcalCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                              right: CustomTextFormField(
-                                label: AppStrings.water.tr,
-                                controller: controller.waterCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                            ),
-                            gap,
-                            _nutritionRow(
-                              left: CustomTextFormField(
-                                label: AppStrings.protein.tr,
-                                controller: controller.proteinCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                              right: CustomTextFormField(
-                                label: AppStrings.fat.tr,
-                                controller: controller.fatCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                            ),
-                            gap,
-                            _nutritionRow(
-                              left: CustomTextFormField(
-                                label: AppStrings.carbohydrate.tr,
-                                controller: controller.carbohydrateCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                              right: CustomTextFormField(
-                                label: AppStrings.fiber.tr,
-                                controller: controller.fiberCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                            ),
-                            gap,
-                            _nutritionRow(
-                              left: CustomTextFormField(
-                                label: AppStrings.ash.tr,
-                                controller: controller.ashCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                              right: CustomTextFormField(
-                                label: AppStrings.sodium.tr,
-                                controller: controller.sodiumCtrl,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
+                        const SizedBox(height: 12),
+                      ],
+                    ),
+          ),
         ),
       ),
     );

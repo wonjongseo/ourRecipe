@@ -75,7 +75,7 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _coverImage(),
-                          SizedBox(height: 24),
+                          SizedBox(height: 6),
                           _recipeCategory(context),
                           SizedBox(height: 12),
                           CustomTextFormField(
@@ -113,63 +113,67 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
   }
 
   Widget _recipeCategory(BuildContext context) {
-    return SizedBox(
-      height: UiConstants.formFieldHeight,
-      child: DropdownButtonFormField<String>(
-        isExpanded: true,
-        icon: Icon(
-          Icons.keyboard_arrow_down_rounded,
-          color:
-              controller.categories.isEmpty
-                  ? Colors.grey
-                  : Colors.grey.shade700,
-        ),
-        borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
-        dropdownColor: Get.theme.colorScheme.surface,
-        menuMaxHeight: 300,
-        value:
-            controller.selectedCategory.value.isEmpty
-                ? null
-                : controller.selectedCategory.value,
-        decoration: AppDropdownStyles.formFieldDecoration(
-          context,
-          labelText: AppStrings.category.tr,
-          suffixIcon: IconButton(
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
             onPressed: () => controller.goToCategoryManagement(),
-            icon: const Icon(Icons.settings_outlined, size: 18),
+            label: Text('카테고리 추가'),
+            icon: Icon(Icons.add),
           ),
         ),
-        hint: Text(
-          controller.categories.isEmpty
-              ? '카테고리를 등록해주세요'
-              : AppStrings.selectCategoryHint.tr,
-          style: TextStyle(
-            fontSize: UiConstants.formFieldHintSize,
-            color: Colors.grey.shade600,
-          ),
-        ),
-        items: [
-          ...controller.categories.map(
-            (category) => DropdownMenuItem<String>(
-              value: category,
-              child: Text(
-                category,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+        SizedBox(
+          height: UiConstants.formFieldHeight,
+          child: DropdownButtonFormField<String>(
+            isExpanded: true,
+            icon: Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color:
+                  controller.categories.isEmpty
+                      ? Colors.grey
+                      : Colors.grey.shade700,
+            ),
+            borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
+            dropdownColor: Get.theme.colorScheme.surface,
+            menuMaxHeight: 300,
+            value:
+                controller.selectedCategory.value.isEmpty
+                    ? null
+                    : controller.selectedCategory.value,
+            decoration: AppDropdownStyles.formFieldDecoration(
+              context,
+              labelText: AppStrings.category.tr,
+            ),
+            hint: Text(
+              controller.categories.isEmpty
+                  ? '카테고리를 등록해주세요'
+                  : AppStrings.selectCategoryHint.tr,
+              style: TextStyle(
+                fontSize: UiConstants.formFieldHintSize,
+                color: Colors.grey.shade600,
               ),
             ),
+            items: [
+              ...controller.categories.map(
+                (category) => DropdownMenuItem<String>(
+                  value: category,
+                  child: Text(
+                    category,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ],
+            onChanged: (value) {
+              if (value == null) return;
+
+              controller.setSelectedCategory(value);
+            },
           ),
-          // DropdownMenuItem(
-          //   child: Text('카테고리 추가'),
-          //   value: 'add',
-          //   onTap: () => controller.goToCategoryManagement(),
-          // ),
-        ],
-        onChanged: (value) {
-          if (value == null) return;
-          controller.setSelectedCategory(value);
-        },
-      ),
+        ),
+      ],
     );
   }
 

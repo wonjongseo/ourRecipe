@@ -50,20 +50,31 @@ class _IngredientProductPickerSheetState
         height: MediaQuery.of(context).size.height * 0.9,
         width: double.infinity,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SizedBox(height: 6),
-            TextButton.icon(
-              onPressed: () async {
-                Get.back();
-                await widget.onTapManage?.call();
-              },
-              label: Text(AppStrings.ingredientManageScreen.tr),
-              icon: const Icon(Icons.arrow_forward_ios_rounded),
-              iconAlignment: IconAlignment.end,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () => Get.back(),
+                    icon: Icon(FontAwesomeIcons.xmark),
+                  ),
+                  TextButton.icon(
+                    onPressed: () async {
+                      Get.back();
+                      await widget.onTapManage?.call();
+                    },
+                    label: Text(AppStrings.ingredientManageScreen.tr),
+                    icon: const Icon(Icons.arrow_forward_ios_rounded),
+                    iconAlignment: IconAlignment.end,
+                  ),
+                ],
+              ),
             ),
 
-            SizedBox(height: 6),
+            SizedBox(height: 18),
             _searchForm(context),
             SizedBox(height: 12),
             Expanded(
