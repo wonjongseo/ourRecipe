@@ -98,66 +98,77 @@ class EditRecipeController extends GetxController {
   Future<void> _setUp() async {
     _isLoading.value = true;
     try {
-      final savedCategories = await _categoryRepository.fetchCategories();
-      savedCategories.sort();
-      categories.assignAll(savedCategories);
-
+      await _loadCategories();
       if (recipeModel == null) {
-        isLiked.value = false;
-        servingsTextCtrl.text = '2';
-        if (inputCookingSteps.isEmpty) {
-          inputCookingSteps.add(InputCookingStep());
-        }
+        _applyDefaultsForCreate();
       } else {
-        final recipe = recipeModel!;
-        recipeNameTextCtrl.text = recipe.name;
-        descriptionTextCtrl.text = recipe.description;
-        websiteLinkTextCtrl.text = recipe.websiteLink;
-        servingsTextCtrl.text = recipe.servings.toString();
-        categoryTextCtrl.text = recipe.category;
-        if (recipe.category.isNotEmpty &&
-            !categories.contains(recipe.category)) {
-          categories.add(recipe.category);
-        }
-        selectedCategory.value = recipe.category;
-        isLiked.value = recipe.isLiked;
-
-        ingredients.assignAll(recipe.ingredients);
-        if (recipe.coverImagePath != null &&
-            recipe.coverImagePath!.isNotEmpty) {
-          _coverImage.value = File(recipe.coverImagePath!);
-        }
-
-        inputCookingSteps.clear();
-        for (final step in recipe.steps) {
-          final input = InputCookingStep();
-          input.descriptionTeCtrl.text = step.instruction;
-          final timerSec = step.timerSec ?? 0;
-          if (timerSec > 0 && timerSec % 3600 == 0) {
-            input.timerValue = timerSec ~/ 3600;
-            input.timerUnit = 'hour';
-          } else if (timerSec > 0 && timerSec % 60 == 0) {
-            input.timerValue = timerSec ~/ 60;
-            input.timerUnit = 'minute';
-          } else {
-            input.timerValue = timerSec;
-            input.timerUnit = 'second';
-          }
-          if (step.imagePath != null && step.imagePath!.isNotEmpty) {
-            input.image = File(step.imagePath!);
-          }
-          inputCookingSteps.add(input);
-        }
-        if (inputCookingSteps.isEmpty) {
-          inputCookingSteps.add(InputCookingStep());
-        }
+        _applyRecipeForEdit(recipeModel!);
       }
+      _ensureCookingStepInput();
     } catch (e, s) {
       LogManager.error('Edit recipe setup failed', error: e, stackTrace: s);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  Future<void> _loadCategories() async {
+    final savedCategories = await _categoryRepository.fetchCategories();
+    savedCategories.sort();
+    categories.assignAll(savedCategories);
+  }
+
+  void _applyDefaultsForCreate() {
+    isLiked.value = false;
+    servingsTextCtrl.text = '2';
+  }
+
+  void _applyRecipeForEdit(RecipeModel recipe) {
+    recipeNameTextCtrl.text = recipe.name;
+    descriptionTextCtrl.text = recipe.description;
+    websiteLinkTextCtrl.text = recipe.websiteLink;
+    servingsTextCtrl.text = recipe.servings.toString();
+    categoryTextCtrl.text = recipe.category;
+    if (recipe.category.isNotEmpty && !categories.contains(recipe.category)) {
+      categories.add(recipe.category);
+    }
+    selectedCategory.value = recipe.category;
+    isLiked.value = recipe.isLiked;
+    ingredients.assignAll(recipe.ingredients);
+    _coverImage.value = _toFileOrNull(recipe.coverImagePath);
+    inputCookingSteps
+      ..clear()
+      ..addAll(recipe.steps.map(_toInputCookingStep));
+  }
+
+  void _ensureCookingStepInput() {
+    if (inputCookingSteps.isEmpty) {
+      inputCookingSteps.add(InputCookingStep());
+    }
+  }
+
+  File? _toFileOrNull(String? path) {
+    if (path == null || path.isEmpty) return null;
+    return File(path);
+  }
+
+  InputCookingStep _toInputCookingStep(CookingStepModel step) {
+    final input = InputCookingStep();
+    input.descriptionTeCtrl.text = step.instruction;
+    final timerSec = step.timerSec ?? 0;
+    if (timerSec > 0 && timerSec % 3600 == 0) {
+      input.timerValue = timerSec ~/ 3600;
+      input.timerUnit = 'hour';
+    } else if (timerSec > 0 && timerSec % 60 == 0) {
+      input.timerValue = timerSec ~/ 60;
+      input.timerUnit = 'minute';
+    } else {
+      input.timerValue = timerSec;
+      input.timerUnit = 'second';
+    }
+    input.image = _toFileOrNull(step.imagePath);
+    return input;
   }
 
   void editIngredient({int? index}) async {
@@ -236,10 +247,9 @@ class EditRecipeController extends GetxController {
       CategoryManagementScreen.name,
       arguments: true,
     );
-    if (result != null && result.runtimeType == String) {
-      selectedCategory.value = result;
+    if (result != null) {
+      setSelectedCategory(result);
     }
-
     await refreshCategories();
   }
 
@@ -355,128 +365,18 @@ class EditRecipeController extends GetxController {
   }
 
   Future<void> saveRecipeModel() async {
-    final recipeName = recipeNameTextCtrl.text.trim();
-    if (recipeName.isEmpty) {
-      SnackBarHelper.showErrorSnackBar(AppStrings.recipeNameRequired.tr);
-      return;
-    }
-    final servings = servingsTextCtrl.text.trim();
-    final servingsAsInt = int.tryParse(servings);
+    final servingsAsInt = _validateInputs();
     if (servingsAsInt == null) {
-      SnackBarHelper.showErrorSnackBar(AppStrings.servingsRequired.tr);
-      return;
-    }
-    if (servingsAsInt < 1) {
-      SnackBarHelper.showErrorSnackBar(AppStrings.servingsMinOne.tr);
       return;
     }
 
     _isLoading.value = true;
     try {
-      final description = descriptionTextCtrl.text.trim();
-      final websiteLink = websiteLinkTextCtrl.text.trim();
       final category = selectedCategory.value.trim();
-      if (category.isNotEmpty) {
-        await _categoryRepository.addCategory(category);
-      }
-
-      String? savedImageCoverPath;
-      if (coverImage != null) {
-        savedImageCoverPath = await ImageService.saveFile(coverImage!);
-      }
-      // final coverImagePath = coverImage?.path;
-
-      List<CookingStepModel> cookingStepModels = [];
-      for (final inputCookingStep in inputCookingSteps) {
-        final instruction = inputCookingStep.descriptionTeCtrl.text.trim();
-
-        String? savedImagePath;
-        if (inputCookingStep.image != null) {
-          savedImagePath = await ImageService.saveFile(inputCookingStep.image!);
-        }
-
-        final hasImage = savedImagePath != null && savedImagePath.isNotEmpty;
-        final timerSeconds = cookingStepTimerToSeconds(inputCookingStep);
-        final hasTimer = timerSeconds > 0;
-        final isEmptyStep = instruction.isEmpty && !hasImage && !hasTimer;
-        if (isEmptyStep) continue;
-
-        cookingStepModels.add(
-          CookingStepModel(
-            id: inputCookingStep.id,
-            order: cookingStepModels.length + 1,
-            instruction: instruction,
-            imagePath: savedImagePath,
-            timerSec: hasTimer ? timerSeconds : null,
-          ),
-        );
-      }
-
-      final products = await _ingredientProductRepository.fetchProducts();
-      final resolvedIngredients =
-          ingredients
-              .map((ingredient) => _applyProductInfo(products, ingredient))
-              .toList();
-
-      final totalIngredientCost = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedCost ?? 0),
-      );
-      final totalKcal = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedKcal ?? 0),
-      );
-      final totalWater = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedWater ?? 0),
-      );
-      final totalProtein = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedProtein ?? 0),
-      );
-      final totalFat = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedFat ?? 0),
-      );
-      final totalCarbohydrate = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedCarbohydrate ?? 0),
-      );
-      final totalFiber = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedFiber ?? 0),
-      );
-      final totalAsh = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedAsh ?? 0),
-      );
-      final totalSodium = resolvedIngredients.fold<double>(
-        0,
-        (sum, ingredient) => sum + (ingredient.usedSodium ?? 0),
-      );
-
-      final recipeModel = RecipeModel(
-        id: this.recipeModel?.id ?? Uuid().v4(),
-        name: recipeName,
-        category: category,
-        isLiked: isLiked.value,
-        totalIngredientCost: totalIngredientCost,
-        totalKcal: totalKcal,
-        totalWater: totalWater,
+      await _saveCategoryIfNeeded(category);
+      final recipeModel = await _buildRecipeModel(
         servings: servingsAsInt,
-        totalProtein: totalProtein,
-        totalFat: totalFat,
-        totalCarbohydrate: totalCarbohydrate,
-        totalFiber: totalFiber,
-        totalAsh: totalAsh,
-        totalSodium: totalSodium,
-        createdAt: this.recipeModel?.createdAt ?? DateTime.now(),
-        updatedAt: DateTime.now(),
-        description: description,
-        websiteLink: websiteLink,
-        coverImagePath: savedImageCoverPath,
-        ingredients: resolvedIngredients,
-        steps: cookingStepModels,
+        category: category,
       );
       Get.back(result: recipeModel);
     } catch (e, s) {
@@ -485,6 +385,147 @@ class EditRecipeController extends GetxController {
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  int? _validateInputs() {
+    final recipeName = recipeNameTextCtrl.text.trim();
+    if (recipeName.isEmpty) {
+      SnackBarHelper.showErrorSnackBar(AppStrings.recipeNameRequired.tr);
+      return null;
+    }
+    final servingsAsInt = int.tryParse(servingsTextCtrl.text.trim());
+    if (servingsAsInt == null) {
+      SnackBarHelper.showErrorSnackBar(AppStrings.servingsRequired.tr);
+      return null;
+    }
+    if (servingsAsInt < 1) {
+      SnackBarHelper.showErrorSnackBar(AppStrings.servingsMinOne.tr);
+      return null;
+    }
+    return servingsAsInt;
+  }
+
+  Future<void> _saveCategoryIfNeeded(String category) async {
+    if (category.isEmpty) return;
+    await _categoryRepository.addCategory(category);
+  }
+
+  Future<RecipeModel> _buildRecipeModel({
+    required int servings,
+    required String category,
+  }) async {
+    final savedImageCoverPath = await _saveCoverImageIfNeeded();
+    final cookingStepModels = await _buildCookingStepModels();
+    final resolvedIngredients = await _buildResolvedIngredients();
+    return RecipeModel(
+      id: recipeModel?.id ?? Uuid().v4(),
+      name: recipeNameTextCtrl.text.trim(),
+      category: category,
+      isLiked: isLiked.value,
+      totalIngredientCost: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedCost ?? 0,
+      ),
+      totalKcal: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedKcal ?? 0,
+      ),
+      totalWater: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedWater ?? 0,
+      ),
+      servings: servings,
+      totalProtein: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedProtein ?? 0,
+      ),
+      totalFat: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedFat ?? 0,
+      ),
+      totalCarbohydrate: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedCarbohydrate ?? 0,
+      ),
+      totalFiber: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedFiber ?? 0,
+      ),
+      totalAsh: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedAsh ?? 0,
+      ),
+      totalSodium: _sumIngredients(
+        resolvedIngredients,
+        (ingredient) => ingredient.usedSodium ?? 0,
+      ),
+      createdAt: recipeModel?.createdAt ?? DateTime.now(),
+      updatedAt: DateTime.now(),
+      description: descriptionTextCtrl.text.trim(),
+      websiteLink: websiteLinkTextCtrl.text.trim(),
+      coverImagePath: savedImageCoverPath,
+      ingredients: resolvedIngredients,
+      steps: cookingStepModels,
+    );
+  }
+
+  Future<String?> _saveCoverImageIfNeeded() async {
+    final image = coverImage;
+    if (image == null) return null;
+    return ImageService.saveFile(image);
+  }
+
+  Future<List<CookingStepModel>> _buildCookingStepModels() async {
+    final cookingStepModels = <CookingStepModel>[];
+    for (final inputCookingStep in inputCookingSteps) {
+      final step = await _buildCookingStepModel(
+        inputCookingStep,
+        order: cookingStepModels.length + 1,
+      );
+      if (step == null) continue;
+      cookingStepModels.add(step);
+    }
+    return cookingStepModels;
+  }
+
+  Future<CookingStepModel?> _buildCookingStepModel(
+    InputCookingStep inputCookingStep, {
+    required int order,
+  }) async {
+    final instruction = inputCookingStep.descriptionTeCtrl.text.trim();
+    String? savedImagePath;
+    if (inputCookingStep.image != null) {
+      savedImagePath = await ImageService.saveFile(inputCookingStep.image!);
+    }
+    final timerSeconds = cookingStepTimerToSeconds(inputCookingStep);
+    final hasImage = savedImagePath != null && savedImagePath.isNotEmpty;
+    final hasTimer = timerSeconds > 0;
+    if (instruction.isEmpty && !hasImage && !hasTimer) {
+      return null;
+    }
+    return CookingStepModel(
+      id: inputCookingStep.id,
+      order: order,
+      instruction: instruction,
+      imagePath: savedImagePath,
+      timerSec: hasTimer ? timerSeconds : null,
+    );
+  }
+
+  Future<List<IngredientModel>> _buildResolvedIngredients() async {
+    final products = await _ingredientProductRepository.fetchProducts();
+    return ingredients
+        .map((ingredient) => _applyProductInfo(products, ingredient))
+        .toList(growable: false);
+  }
+
+  double _sumIngredients(
+    List<IngredientModel> values,
+    double Function(IngredientModel ingredient) selector,
+  ) {
+    return values.fold<double>(0, (sum, ingredient) {
+      return sum + selector(ingredient);
+    });
   }
 
   IngredientProductModel? _findProductByName(

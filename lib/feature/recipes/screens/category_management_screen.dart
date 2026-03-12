@@ -88,6 +88,57 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
     }
   }
 
+  Future<void> _renameCategory(String category) async {
+    final renameController = TextEditingController(text: category);
+    final renamed =
+        await Get.dialog<String>(
+          AlertDialog(
+            title: Text(AppStrings.edit.tr),
+            content: CustomTextFormField(
+              controller: renameController,
+              hintText: AppStrings.categoryName.tr,
+              autoFocus: true,
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) {
+                final value = renameController.text.trim();
+                Get.back(result: value);
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: Get.back,
+                child: Text(AppStrings.cancel.tr),
+              ),
+              FilledButton(
+                onPressed: () {
+                  final value = renameController.text.trim();
+                  Get.back(result: value);
+                },
+                child: Text(AppStrings.save.tr),
+              ),
+            ],
+          ),
+        ) ??
+        '';
+    final nextValue = renamed.trim();
+    if (nextValue.isEmpty || nextValue == category) return;
+
+    setState(() => _isLoading = true);
+    try {
+      await _repository.renameCategory(category, nextValue);
+      await _loadCategories();
+    } catch (e, s) {
+      LogManager.error(
+        'Rename recipe category failed',
+        error: e,
+        stackTrace: s,
+      );
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -152,12 +203,21 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                               side: const BorderSide(color: Color(0xFFD5D9DF)),
                             ),
                             title: Text(category),
-                            trailing: IconButton(
-                              onPressed: () => _removeCategory(category),
-                              icon: const Icon(
-                                Icons.remove_circle_outline,
-                                color: Colors.redAccent,
-                              ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  onPressed: () => _renameCategory(category),
+                                  icon: const Icon(Icons.edit_outlined),
+                                ),
+                                IconButton(
+                                  onPressed: () => _removeCategory(category),
+                                  icon: const Icon(
+                                    Icons.remove_circle_outline,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },

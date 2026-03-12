@@ -184,15 +184,15 @@ class IngredientEditController extends GetxController {
       result = await Get.dialog(
         barrierDismissible: false,
         AlertDialog.adaptive(
-          content: Text('영양 성분의 정보 없습니다.\n저장하시겠습니까?'),
+          content: Text(AppStrings.noNutritionInfoConfirmSave.tr),
           actions: [
             TextButton(
               onPressed: () => Get.back(result: false),
-              child: Text('아니요'),
+              child: Text(AppStrings.no.tr),
             ),
             TextButton(
               onPressed: () => Get.back(result: true),
-              child: Text('예'),
+              child: Text(AppStrings.yes.tr),
             ),
           ],
         ),

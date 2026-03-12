@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.pages,
       initialRoute: SplashScreen.name,
       fallbackLocale: const Locale('ko', 'KR'),
+      debugShowCheckedModeBanner: false,
       locale: locale,
       translations: AppStrings(),
       builder: (context, child) {

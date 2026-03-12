@@ -20,7 +20,7 @@ class RecipeRepository {
     final docsPath = await AppDataPathService.getRecipeImagesDirectoryPath();
     final rows = await db.query(
       RecipeDatabaseService.recipes,
-      orderBy: 'updated_at DESC',
+      orderBy: 'created_at DESC',
     );
     final recipes = <RecipeModel>[];
     for (final row in rows) {

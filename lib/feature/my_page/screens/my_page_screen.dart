@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/feature/my_page/controller/my_page_controller.dart';
@@ -17,7 +16,11 @@ class MyPageScreen extends GetView<MyPageController> {
         centerTitle: true,
         title: Text(
           AppStrings.myPage.tr,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color:
+                Theme.of(context).appBarTheme.foregroundColor ??
+                Theme.of(context).colorScheme.onSurface,
+          ),
         ),
       ),
       body: SafeArea(

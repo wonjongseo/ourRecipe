@@ -75,7 +75,7 @@ class RecipesScreen extends GetView<RecipeController> {
                 controller.isLoading
                     ? Center(child: CircularProgressIndicator.adaptive())
                     : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
                       child: Column(
                         children: [
                           Padding(
@@ -84,67 +84,60 @@ class RecipesScreen extends GetView<RecipeController> {
                           ),
 
                           SizedBox(height: 10),
-                          Obx(
-                            () => Expanded(
-                              child:
-                                  controller.recipes.isEmpty
-                                      ? Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              '등록된 레시피가 없습니다',
-                                              style: TextStyle(
-                                                color:
-                                                    AppColors.noRegisteredItemColor,
-                                              ),
-                                            ),
-                                            if (controller.isICloudSyncEnabled) ...[
-                                              const SizedBox(height: 16),
-                                              OutlinedButton.icon(
-                                                onPressed: controller.downloadFromICloud,
-                                                icon: const Icon(Icons.sync_rounded),
-                                                label: Text(
-                                                  AppStrings.downloadFromICloud.tr,
-                                                ),
-                                              ),
-                                            ],
-                                          ],
-                                        ),
-                                      )
-                                      : AppRefreshIndicator(
-                                        onRefresh: controller.reloadAll,
-                                        child: ListView.separated(
-                                          physics:
-                                              const AlwaysScrollableScrollPhysics(),
-                                          separatorBuilder:
-                                              (context, index) =>
-                                                  SizedBox(height: 12),
-                                          shrinkWrap: false,
-                                          itemCount: _itemCount(
-                                            controller.recipes.length,
-                                          ),
-                                          itemBuilder: (context, index) {
-                                            if (_isNativeAdIndex(index)) {
-                                              return const AppNativeAdListTile();
-                                            }
-                                            final recipeIndex = _recipeIndexFor(
-                                              index,
-                                            );
-                                            final recipe =
-                                                controller.recipes[recipeIndex];
-
-                                            return recipeListTIle(recipe);
-                                          },
-                                        ),
-                                      ),
-                            ),
-                          ),
+                          _recipesBody(),
                         ],
                       ),
                     ),
           ),
         ),
+      ),
+    );
+  }
+
+  Obx _recipesBody() {
+    return Obx(
+      () => Expanded(
+        child:
+            controller.recipes.isEmpty
+                ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        AppStrings.noRegisteredRecipe.tr,
+                        style: TextStyle(
+                          color: AppColors.noRegisteredItemColor,
+                        ),
+                      ),
+                      if (controller.isICloudSyncEnabled) ...[
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: controller.downloadFromICloud,
+                          icon: const Icon(Icons.sync_rounded),
+                          label: Text(AppStrings.downloadFromICloud.tr),
+                        ),
+                      ],
+                    ],
+                  ),
+                )
+                : AppRefreshIndicator(
+                  onRefresh: controller.reloadAll,
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) => SizedBox(height: 12),
+                    shrinkWrap: false,
+                    itemCount: _itemCount(controller.recipes.length),
+                    itemBuilder: (context, index) {
+                      if (_isNativeAdIndex(index)) {
+                        return const AppNativeAdListTile();
+                      }
+                      final recipeIndex = _recipeIndexFor(index);
+                      final recipe = controller.recipes[recipeIndex];
+
+                      return recipeListTIle(recipe, context);
+                    },
+                  ),
+                ),
       ),
     );
   }
@@ -215,7 +208,7 @@ class RecipesScreen extends GetView<RecipeController> {
     );
   }
 
-  Widget recipeListTIle(RecipeModel recipe) {
+  Widget recipeListTIle(RecipeModel recipe, BuildContext context) {
     final isDark = Theme.of(Get.context!).brightness == Brightness.dark;
     final coverPath = recipe.coverImagePath;
     final hasValidCoverImage =
@@ -246,58 +239,93 @@ class RecipesScreen extends GetView<RecipeController> {
             ),
           ],
         ),
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        padding: EdgeInsets.fromLTRB(14, 15, 7, 15),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Hero(
-                  tag: recipe.id,
-                  child: Container(
-                    width: 65,
-                    height: 65,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image:
+            Expanded(
+              child: Row(
+                children: [
+                  Hero(
+                    tag: recipe.id,
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        image:
+                            !hasValidCoverImage
+                                ? null
+                                : DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(File(coverPath!)),
+                                ),
+                      ),
+                      child:
                           !hasValidCoverImage
-                              ? null
-                              : DecorationImage(
-                                fit: BoxFit.cover,
-                                image: FileImage(File(coverPath!)),
-                              ),
+                              ? Icon(FontAwesomeIcons.utensils)
+                              : null,
                     ),
-                    child:
-                        !hasValidCoverImage
-                            ? Icon(FontAwesomeIcons.utensils)
-                            : null,
                   ),
-                ),
-                SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(recipe.name),
-                    SizedBox(height: 2),
-                    Text(recipe.description, style: TextStyle(fontSize: 12)),
-                    SizedBox(height: 4),
-                    Row(
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          recipe.category.isEmpty ? '-' : recipe.category,
-                          style: TextStyle(fontSize: 11),
+                          recipe.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(width: 8),
+                        SizedBox(height: 2),
                         Text(
-                          '${recipe.ingredientCostTotal.toStringAsFixed(0)}${AppStrings.won.tr}',
-                          style: TextStyle(fontSize: 11),
+                          recipe.description,
+                          style: TextStyle(fontSize: 12),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: _metaChip(
+                                context,
+                                label:
+                                    recipe.category.isEmpty
+                                        ? '-'
+                                        : recipe.category,
+                                icon: Icons.local_offer_outlined,
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceContainerHighest
+                                    .withValues(alpha: 0.7),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              flex: 3,
+                              child:
+                                  recipe.ingredientCostTotal > 0
+                                      ? _metaChip(
+                                        context,
+                                        label:
+                                            '${recipe.ingredientCostTotal.toStringAsFixed(0)}${AppStrings.won.tr} · ${recipe.servings}${AppStrings.servingsUnit.tr}',
+                                        icon: Icons.payments_outlined,
+                                        backgroundColor: AppColors.primaryColor
+                                            .withValues(alpha: 0.12),
+                                        foregroundColor: AppColors.primaryColor,
+                                      )
+                                      : const SizedBox.shrink(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             IconButton(
               onPressed: () => controller.toggleBookmark(recipe.id),
@@ -318,6 +346,46 @@ class RecipesScreen extends GetView<RecipeController> {
   int _itemCount(int recipeCount) {
     if (recipeCount < _nativeAdInterval) return recipeCount;
     return recipeCount + (recipeCount ~/ _nativeAdInterval);
+  }
+
+  Widget _metaChip(
+    BuildContext context, {
+    required String label,
+    IconData? icon,
+    required Color backgroundColor,
+    Color? foregroundColor,
+  }) {
+    final resolvedForeground =
+        foregroundColor ?? Theme.of(context).colorScheme.onSurfaceVariant;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 13, color: resolvedForeground),
+            const SizedBox(width: 6),
+          ],
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: resolvedForeground,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   bool _isNativeAdIndex(int index) {

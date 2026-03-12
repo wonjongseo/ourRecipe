@@ -29,6 +29,7 @@ class RecipeIngredientInputSheet extends StatefulWidget {
 class _RecipeIngredientInputSheetState
     extends State<RecipeIngredientInputSheet> {
   late final RecipeIngredientInputController controller;
+  String get _controllerTag => '${runtimeType}_${identityHashCode(this)}';
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _RecipeIngredientInputSheetState
         Get.find<IngredientProductRepository>(),
         initialIngredient: widget.initialIngredient,
       ),
-      tag: '${runtimeType}_${identityHashCode(this)}',
+      tag: _controllerTag,
     );
   }
 
@@ -81,7 +82,6 @@ class _RecipeIngredientInputSheetState
       child: Column(
         children: [
           const SizedBox(height: 20),
-
           Expanded(
             child: Obx(
               () =>
@@ -90,103 +90,106 @@ class _RecipeIngredientInputSheetState
                       : SingleChildScrollView(
                         keyboardDismissBehavior:
                             ScrollViewKeyboardDismissBehavior.onDrag,
-                        child: Column(
-                          children: [
-                            _IngredientNameField(
-                              selectedIngredientNameRx:
-                                  controller.selectedIngredientName,
-                              onTapField: _showIngredientPickerSheet,
-                              onTapManage: _goToIngredientManagementScreen,
-                            ),
-                            const SizedBox(height: 10),
-                            _ingredientAmountField(),
-                            Obx(
-                              () =>
-                                  controller.isAppProvidedProductSelected
-                                      ? Padding(
-                                        padding: const EdgeInsets.only(top: 6),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            AppStrings
-                                                .appProvidedUnitFixedGuide
-                                                .tr,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      : const SizedBox.shrink(),
-                            ),
-                            const SizedBox(height: 20),
-                            CustomTextFormField(
-                              label: AppStrings.memo.tr,
-                              maxLine: 2,
-                              textInputAction: TextInputAction.newline,
-                              keyboardType: TextInputType.multiline,
-                              controller: controller.memoTextCtl,
-                            ),
-                            const SizedBox(height: 20),
-                            Obx(
-                              () =>
-                                  controller.hasPrice == false
-                                      ? Text.rich(
-                                        textAlign: TextAlign.center,
-                                        TextSpan(
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(
-                                                  context,
-                                                ).colorScheme.onSurfaceVariant,
-                                            fontSize: 11,
-                                          ),
-                                          children: [
-                                            TextSpan(
-                                              text:
-                                                  '${AppStrings.priceNotRegistered.tr}\n',
-                                            ),
-                                            TextSpan(
-                                              text: AppStrings.recipePriceGuide.tr,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                      : const SizedBox(),
-                            ),
-                          ],
-                        ),
+                        child: _formContent(context),
                       ),
             ),
           ),
           const SizedBox(height: 12),
-          InkWell(
-            onTap: _add,
-            child: Container(
-              width: double.infinity,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                widget.initialIngredient == null
-                    ? AppStrings.addIngredient.tr
-                    : AppStrings.ingredientEdit.tr,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
+          _submitButton(),
         ],
+      ),
+    );
+  }
+
+  Widget _formContent(BuildContext context) {
+    return Column(
+      children: [
+        _IngredientNameField(
+          selectedIngredientNameRx: controller.selectedIngredientName,
+          onTapField: _showIngredientPickerSheet,
+        ),
+        const SizedBox(height: 10),
+        _ingredientAmountField(),
+        _appProvidedGuide(context),
+        const SizedBox(height: 20),
+        CustomTextFormField(
+          label: AppStrings.memo.tr,
+          maxLine: 2,
+          textInputAction: TextInputAction.newline,
+          keyboardType: TextInputType.multiline,
+          controller: controller.memoTextCtl,
+        ),
+        const SizedBox(height: 20),
+        _priceGuide(context),
+      ],
+    );
+  }
+
+  Widget _appProvidedGuide(BuildContext context) {
+    return Obx(
+      () =>
+          controller.isAppProvidedProductSelected
+              ? Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppStrings.appProvidedUnitFixedGuide.tr,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              )
+              : const SizedBox.shrink(),
+    );
+  }
+
+  Widget _priceGuide(BuildContext context) {
+    return Obx(
+      () =>
+          controller.hasPrice == false
+              ? Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    fontSize: 11,
+                  ),
+                  children: [
+                    TextSpan(text: '${AppStrings.priceNotRegistered.tr}\n'),
+                    TextSpan(text: AppStrings.recipePriceGuide.tr),
+                  ],
+                ),
+              )
+              : const SizedBox(),
+    );
+  }
+
+  Widget _submitButton() {
+    final label =
+        widget.initialIngredient == null
+            ? AppStrings.addIngredient.tr
+            : AppStrings.ingredientEdit.tr;
+    return InkWell(
+      onTap: _add,
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 18,
+          ),
+        ),
       ),
     );
   }
@@ -268,7 +271,7 @@ class _RecipeIngredientInputSheetState
   @override
   void dispose() {
     Get.delete<RecipeIngredientInputController>(
-      tag: '${runtimeType}_${identityHashCode(this)}',
+      tag: _controllerTag,
     );
     super.dispose();
   }
@@ -278,12 +281,10 @@ class _IngredientNameField extends StatelessWidget {
   const _IngredientNameField({
     required this.selectedIngredientNameRx,
     required this.onTapField,
-    required this.onTapManage,
   });
 
   final RxnString selectedIngredientNameRx;
   final VoidCallback onTapField;
-  final VoidCallback onTapManage;
 
   @override
   Widget build(BuildContext context) {

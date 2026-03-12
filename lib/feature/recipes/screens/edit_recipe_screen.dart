@@ -42,7 +42,9 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
             ],
           ),
         ),
-        appBar: AppBar(title: Text(AppStrings.addRecipe.tr)),
+        appBar: AppBar(
+          title: Text(controller.isEdit ? '레시피 수정' : AppStrings.addRecipe.tr),
+        ),
         body: SafeArea(
           child: Obx(
             () =>
@@ -107,7 +109,7 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
           alignment: Alignment.centerRight,
           child: TextButton.icon(
             onPressed: () => controller.goToCategoryManagement(),
-            label: Text('카테고리 추가'),
+            label: Text(AppStrings.addCategory.tr),
             icon: Icon(Icons.add),
           ),
         ),
@@ -135,7 +137,7 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
             ),
             hint: Text(
               controller.categories.isEmpty
-                  ? '카테고리를 등록해주세요'
+                  ? AppStrings.pleaseRegisterCategory.tr
                   : AppStrings.selectCategoryHint.tr,
               style: TextStyle(
                 fontSize: UiConstants.formFieldHintSize,
@@ -267,10 +269,13 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${AppStrings.totalIngredientCost.tr}: ${controller.totalUseCount.toStringAsFixed(0)}${AppStrings.won.tr}',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
-            ),
+            if (controller.totalUseCount > 0)
+              Text(
+                '${AppStrings.totalIngredientCost.tr}: ${controller.totalUseCount.toStringAsFixed(0)}${AppStrings.won.tr}',
+                style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
+              )
+            else
+              const SizedBox.shrink(),
             TextButton.icon(
               onPressed: () => controller.editIngredient(),
               icon: Icon(Icons.add),

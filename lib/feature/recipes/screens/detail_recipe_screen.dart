@@ -489,7 +489,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
         recipeModel.coverImagePath!.isNotEmpty;
 
     return SliverAppBar(
-      expandedHeight: 300,
+      expandedHeight: 250,
       pinned: true,
       foregroundColor: Colors.white,
 

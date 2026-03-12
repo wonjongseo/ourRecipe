@@ -58,4 +58,26 @@ class RecipeCategoryRepository {
       whereArgs: [value],
     );
   }
+
+  Future<void> renameCategory(String oldCategory, String newCategory) async {
+    final oldValue = oldCategory.trim();
+    final newValue = newCategory.trim();
+    if (oldValue.isEmpty || newValue.isEmpty || oldValue == newValue) return;
+
+    final db = await _database.db;
+    await db.transaction((txn) async {
+      await txn.update(
+        RecipeDatabaseService.recipeCategories,
+        {'name': newValue},
+        where: 'name = ?',
+        whereArgs: [oldValue],
+      );
+      await txn.update(
+        RecipeDatabaseService.recipes,
+        {'category': newValue},
+        where: 'category = ?',
+        whereArgs: [oldValue],
+      );
+    });
+  }
 }

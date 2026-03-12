@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/services/test_data_service.dart';
 import 'package:our_recipe/feature/home/controller/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -12,6 +13,7 @@ class HomeScreen extends GetView<HomeController> {
     return Obx(
       () => Scaffold(
         body: controller.body,
+        // floatingActionButton: _floatingActionButton(),
         bottomNavigationBar: NavigationBar(
           selectedIndex: controller.pageIdx,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -32,6 +34,14 @@ class HomeScreen extends GetView<HomeController> {
           ],
         ),
       ),
+    );
+  }
+
+  FloatingActionButton _floatingActionButton() {
+    return FloatingActionButton(
+      onPressed: () async {
+        await TestDataService().seedSampleRecipes();
+      },
     );
   }
 }

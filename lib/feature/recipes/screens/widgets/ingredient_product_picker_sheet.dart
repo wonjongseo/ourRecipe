@@ -5,6 +5,7 @@ import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
+import 'package:our_recipe/feature/recipes/controller/ingredient_product_picker_controller.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_product_repository.dart';
 import 'package:our_recipe/feature/recipes/screens/widgets/ingredient_product_grouped_expansion_list.dart';
 
@@ -27,65 +28,39 @@ class IngredientProductPickerSheet extends StatefulWidget {
 
 class _IngredientProductPickerSheetState
     extends State<IngredientProductPickerSheet> {
-  String query = '';
+  late final IngredientProductPickerController controller;
+  String get _controllerTag => '${runtimeType}_${identityHashCode(this)}';
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(
+      IngredientProductPickerController(filterGroups: widget.filterGroups),
+      tag: _controllerTag,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Called IngredientProductPickerSheet');
-    final filteredGroups = widget.filterGroups(query);
-    final appProvidedGroups =
-        filteredGroups
-            .where((group) => !group.id.startsWith('custom_'))
-            .toList();
-    final userAddedGroups =
-        filteredGroups
-            .where((group) => group.id.startsWith('custom_'))
-            .toList();
-
     return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.9,
         width: double.infinity,
         child: Column(
           children: [
-            SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () => Get.back(),
-                    icon: Icon(FontAwesomeIcons.xmark),
-                  ),
-                  TextButton.icon(
-                    onPressed: () async {
-                      Get.back();
-                      await widget.onTapManage?.call();
-                    },
-                    label: Text(AppStrings.ingredientManageScreen.tr),
-                    icon: const Icon(Icons.arrow_forward_ios_rounded),
-                    iconAlignment: IconAlignment.end,
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 18),
+            const SizedBox(height: 6),
+            _header(),
+            const SizedBox(height: 18),
             _searchForm(context),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Expanded(
-              child:
-                  filteredGroups.isEmpty
-                      ? _emptyForSearch(context)
-                      : _filteredIngredient(
-                        context,
-                        appProvidedGroups,
-                        userAddedGroups,
-                      ),
+              child: Obx(
+                () =>
+                    controller.hasFilteredGroups
+                        ? _filteredIngredient()
+                        : _emptyForSearch(context),
+              ),
             ),
           ],
         ),
@@ -93,37 +68,54 @@ class _IngredientProductPickerSheetState
     );
   }
 
-  ListView _filteredIngredient(
-    BuildContext context,
-    List<IngredientProductGroup> appProvidedGroups,
-    List<IngredientProductGroup> userAddedGroups,
-  ) {
+  Widget _header() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: Get.back,
+            icon: const Icon(FontAwesomeIcons.xmark),
+          ),
+          TextButton.icon(
+            onPressed: () async {
+              Get.back();
+              await widget.onTapManage?.call();
+            },
+            label: Text(AppStrings.ingredientManageScreen.tr),
+            icon: const Icon(Icons.arrow_forward_ios_rounded),
+            iconAlignment: IconAlignment.end,
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListView _filteredIngredient() {
+    final appProvidedGroups = controller.appProvidedGroups;
+    final userAddedGroups = controller.userAddedGroups;
     return ListView(
-      // padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       children: [
         _appDataOrUserData(
           context,
           AppStrings.appProvidedIngredients.tr,
           AppStrings.nutritionPer100gGuide.tr,
         ),
-        SizedBox(height: 4),
-
+        const SizedBox(height: 4),
         if (appProvidedGroups.isEmpty)
           _sectionEmpty(context)
         else
           IngredientProductGroupedExpansionList(
             groups: appProvidedGroups,
-            query: query,
+            query: controller.query.value,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             selectedProductId: widget.selectedProductId,
-            onTapProduct: (product) {
-              Navigator.of(context).pop(product);
-            },
+            onTapProduct: (product) => Get.back(result: product),
           ),
-
         const SizedBox(height: 16),
         _appDataOrUserData(context, AppStrings.userAddedIngredients.tr, null),
         if (userAddedGroups.isEmpty)
@@ -131,14 +123,12 @@ class _IngredientProductPickerSheetState
         else
           IngredientProductGroupedExpansionList(
             groups: userAddedGroups,
-            query: query,
+            query: controller.query.value,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             selectedProductId: widget.selectedProductId,
-            onTapProduct: (product) {
-              Navigator.of(context).pop(product);
-            },
+            onTapProduct: (product) => Get.back(result: product),
           ),
       ],
     );
@@ -149,11 +139,7 @@ class _IngredientProductPickerSheetState
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: TextFormField(
         autofocus: true,
-        onChanged: (value) {
-          setState(() {
-            query = value.trim();
-          });
-        },
+        onChanged: controller.updateQuery,
         decoration: InputDecoration(
           isDense: true,
           constraints: const BoxConstraints(
@@ -226,20 +212,14 @@ class _IngredientProductPickerSheetState
             AppStrings.noRegisteredIngredient.tr,
             style: TextStyle(color: AppColors.noRegisteredItemColor),
           ),
-
-          // if (widget.onTapManage != null) ...[
-          //   const SizedBox(height: 4),
-          //   ElevatedButton.icon(
-          //     onPressed: () async {
-          //       Navigator.of(context).pop();
-          //       await widget.onTapManage?.call();
-          //     },
-          //     label: Text(AppStrings.ingredientManagement.tr),
-          //     icon: const Icon(Icons.arrow_forward_ios_rounded),
-          //   ),
-          // ],
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    Get.delete<IngredientProductPickerController>(tag: _controllerTag);
+    super.dispose();
   }
 }

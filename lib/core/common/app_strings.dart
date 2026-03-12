@@ -21,6 +21,7 @@ class AppStrings extends Translations {
       AppStrings.recipe: AppStrings.recipeJp,
       AppStrings.category: AppStrings.categoryJp,
       AppStrings.selectCategoryHint: AppStrings.selectCategoryHintJp,
+      AppStrings.pleaseRegisterCategory: AppStrings.pleaseRegisterCategoryJp,
       AppStrings.addRecipe: AppStrings.addRecipeJp,
       AppStrings.edit: AppStrings.editJp,
       AppStrings.save: AppStrings.saveJp,
@@ -111,8 +112,13 @@ class AppStrings extends Translations {
       AppStrings.add: AppStrings.addJp,
       AppStrings.categoryName: AppStrings.categoryNameJp,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryJp,
+      AppStrings.noRegisteredRecipe: AppStrings.noRegisteredRecipeJp,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientJp,
       AppStrings.noRegisteredCookingStep: AppStrings.noRegisteredCookingStepJp,
+      AppStrings.noNutritionInfoConfirmSave:
+          AppStrings.noNutritionInfoConfirmSaveJp,
+      AppStrings.no: AppStrings.noJp,
+      AppStrings.yes: AppStrings.yesJp,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredJp,
       AppStrings.appProvidedUnitFixedGuide:
           AppStrings.appProvidedUnitFixedGuideJp,
@@ -216,6 +222,7 @@ class AppStrings extends Translations {
       AppStrings.recipe: AppStrings.recipeKr,
       AppStrings.category: AppStrings.categoryKr,
       AppStrings.selectCategoryHint: AppStrings.selectCategoryHintKr,
+      AppStrings.pleaseRegisterCategory: AppStrings.pleaseRegisterCategoryKr,
       AppStrings.addRecipe: AppStrings.addRecipeKr,
       AppStrings.edit: AppStrings.editKr,
       AppStrings.save: AppStrings.saveKr,
@@ -306,8 +313,13 @@ class AppStrings extends Translations {
       AppStrings.add: AppStrings.addKr,
       AppStrings.categoryName: AppStrings.categoryNameKr,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryKr,
+      AppStrings.noRegisteredRecipe: AppStrings.noRegisteredRecipeKr,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientKr,
       AppStrings.noRegisteredCookingStep: AppStrings.noRegisteredCookingStepKr,
+      AppStrings.noNutritionInfoConfirmSave:
+          AppStrings.noNutritionInfoConfirmSaveKr,
+      AppStrings.no: AppStrings.noKr,
+      AppStrings.yes: AppStrings.yesKr,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredKr,
       AppStrings.appProvidedUnitFixedGuide:
           AppStrings.appProvidedUnitFixedGuideKr,
@@ -412,6 +424,7 @@ class AppStrings extends Translations {
       AppStrings.recipe: AppStrings.recipeEn,
       AppStrings.category: AppStrings.categoryEn,
       AppStrings.selectCategoryHint: AppStrings.selectCategoryHintEn,
+      AppStrings.pleaseRegisterCategory: AppStrings.pleaseRegisterCategoryEn,
       AppStrings.addRecipe: AppStrings.addRecipeEn,
       AppStrings.edit: AppStrings.editEn,
       AppStrings.save: AppStrings.saveEn,
@@ -502,8 +515,13 @@ class AppStrings extends Translations {
       AppStrings.add: AppStrings.addEn,
       AppStrings.categoryName: AppStrings.categoryNameEn,
       AppStrings.noRegisteredCategory: AppStrings.noRegisteredCategoryEn,
+      AppStrings.noRegisteredRecipe: AppStrings.noRegisteredRecipeEn,
       AppStrings.noRegisteredIngredient: AppStrings.noRegisteredIngredientEn,
       AppStrings.noRegisteredCookingStep: AppStrings.noRegisteredCookingStepEn,
+      AppStrings.noNutritionInfoConfirmSave:
+          AppStrings.noNutritionInfoConfirmSaveEn,
+      AppStrings.no: AppStrings.noEn,
+      AppStrings.yes: AppStrings.yesEn,
       AppStrings.priceNotRegistered: AppStrings.priceNotRegisteredEn,
       AppStrings.appProvidedUnitFixedGuide:
           AppStrings.appProvidedUnitFixedGuideEn,
@@ -675,6 +693,11 @@ class AppStrings extends Translations {
   static String selectCategoryHintKr = "카테고리를 선택해주세요";
   static String selectCategoryHintJp = "カテゴリーを選択してください";
   static String selectCategoryHintEn = "Please select a category";
+
+  static String pleaseRegisterCategory = "pleaseRegisterCategoryTr";
+  static String pleaseRegisterCategoryKr = "카테고리를 등록해주세요";
+  static String pleaseRegisterCategoryJp = "カテゴリーを登録してください";
+  static String pleaseRegisterCategoryEn = "Please register a category";
 
   static String addRecipe = "addRecipeTr";
   static String addRecipeKr = "레시피 추가";
@@ -972,6 +995,11 @@ class AppStrings extends Translations {
   static String noRegisteredCategoryKr = "등록된 카테고리가 없습니다";
   static String noRegisteredCategoryJp = "登録されたカテゴリーがありません";
   static String noRegisteredCategoryEn = "No categories registered";
+
+  static String noRegisteredRecipe = "noRegisteredRecipeTr";
+  static String noRegisteredRecipeKr = "등록된 레시피가 없습니다";
+  static String noRegisteredRecipeJp = "登録されたレシピがありません";
+  static String noRegisteredRecipeEn = "No recipes registered";
 
   static String noRegisteredIngredient = "noRegisteredIngredientTr";
   static String noRegisteredIngredientKr = "등록된 재료가 없습니다";
@@ -1404,6 +1432,24 @@ class AppStrings extends Translations {
   static String ingredientAmountRequiredJp = "材料の量を入力してください";
   static String ingredientAmountRequiredEn =
       "Please enter the ingredient amount";
+
+  static String noNutritionInfoConfirmSave = "noNutritionInfoConfirmSaveTr";
+  static String noNutritionInfoConfirmSaveKr =
+      "영양 성분의 정보 없습니다.\n저장하시겠습니까?";
+  static String noNutritionInfoConfirmSaveJp =
+      "栄養成分の情報がありません。\n保存しますか？";
+  static String noNutritionInfoConfirmSaveEn =
+      "There is no nutrition information.\nDo you want to save it?";
+
+  static String no = "noTr";
+  static String noKr = "아니요";
+  static String noJp = "いいえ";
+  static String noEn = "No";
+
+  static String yes = "yesTr";
+  static String yesKr = "예";
+  static String yesJp = "はい";
+  static String yesEn = "Yes";
 
   static String timeMinute = "timeMinuteTr";
   static String timeMinuteKr = "시간(분)";

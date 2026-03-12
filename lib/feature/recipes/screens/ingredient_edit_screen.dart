@@ -79,7 +79,7 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
                                           () =>
                                               controller
                                                   .goToCategoryManagement(),
-                                      label: Text('재료 카테고리 추가'),
+                                      label: Text(AppStrings.addCategory.tr),
                                       icon: Icon(Icons.add),
                                     ),
                                   ),
