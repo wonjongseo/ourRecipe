@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:our_recipe/core/common/admob_unit_ids.dart';
-import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 
 class AdInterstitialService {
   AdInterstitialService._();
@@ -60,16 +59,16 @@ class AdInterstitialService {
         _load();
       },
     );
+    if (kDebugMode) {
+      return;
+    }
     await ad.show();
   }
 
   void _load() {
     if (kIsWeb || _isLoading || AdMobUnitIds.interstitial.isEmpty) return;
     if (_interstitialAd != null) return;
-    if (kDebugMode) {
-      SnackBarHelper.showSuccessSnackBar('전면광고 출력');
-      return;
-    }
+
     _isLoading = true;
     InterstitialAd.load(
       adUnitId: AdMobUnitIds.interstitial,

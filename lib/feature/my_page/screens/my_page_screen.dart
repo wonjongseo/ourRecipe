@@ -28,6 +28,8 @@ class MyPageScreen extends GetView<MyPageController> {
             const SizedBox(height: 24),
             _settingsGeneral(cardColor, borderColor, context),
             const SizedBox(height: 24),
+            _settingsSupport(cardColor, borderColor),
+            const SizedBox(height: 24),
             _settingsAppearance(cardColor, borderColor, context),
             const SizedBox(height: 24),
           ],
@@ -125,7 +127,7 @@ class MyPageScreen extends GetView<MyPageController> {
               trailing: _styledDropdown(
                 context: context,
                 child: DropdownButton<String>(
-                  value: controller.fontKey.value,
+                  value: controller.selectedFontKeyForCurrentLocale(),
                   isDense: true,
                   borderRadius: BorderRadius.circular(
                     UiConstants.formFieldRadius,
@@ -252,6 +254,49 @@ class MyPageScreen extends GetView<MyPageController> {
                 },
               ),
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _settingsSupport(Color cardColor, Color borderColor) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _sectionHeader(AppStrings.appInfo.tr),
+        Obx(
+          () => _card(
+            cardColor: cardColor,
+            borderColor: borderColor,
+            child: ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: Text(AppStrings.appVersion.tr),
+              trailing: Text(controller.appVersionLabel.value),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        _card(
+          cardColor: cardColor,
+          borderColor: borderColor,
+          child: ListTile(
+            leading: const Icon(Icons.rate_review_outlined),
+            title: Text(AppStrings.leaveReview.tr),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: controller.openReviewPage,
+          ),
+        ),
+        const SizedBox(height: 8),
+        _card(
+          cardColor: cardColor,
+          borderColor: borderColor,
+          child: ListTile(
+            leading: const Icon(Icons.mail_outline),
+            title: Text(AppStrings.contactAndBugReport.tr),
+            subtitle: Text(MyPageController.supportEmail),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: controller.contactSupport,
           ),
         ),
       ],

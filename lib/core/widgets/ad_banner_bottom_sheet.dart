@@ -45,6 +45,7 @@ class _AdBannerBottomSheetState extends State<AdBannerBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) return SizedBox.shrink();
     final ad = _bannerAd;
     if (!_loaded || ad == null) return const SizedBox.shrink();
     return ColoredBox(

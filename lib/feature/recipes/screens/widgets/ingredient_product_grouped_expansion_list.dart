@@ -112,6 +112,11 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                           item.products.map((product) {
                             final subtitle = subtitleBuilder?.call(product);
                             final isSelected = selectedProductId == product.id;
+                            final itemDisplayName =
+                                IngredientCategoryCatalog.displayName(
+                                  item.name,
+                                  languageCode,
+                                );
                             return ListTile(
                               dense: true,
                               tileColor:
@@ -144,7 +149,15 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                                         Icons.arrow_forward_ios_rounded,
                                         size: 12,
                                       )),
-                              onTap: () => onTapProduct(product),
+                              onTap:
+                                  () => onTapProduct(
+                                    product.copyWith(
+                                      name: _selectedDisplayName(
+                                        itemName: itemDisplayName,
+                                        productName: product.name,
+                                      ),
+                                    ),
+                                  ),
                             );
                           }).toList(),
                     ),
@@ -154,5 +167,20 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _selectedDisplayName({
+    required String itemName,
+    required String productName,
+  }) {
+    final normalizedItemName = itemName.trim();
+    final normalizedProductName = productName.trim();
+    if (normalizedItemName.isEmpty || normalizedProductName.isEmpty) {
+      return normalizedProductName;
+    }
+    if (normalizedProductName.startsWith(normalizedItemName)) {
+      return normalizedProductName;
+    }
+    return '$normalizedItemName $normalizedProductName';
   }
 }

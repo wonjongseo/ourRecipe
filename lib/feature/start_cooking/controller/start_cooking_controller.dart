@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:our_recipe/core/services/local_notification_service.dart';
+import 'package:our_recipe/core/services/timer_alert_service.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_step_model.dart';
 
@@ -54,7 +55,7 @@ class StartCookingController extends GetxController {
 
   @override
   void onClose() {
-    _timer?.cancel();
+    _cancelTimerEffects();
     pageController.dispose();
     super.onClose();
   }
@@ -88,18 +89,18 @@ class StartCookingController extends GetxController {
     if (steps.isEmpty) return;
     if (!hasTimerOnCurrentStep) return;
     if (isTimerRunning.value) {
-      _stopTimer();
+      _stopTimer(cancelEffects: true);
       return;
     }
     final current = remainingSec.value ?? currentStep.timerSec!;
     if (current <= 0) {
       _resetTimerForCurrentStep();
     }
-    _startTimer();
+    unawaited(_startTimer());
   }
 
   void _resetTimerForCurrentStep() {
-    _stopTimer();
+    _stopTimer(cancelEffects: true);
     if (steps.isEmpty) {
       remainingSec.value = null;
       return;
@@ -107,36 +108,56 @@ class StartCookingController extends GetxController {
     remainingSec.value = hasTimerOnCurrentStep ? currentStep.timerSec! : null;
   }
 
-  void _startTimer() {
+  Future<void> _startTimer() async {
     if (!hasTimerOnCurrentStep) return;
     if ((remainingSec.value ?? 0) <= 0) {
       remainingSec.value = currentStep.timerSec!;
     }
+    final seconds = remainingSec.value ?? 0;
+    if (seconds <= 0) return;
     isTimerRunning.value = true;
     _timer?.cancel();
+    await LocalNotificationService.instance.cancelCookingDoneNotification();
+    await LocalNotificationService.instance.scheduleCookingDoneNotification(
+      Duration(seconds: seconds),
+    );
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final now = remainingSec.value;
       if (now == null) {
-        _stopTimer();
+        _stopTimer(cancelEffects: true);
         return;
       }
       if (now <= 1) {
         remainingSec.value = 0;
-        _stopTimer();
-        _notifyTimerFinished();
+        _stopTimer(cancelEffects: false);
+        unawaited(_notifyTimerFinished());
         return;
       }
       remainingSec.value = now - 1;
     });
   }
 
-  void _stopTimer() {
+  void _stopTimer({required bool cancelEffects}) {
     _timer?.cancel();
     _timer = null;
     isTimerRunning.value = false;
+    if (cancelEffects) {
+      _cancelTimerEffects();
+    }
   }
 
-  void _notifyTimerFinished() {
-    FlutterRingtonePlayer().playAlarm();
+  Future<void> _notifyTimerFinished() async {
+    await LocalNotificationService.instance.cancelCookingDoneNotification();
+    await TimerAlertService.instance.playFinishedAlert();
+  }
+
+  void _cancelTimerEffects() {
+    _timer?.cancel();
+    _timer = null;
+    isTimerRunning.value = false;
+    unawaited(TimerAlertService.instance.stopFinishedAlert());
+    unawaited(
+      LocalNotificationService.instance.cancelCookingDoneNotification(),
+    );
   }
 }

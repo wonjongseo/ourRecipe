@@ -165,11 +165,13 @@ class IngredientEditController extends GetxController {
     final baseGram = _toDouble(baseGramCtrl);
 
     if (name.isEmpty) {
-      SnackBarHelper.showErrorSnackBar('재료명을 입력해주세요');
+      SnackBarHelper.showErrorSnackBar(AppStrings.ingredientNameRequired.tr);
       return;
     }
     if (category.isEmpty) {
-      SnackBarHelper.showErrorSnackBar('재료 카테고리를 선택해주세요.');
+      SnackBarHelper.showErrorSnackBar(
+        AppStrings.ingredientCategoryRequired.tr,
+      );
       return;
     }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
 
 class SnackBarHelper {
-  static void showErrorSnackBar(String message, {String title = "Error"}) {
+  static void showErrorSnackBar(String message) {
+    LogManager.error(message);
     Get.rawSnackbar(
       message: message,
       backgroundColor: Colors.red,
@@ -14,7 +16,7 @@ class SnackBarHelper {
     );
   }
 
-  static void showSuccessSnackBar(String message, {String title = "Success"}) {
+  static void showSuccessSnackBar(String message) {
     Get.rawSnackbar(
       message: message,
       backgroundColor: Colors.green,

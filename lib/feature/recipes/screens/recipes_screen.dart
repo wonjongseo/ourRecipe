@@ -229,6 +229,11 @@ class RecipesScreen extends GetView<RecipeController> {
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(Get.context!).cardColor,
+          border: Border.all(
+            color: Theme.of(
+              Get.context!,
+            ).colorScheme.outline.withValues(alpha: isDark ? 0.45 : 0.7),
+          ),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(

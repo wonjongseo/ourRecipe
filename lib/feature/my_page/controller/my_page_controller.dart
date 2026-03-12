@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/app_theme.dart';
@@ -15,11 +18,14 @@ import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/screens/category_management_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
 import 'package:our_recipe/feature/my_page/screens/icloud_sync_settings_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyPageController extends GetxController {
+  static const String supportEmail = 'visionwill3322@gmail.com';
   final themeMode = ThemeMode.system.obs;
   final fontKey = AppFonts.defaultKeyFor(const Locale('ja', 'JP')).obs;
   final textScale = 1.0.obs;
+  final appVersionLabel = ''.obs;
   final ThemeService _themeService = ThemeService();
   final ICloudSyncSettingsService _iCloudSettings = ICloudSyncSettingsService();
   final ICloudSyncService _iCloudSync = ICloudSyncService();
@@ -34,6 +40,7 @@ class MyPageController extends GetxController {
     _initFontKey();
     _initTextScale();
     _initICloudSync();
+    _initAppVersion();
   }
 
   Future<void> _initThemeMode() async {
@@ -51,6 +58,7 @@ class MyPageController extends GetxController {
     final isValid = AppFonts.isValidKey(saved);
     if (!isValid) return;
     fontKey.value = saved;
+    _ensureFontMatchesLocale();
   }
 
   Future<void> _initTextScale() async {
@@ -64,6 +72,16 @@ class MyPageController extends GetxController {
     iCloudSyncEnabled.value = await _iCloudSettings.isEnabled();
   }
 
+  Future<void> _initAppVersion() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      appVersionLabel.value = '${info.version}+${info.buildNumber}';
+    } catch (e, s) {
+      LogManager.error('Load app version failed', error: e, stackTrace: s);
+      appVersionLabel.value = '-';
+    }
+  }
+
   Locale currentLocale() {
     final code = Get.locale?.languageCode ?? 'ja';
     switch (code) {
@@ -74,6 +92,14 @@ class MyPageController extends GetxController {
       default:
         return const Locale('ja', 'JP');
     }
+  }
+
+  String selectedFontKeyForCurrentLocale() {
+    final locale = currentLocale();
+    if (AppFonts.isValidKeyForLocale(fontKey.value, locale)) {
+      return fontKey.value;
+    }
+    return AppFonts.defaultKeyFor(locale);
   }
 
   Future<void> changeLanguage(Locale locale) async {
@@ -102,6 +128,15 @@ class MyPageController extends GetxController {
 
   List<AppFontOption> fontOptionsForCurrentLocale() {
     return AppFonts.optionsFor(currentLocale());
+  }
+
+  Future<void> _ensureFontMatchesLocale() async {
+    final locale = currentLocale();
+    if (AppFonts.isValidKeyForLocale(fontKey.value, locale)) return;
+    final fallback = AppFonts.defaultKeyFor(locale);
+    if (fontKey.value == fallback) return;
+    fontKey.value = fallback;
+    await _themeService.saveFontKey(fallback);
   }
 
   void previewTextScale(double value) {
@@ -146,6 +181,68 @@ class MyPageController extends GetxController {
   Future<void> goToICloudSyncSettings() async {
     await refreshICloudStatusMessage();
     await Get.toNamed(ICloudSyncSettingsScreen.name);
+  }
+
+  Future<void> openReviewPage() async {
+    try {
+      final review = InAppReview.instance;
+      final isAvailable = await review.isAvailable();
+      if (isAvailable) {
+        await review.openStoreListing();
+        return;
+      }
+    } catch (e, s) {
+      LogManager.error('Open review page failed', error: e, stackTrace: s);
+    }
+    SnackBarHelper.showErrorSnackBar(AppStrings.reviewOpenFailed.tr);
+  }
+
+  Future<void> contactSupport() async {
+    final version = appVersionLabel.value.isEmpty ? '-' : appVersionLabel.value;
+    final uri = Uri(
+      scheme: 'mailto',
+      path: supportEmail,
+      queryParameters: {
+        'subject': '[Our Recipe] ${AppStrings.contactAndBugReport.tr}',
+        'body': 'App Version: $version\n\n',
+      },
+    );
+
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (launched) return;
+    } catch (e, s) {
+      LogManager.error('Open support email failed', error: e, stackTrace: s);
+    }
+
+    await _showCopyEmailDialog();
+  }
+
+  Future<void> _showCopyEmailDialog() async {
+    final shouldCopy =
+        await Get.dialog<bool>(
+          AlertDialog(
+            title: Text(AppStrings.mailAppUnavailableTitle.tr),
+            content: Text(AppStrings.mailAppUnavailableMessage.tr),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(result: false),
+                child: Text(AppStrings.cancel.tr),
+              ),
+              FilledButton(
+                onPressed: () => Get.back(result: true),
+                child: Text(AppStrings.copyEmail.tr),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+    if (!shouldCopy) return;
+    await Clipboard.setData(const ClipboardData(text: supportEmail));
+    SnackBarHelper.showSuccessSnackBar(AppStrings.emailCopied.tr);
   }
 
   Future<void> changeICloudSync(bool enabled) async {

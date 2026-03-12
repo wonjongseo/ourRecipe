@@ -33,6 +33,42 @@ class IngredientProductModel {
     this.sodium,
   });
 
+  IngredientProductModel copyWith({
+    String? id,
+    bool? isDefault,
+    String? name,
+    String? category,
+    String? manufacturer,
+    double? price,
+    double? baseGram,
+    double? kcal,
+    double? water,
+    double? protein,
+    double? fat,
+    double? carbohydrate,
+    double? fiber,
+    double? ash,
+    double? sodium,
+  }) {
+    return IngredientProductModel(
+      id: id ?? this.id,
+      isDefault: isDefault ?? this.isDefault,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      manufacturer: manufacturer ?? this.manufacturer,
+      price: price ?? this.price,
+      baseGram: baseGram ?? this.baseGram,
+      kcal: kcal ?? this.kcal,
+      water: water ?? this.water,
+      protein: protein ?? this.protein,
+      fat: fat ?? this.fat,
+      carbohydrate: carbohydrate ?? this.carbohydrate,
+      fiber: fiber ?? this.fiber,
+      ash: ash ?? this.ash,
+      sodium: sodium ?? this.sodium,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

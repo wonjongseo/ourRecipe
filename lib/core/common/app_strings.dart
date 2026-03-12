@@ -27,6 +27,10 @@ class AppStrings extends Translations {
       AppStrings.addStep: AppStrings.addStepJp,
       AppStrings.timer: AppStrings.timerJp,
       AppStrings.startCooking: AppStrings.startCookingJp,
+      AppStrings.cookingCompleted: AppStrings.cookingCompletedJp,
+      AppStrings.cookingDoneChannelName: AppStrings.cookingDoneChannelNameJp,
+      AppStrings.cookingDoneChannelDescription:
+          AppStrings.cookingDoneChannelDescriptionJp,
       AppStrings.startTimer: AppStrings.startTimerJp,
       AppStrings.stopTimer: AppStrings.stopTimerJp,
       AppStrings.previous: AppStrings.previousJp,
@@ -71,6 +75,17 @@ class AppStrings extends Translations {
       AppStrings.settingsGeneral: AppStrings.settingsGeneralJp,
       AppStrings.settingsAppearance: AppStrings.settingsAppearanceJp,
       AppStrings.settingsManagement: AppStrings.settingsManagementJp,
+      AppStrings.appInfo: AppStrings.appInfoJp,
+      AppStrings.appVersion: AppStrings.appVersionJp,
+      AppStrings.leaveReview: AppStrings.leaveReviewJp,
+      AppStrings.contactAndBugReport: AppStrings.contactAndBugReportJp,
+      AppStrings.mailAppUnavailableTitle:
+          AppStrings.mailAppUnavailableTitleJp,
+      AppStrings.mailAppUnavailableMessage:
+          AppStrings.mailAppUnavailableMessageJp,
+      AppStrings.copyEmail: AppStrings.copyEmailJp,
+      AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedJp,
+      AppStrings.emailCopied: AppStrings.emailCopiedJp,
       AppStrings.iCloudSync: AppStrings.iCloudSyncJp,
       AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionJp,
       AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleJp,
@@ -89,6 +104,8 @@ class AppStrings extends Translations {
       AppStrings.servings: AppStrings.servingsJp,
       AppStrings.servingsExample: AppStrings.servingsExampleJp,
       AppStrings.servingsUnit: AppStrings.servingsUnitJp,
+      AppStrings.servingsRequired: AppStrings.servingsRequiredJp,
+      AppStrings.servingsMinOne: AppStrings.servingsMinOneJp,
       AppStrings.adjustServings: AppStrings.adjustServingsJp,
       AppStrings.ingredientSearchHint: AppStrings.ingredientSearchHintJp,
       AppStrings.add: AppStrings.addJp,
@@ -102,6 +119,8 @@ class AppStrings extends Translations {
       AppStrings.ingredientCategoryManagement:
           AppStrings.ingredientCategoryManagementJp,
       AppStrings.ingredientCategory: AppStrings.ingredientCategoryJp,
+      AppStrings.ingredientCategoryRequired:
+          AppStrings.ingredientCategoryRequiredJp,
       AppStrings.ingredientEdit: AppStrings.ingredientEditJp,
       AppStrings.ingredientCreate: AppStrings.ingredientCreateJp,
       AppStrings.manufacturerName: AppStrings.manufacturerNameJp,
@@ -165,18 +184,13 @@ class AppStrings extends Translations {
           AppStrings.iCloudDownloadProgressDescriptionJp,
       AppStrings.iCloudDeleteProgressDescription:
           AppStrings.iCloudDeleteProgressDescriptionJp,
-      AppStrings.iCloudUploadCompleted:
-          AppStrings.iCloudUploadCompletedJp,
-      AppStrings.iCloudDownloadCompleted:
-          AppStrings.iCloudDownloadCompletedJp,
-      AppStrings.iCloudDeleteCompleted:
-          AppStrings.iCloudDeleteCompletedJp,
-      AppStrings.iCloudUploadButtonGuide:
-          AppStrings.iCloudUploadButtonGuideJp,
+      AppStrings.iCloudUploadCompleted: AppStrings.iCloudUploadCompletedJp,
+      AppStrings.iCloudDownloadCompleted: AppStrings.iCloudDownloadCompletedJp,
+      AppStrings.iCloudDeleteCompleted: AppStrings.iCloudDeleteCompletedJp,
+      AppStrings.iCloudUploadButtonGuide: AppStrings.iCloudUploadButtonGuideJp,
       AppStrings.iCloudDownloadButtonGuide:
           AppStrings.iCloudDownloadButtonGuideJp,
-      AppStrings.iCloudDeleteButtonGuide:
-          AppStrings.iCloudDeleteButtonGuideJp,
+      AppStrings.iCloudDeleteButtonGuide: AppStrings.iCloudDeleteButtonGuideJp,
       AppStrings.recipeName: AppStrings.recipeNameJp,
       AppStrings.websiteLink: AppStrings.websiteLinkJp,
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkJp,
@@ -208,6 +222,10 @@ class AppStrings extends Translations {
       AppStrings.addStep: AppStrings.addStepKr,
       AppStrings.timer: AppStrings.timerKr,
       AppStrings.startCooking: AppStrings.startCookingKr,
+      AppStrings.cookingCompleted: AppStrings.cookingCompletedKr,
+      AppStrings.cookingDoneChannelName: AppStrings.cookingDoneChannelNameKr,
+      AppStrings.cookingDoneChannelDescription:
+          AppStrings.cookingDoneChannelDescriptionKr,
       AppStrings.startTimer: AppStrings.startTimerKr,
       AppStrings.stopTimer: AppStrings.stopTimerKr,
       AppStrings.previous: AppStrings.previousKr,
@@ -252,6 +270,17 @@ class AppStrings extends Translations {
       AppStrings.settingsGeneral: AppStrings.settingsGeneralKr,
       AppStrings.settingsAppearance: AppStrings.settingsAppearanceKr,
       AppStrings.settingsManagement: AppStrings.settingsManagementKr,
+      AppStrings.appInfo: AppStrings.appInfoKr,
+      AppStrings.appVersion: AppStrings.appVersionKr,
+      AppStrings.leaveReview: AppStrings.leaveReviewKr,
+      AppStrings.contactAndBugReport: AppStrings.contactAndBugReportKr,
+      AppStrings.mailAppUnavailableTitle:
+          AppStrings.mailAppUnavailableTitleKr,
+      AppStrings.mailAppUnavailableMessage:
+          AppStrings.mailAppUnavailableMessageKr,
+      AppStrings.copyEmail: AppStrings.copyEmailKr,
+      AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedKr,
+      AppStrings.emailCopied: AppStrings.emailCopiedKr,
       AppStrings.iCloudSync: AppStrings.iCloudSyncKr,
       AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionKr,
       AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleKr,
@@ -270,6 +299,8 @@ class AppStrings extends Translations {
       AppStrings.servings: AppStrings.servingsKr,
       AppStrings.servingsExample: AppStrings.servingsExampleKr,
       AppStrings.servingsUnit: AppStrings.servingsUnitKr,
+      AppStrings.servingsRequired: AppStrings.servingsRequiredKr,
+      AppStrings.servingsMinOne: AppStrings.servingsMinOneKr,
       AppStrings.adjustServings: AppStrings.adjustServingsKr,
       AppStrings.ingredientSearchHint: AppStrings.ingredientSearchHintKr,
       AppStrings.add: AppStrings.addKr,
@@ -283,6 +314,8 @@ class AppStrings extends Translations {
       AppStrings.ingredientCategoryManagement:
           AppStrings.ingredientCategoryManagementKr,
       AppStrings.ingredientCategory: AppStrings.ingredientCategoryKr,
+      AppStrings.ingredientCategoryRequired:
+          AppStrings.ingredientCategoryRequiredKr,
       AppStrings.ingredientEdit: AppStrings.ingredientEditKr,
       AppStrings.ingredientCreate: AppStrings.ingredientCreateKr,
       AppStrings.manufacturerName: AppStrings.manufacturerNameKr,
@@ -346,18 +379,13 @@ class AppStrings extends Translations {
           AppStrings.iCloudDownloadProgressDescriptionKr,
       AppStrings.iCloudDeleteProgressDescription:
           AppStrings.iCloudDeleteProgressDescriptionKr,
-      AppStrings.iCloudUploadCompleted:
-          AppStrings.iCloudUploadCompletedKr,
-      AppStrings.iCloudDownloadCompleted:
-          AppStrings.iCloudDownloadCompletedKr,
-      AppStrings.iCloudDeleteCompleted:
-          AppStrings.iCloudDeleteCompletedKr,
-      AppStrings.iCloudUploadButtonGuide:
-          AppStrings.iCloudUploadButtonGuideKr,
+      AppStrings.iCloudUploadCompleted: AppStrings.iCloudUploadCompletedKr,
+      AppStrings.iCloudDownloadCompleted: AppStrings.iCloudDownloadCompletedKr,
+      AppStrings.iCloudDeleteCompleted: AppStrings.iCloudDeleteCompletedKr,
+      AppStrings.iCloudUploadButtonGuide: AppStrings.iCloudUploadButtonGuideKr,
       AppStrings.iCloudDownloadButtonGuide:
           AppStrings.iCloudDownloadButtonGuideKr,
-      AppStrings.iCloudDeleteButtonGuide:
-          AppStrings.iCloudDeleteButtonGuideKr,
+      AppStrings.iCloudDeleteButtonGuide: AppStrings.iCloudDeleteButtonGuideKr,
       AppStrings.recipeName: AppStrings.recipeNameKr,
       AppStrings.websiteLink: AppStrings.websiteLinkKr,
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkKr,
@@ -390,6 +418,10 @@ class AppStrings extends Translations {
       AppStrings.addStep: AppStrings.addStepEn,
       AppStrings.timer: AppStrings.timerEn,
       AppStrings.startCooking: AppStrings.startCookingEn,
+      AppStrings.cookingCompleted: AppStrings.cookingCompletedEn,
+      AppStrings.cookingDoneChannelName: AppStrings.cookingDoneChannelNameEn,
+      AppStrings.cookingDoneChannelDescription:
+          AppStrings.cookingDoneChannelDescriptionEn,
       AppStrings.startTimer: AppStrings.startTimerEn,
       AppStrings.stopTimer: AppStrings.stopTimerEn,
       AppStrings.previous: AppStrings.previousEn,
@@ -434,6 +466,17 @@ class AppStrings extends Translations {
       AppStrings.settingsGeneral: AppStrings.settingsGeneralEn,
       AppStrings.settingsAppearance: AppStrings.settingsAppearanceEn,
       AppStrings.settingsManagement: AppStrings.settingsManagementEn,
+      AppStrings.appInfo: AppStrings.appInfoEn,
+      AppStrings.appVersion: AppStrings.appVersionEn,
+      AppStrings.leaveReview: AppStrings.leaveReviewEn,
+      AppStrings.contactAndBugReport: AppStrings.contactAndBugReportEn,
+      AppStrings.mailAppUnavailableTitle:
+          AppStrings.mailAppUnavailableTitleEn,
+      AppStrings.mailAppUnavailableMessage:
+          AppStrings.mailAppUnavailableMessageEn,
+      AppStrings.copyEmail: AppStrings.copyEmailEn,
+      AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedEn,
+      AppStrings.emailCopied: AppStrings.emailCopiedEn,
       AppStrings.iCloudSync: AppStrings.iCloudSyncEn,
       AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionEn,
       AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleEn,
@@ -452,6 +495,8 @@ class AppStrings extends Translations {
       AppStrings.servings: AppStrings.servingsEn,
       AppStrings.servingsExample: AppStrings.servingsExampleEn,
       AppStrings.servingsUnit: AppStrings.servingsUnitEn,
+      AppStrings.servingsRequired: AppStrings.servingsRequiredEn,
+      AppStrings.servingsMinOne: AppStrings.servingsMinOneEn,
       AppStrings.adjustServings: AppStrings.adjustServingsEn,
       AppStrings.ingredientSearchHint: AppStrings.ingredientSearchHintEn,
       AppStrings.add: AppStrings.addEn,
@@ -465,6 +510,8 @@ class AppStrings extends Translations {
       AppStrings.ingredientCategoryManagement:
           AppStrings.ingredientCategoryManagementEn,
       AppStrings.ingredientCategory: AppStrings.ingredientCategoryEn,
+      AppStrings.ingredientCategoryRequired:
+          AppStrings.ingredientCategoryRequiredEn,
       AppStrings.ingredientEdit: AppStrings.ingredientEditEn,
       AppStrings.ingredientCreate: AppStrings.ingredientCreateEn,
       AppStrings.manufacturerName: AppStrings.manufacturerNameEn,
@@ -528,18 +575,13 @@ class AppStrings extends Translations {
           AppStrings.iCloudDownloadProgressDescriptionEn,
       AppStrings.iCloudDeleteProgressDescription:
           AppStrings.iCloudDeleteProgressDescriptionEn,
-      AppStrings.iCloudUploadCompleted:
-          AppStrings.iCloudUploadCompletedEn,
-      AppStrings.iCloudDownloadCompleted:
-          AppStrings.iCloudDownloadCompletedEn,
-      AppStrings.iCloudDeleteCompleted:
-          AppStrings.iCloudDeleteCompletedEn,
-      AppStrings.iCloudUploadButtonGuide:
-          AppStrings.iCloudUploadButtonGuideEn,
+      AppStrings.iCloudUploadCompleted: AppStrings.iCloudUploadCompletedEn,
+      AppStrings.iCloudDownloadCompleted: AppStrings.iCloudDownloadCompletedEn,
+      AppStrings.iCloudDeleteCompleted: AppStrings.iCloudDeleteCompletedEn,
+      AppStrings.iCloudUploadButtonGuide: AppStrings.iCloudUploadButtonGuideEn,
       AppStrings.iCloudDownloadButtonGuide:
           AppStrings.iCloudDownloadButtonGuideEn,
-      AppStrings.iCloudDeleteButtonGuide:
-          AppStrings.iCloudDeleteButtonGuideEn,
+      AppStrings.iCloudDeleteButtonGuide: AppStrings.iCloudDeleteButtonGuideEn,
       AppStrings.recipeName: AppStrings.recipeNameEn,
       AppStrings.websiteLink: AppStrings.websiteLinkEn,
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkEn,
@@ -664,6 +706,21 @@ class AppStrings extends Translations {
   static String startCookingJp = "料理開始";
   static String startCookingEn = "Start Cooking";
 
+  static String cookingCompleted = "cookingCompletedTr";
+  static String cookingCompletedKr = "조리가 완료되었습니다.";
+  static String cookingCompletedJp = "調理が完了しました。";
+  static String cookingCompletedEn = "Cooking is complete.";
+  static String cookingDoneChannelName = "cookingDoneChannelNameTr";
+  static String cookingDoneChannelNameKr = "조리 완료";
+  static String cookingDoneChannelNameJp = "調理完了";
+  static String cookingDoneChannelNameEn = "Cooking Done";
+  static String cookingDoneChannelDescription =
+      "cookingDoneChannelDescriptionTr";
+  static String cookingDoneChannelDescriptionKr = "조리 타이머 완료 알림";
+  static String cookingDoneChannelDescriptionJp = "調理タイマー完了通知";
+  static String cookingDoneChannelDescriptionEn =
+      "Notifications for finished cooking timers";
+
   static String startTimer = "startTimerTr";
   static String startTimerKr = "타이머 시작";
   static String startTimerJp = "タイマー開始";
@@ -744,6 +801,54 @@ class AppStrings extends Translations {
   static String settingsManagementKr = "관리";
   static String settingsManagementJp = "管理";
   static String settingsManagementEn = "Management";
+
+  static String appInfo = "appInfoTr";
+  static String appInfoKr = "앱 정보";
+  static String appInfoJp = "アプリ情報";
+  static String appInfoEn = "App Info";
+
+  static String appVersion = "appVersionTr";
+  static String appVersionKr = "앱 버전";
+  static String appVersionJp = "アプリバージョン";
+  static String appVersionEn = "App Version";
+
+  static String leaveReview = "leaveReviewTr";
+  static String leaveReviewKr = "리뷰 남기기";
+  static String leaveReviewJp = "レビューを書く";
+  static String leaveReviewEn = "Leave a Review";
+
+  static String contactAndBugReport = "contactAndBugReportTr";
+  static String contactAndBugReportKr = "건의사항 / 버그 제보";
+  static String contactAndBugReportJp = "ご意見 / バグ報告";
+  static String contactAndBugReportEn = "Feedback / Bug Report";
+
+  static String mailAppUnavailableTitle = "mailAppUnavailableTitleTr";
+  static String mailAppUnavailableTitleKr = "메일 앱을 열 수 없어요";
+  static String mailAppUnavailableTitleJp = "メールアプリを開けません";
+  static String mailAppUnavailableTitleEn = "Unable to open the mail app";
+
+  static String mailAppUnavailableMessage = "mailAppUnavailableMessageTr";
+  static String mailAppUnavailableMessageKr =
+      "메일 앱이 없거나 로그인되어 있지 않을 수 있어요.\nvisionwill3322@gmail.com 주소를 복사할까요?";
+  static String mailAppUnavailableMessageJp =
+      "メールアプリがないか、ログインされていない可能性があります。\nvisionwill3322@gmail.com をコピーしますか？";
+  static String mailAppUnavailableMessageEn =
+      "The mail app may be unavailable or not signed in.\nDo you want to copy visionwill3322@gmail.com?";
+
+  static String copyEmail = "copyEmailTr";
+  static String copyEmailKr = "이메일 복사";
+  static String copyEmailJp = "メールアドレスをコピー";
+  static String copyEmailEn = "Copy Email";
+
+  static String reviewOpenFailed = "reviewOpenFailedTr";
+  static String reviewOpenFailedKr = "리뷰 화면을 열 수 없어요.";
+  static String reviewOpenFailedJp = "レビュー画面を開けません。";
+  static String reviewOpenFailedEn = "Could not open the review page.";
+
+  static String emailCopied = "emailCopiedTr";
+  static String emailCopiedKr = "이메일 주소를 복사했어요.";
+  static String emailCopiedJp = "メールアドレスをコピーしました。";
+  static String emailCopiedEn = "Email address copied.";
 
   static String iCloudSync = "iCloudSyncTr";
   static String iCloudSyncKr = "iCloud 공유";
@@ -833,6 +938,16 @@ class AppStrings extends Translations {
   static String servingsUnitJp = "人分";
   static String servingsUnitEn = "servings";
 
+  static String servingsRequired = "servingsRequiredTr";
+  static String servingsRequiredKr = "인분을 입력해주세요";
+  static String servingsRequiredJp = "人数を入力してください";
+  static String servingsRequiredEn = "Please enter servings";
+
+  static String servingsMinOne = "servingsMinOneTr";
+  static String servingsMinOneKr = "1인분 이상을 입력해주세요";
+  static String servingsMinOneJp = "1人分以上を入力してください";
+  static String servingsMinOneEn = "Please enter at least 1 serving";
+
   static String adjustServings = "adjustServingsTr";
   static String adjustServingsKr = "인분 조절";
   static String adjustServingsJp = "人数調整";
@@ -889,6 +1004,12 @@ class AppStrings extends Translations {
   static String ingredientCategoryKr = "재료 카테고리";
   static String ingredientCategoryJp = "材料カテゴリー";
   static String ingredientCategoryEn = "Ingredient Category";
+
+  static String ingredientCategoryRequired = "ingredientCategoryRequiredTr";
+  static String ingredientCategoryRequiredKr = "재료 카테고리를 선택해주세요";
+  static String ingredientCategoryRequiredJp = "材料カテゴリーを選択してください";
+  static String ingredientCategoryRequiredEn =
+      "Please select an ingredient category";
 
   static String ingredientEdit = "ingredientEditTr";
   static String ingredientEditKr = "재료 수정";
@@ -1120,9 +1241,9 @@ class AppStrings extends Translations {
   static String cropperEn = "Cropper";
 
   static String appTitle = "appTitleTr";
-  static String appTitleKr = "Our Recipe";
-  static String appTitleJp = "Our Recipe";
-  static String appTitleEn = "Our Recipe";
+  static String appTitleKr = "우리의 레시피";
+  static String appTitleJp = "レシピメイト";
+  static String appTitleEn = "Our Recipe Note";
 
   static String recipeName = "recipeNameTr";
   static String recipeNameKr = "레시피명";

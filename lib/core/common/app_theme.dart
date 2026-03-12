@@ -44,7 +44,11 @@ class AppTheme {
         foregroundColor: AppColors.onSecondaryColor,
         elevation: 0,
         scrolledUnderElevation: 0,
-        titleTextStyle: textTheme.titleLarge,
+        centerTitle: true,
+        titleTextStyle: textTheme.titleLarge?.copyWith(
+          color: AppColors.onSecondaryColor,
+          fontWeight: FontWeight.w700,
+        ),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -80,8 +84,10 @@ class AppTheme {
         foregroundColor: const Color(0xFFF4E4D4),
         elevation: 0,
         scrolledUnderElevation: 0,
+        centerTitle: true,
         titleTextStyle: textTheme.titleLarge?.copyWith(
           color: const Color(0xFFF4E4D4),
+          fontWeight: FontWeight.w700,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(

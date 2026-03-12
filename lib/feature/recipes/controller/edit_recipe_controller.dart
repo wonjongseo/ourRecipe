@@ -363,11 +363,11 @@ class EditRecipeController extends GetxController {
     final servings = servingsTextCtrl.text.trim();
     final servingsAsInt = int.tryParse(servings);
     if (servingsAsInt == null) {
-      SnackBarHelper.showErrorSnackBar('인분을 입력해주세요.');
+      SnackBarHelper.showErrorSnackBar(AppStrings.servingsRequired.tr);
       return;
     }
     if (servingsAsInt < 1) {
-      SnackBarHelper.showErrorSnackBar('1인분 이상을 입력해주세요.');
+      SnackBarHelper.showErrorSnackBar(AppStrings.servingsMinOne.tr);
       return;
     }
 
