@@ -41,6 +41,9 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
       itemCount: groups.length,
       itemBuilder: (context, groupIndex) {
         final group = groups[groupIndex];
+        final totalProducts = group.items.fold<int>(0, (sum, item) {
+          return sum + item.products.length;
+        });
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(
@@ -67,7 +70,7 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.w700),
             ),
             subtitle: Text(
-              '${group.items.length}',
+              '$totalProducts',
               style: TextStyle(color: Colors.grey.shade600, fontSize: 11),
             ),
             childrenPadding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
