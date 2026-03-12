@@ -56,7 +56,7 @@ class ExampleICloudController extends GetxController {
   }
 
   /// 화면 진입 시:
-  /// 1. iCloud -> local pull
+  /// 1. CloudKit -> local pull
   /// 2. local DB 조회
   Future<void> load() async {
     isLoading.value = true;
@@ -70,7 +70,7 @@ class ExampleICloudController extends GetxController {
 
   /// 데이터 저장 시:
   /// 1. local DB 저장
-  /// 2. local <-> iCloud 동기화
+  /// 2. local -> CloudKit 백그라운드 업로드
   /// 3. local DB 재조회
   Future<void> saveItem(ExampleItem item) async {
     isLoading.value = true;
@@ -78,21 +78,19 @@ class ExampleICloudController extends GetxController {
       await _repository.saveItem(
         item.copyWith(updatedAt: DateTime.now()),
       );
-      await _iCloudSync.pushPullIfEnabled();
+      _iCloudSync.schedulePushIfEnabled();
       items.assignAll(await _repository.fetchItems());
     } finally {
       isLoading.value = false;
     }
   }
 
-  /// 삭제 시:
-  /// - 일반 테이블은 local 삭제 후 push/pull 로 충분할 수 있다.
-  /// - 하지만 "삭제 이벤트"가 필요한 구조라면 전용 메서드를 따로 만들어야 한다.
+  /// 삭제 시에도 local 삭제 후 전체 스냅샷을 다시 올리는 방식으로 맞춘다.
   Future<void> deleteItem(String id) async {
     isLoading.value = true;
     try {
       await _repository.deleteItem(id);
-      await _iCloudSync.pushPullIfEnabled();
+      _iCloudSync.schedulePushIfEnabled();
       items.assignAll(await _repository.fetchItems());
     } finally {
       isLoading.value = false;

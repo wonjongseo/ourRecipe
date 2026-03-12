@@ -22,7 +22,8 @@ class InputCookingStep {
   final String id = Uuid().v4();
   final TextEditingController descriptionTeCtrl = TextEditingController();
   // 0이면 타이머 미설정 상태.
-  int timer = 0; // minute
+  int timerValue = 0;
+  String timerUnit = 'minute';
   File? image;
   InputCookingStep();
 }
@@ -74,6 +75,20 @@ class EditRecipeController extends GetxController {
     }
   }
 
+  Future<void> cropCoverImage() async {
+    final current = _coverImage.value;
+    if (current == null || _isPickingImage.value) return;
+    _isPickingImage.value = true;
+    try {
+      final cropped = await ImageService.cropSelectedImage(current);
+      if (cropped != null) {
+        _coverImage.value = cropped;
+      }
+    } finally {
+      _isPickingImage.value = false;
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -117,7 +132,17 @@ class EditRecipeController extends GetxController {
         for (final step in recipe.steps) {
           final input = InputCookingStep();
           input.descriptionTeCtrl.text = step.instruction;
-          input.timer = step.timerSec ?? 0;
+          final timerSec = step.timerSec ?? 0;
+          if (timerSec > 0 && timerSec % 3600 == 0) {
+            input.timerValue = timerSec ~/ 3600;
+            input.timerUnit = 'hour';
+          } else if (timerSec > 0 && timerSec % 60 == 0) {
+            input.timerValue = timerSec ~/ 60;
+            input.timerUnit = 'minute';
+          } else {
+            input.timerValue = timerSec;
+            input.timerUnit = 'second';
+          }
           if (step.imagePath != null && step.imagePath!.isNotEmpty) {
             input.image = File(step.imagePath!);
           }
@@ -257,16 +282,46 @@ class EditRecipeController extends GetxController {
     inputCookingSteps.refresh();
   }
 
+  Future<void> cropCookingStepImage(int index) async {
+    if (_isPickingImage.value) return;
+    if (index < 0 || index >= inputCookingSteps.length) return;
+    final current = inputCookingSteps[index].image;
+    if (current == null) return;
+    _isPickingImage.value = true;
+    try {
+      final cropped = await ImageService.cropSelectedImage(current);
+      if (cropped == null) return;
+      inputCookingSteps[index].image = cropped;
+      inputCookingSteps.refresh();
+    } finally {
+      _isPickingImage.value = false;
+    }
+  }
+
   void removeImageFromCookingStep(int index) {
     if (index < 0 || index >= inputCookingSteps.length) return;
     inputCookingSteps[index].image = null;
     inputCookingSteps.refresh();
   }
 
-  void setCookingStepTimer(int index, int minutes) {
+  void setCookingStepTimer(int index, int value, String unit) {
     if (index < 0 || index >= inputCookingSteps.length) return;
-    inputCookingSteps[index].timer = minutes;
+    inputCookingSteps[index].timerValue = value;
+    inputCookingSteps[index].timerUnit = unit;
     inputCookingSteps.refresh();
+  }
+
+  int cookingStepTimerToSeconds(InputCookingStep step) {
+    if (step.timerValue <= 0) return 0;
+    switch (step.timerUnit) {
+      case 'hour':
+        return step.timerValue * 3600;
+      case 'minute':
+        return step.timerValue * 60;
+      case 'second':
+      default:
+        return step.timerValue;
+    }
   }
 
   void toggleLike() {
@@ -341,7 +396,8 @@ class EditRecipeController extends GetxController {
         }
 
         final hasImage = savedImagePath != null && savedImagePath.isNotEmpty;
-        final hasTimer = inputCookingStep.timer > 0;
+        final timerSeconds = cookingStepTimerToSeconds(inputCookingStep);
+        final hasTimer = timerSeconds > 0;
         final isEmptyStep = instruction.isEmpty && !hasImage && !hasTimer;
         if (isEmptyStep) continue;
 
@@ -351,7 +407,7 @@ class EditRecipeController extends GetxController {
             order: cookingStepModels.length + 1,
             instruction: instruction,
             imagePath: savedImagePath,
-            timerSec: hasTimer ? inputCookingStep.timer : null,
+            timerSec: hasTimer ? timerSeconds : null,
           ),
         );
       }

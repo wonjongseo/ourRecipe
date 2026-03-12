@@ -53,6 +53,31 @@ class IngredientProductRepository {
     return rows.map((row) => row['id'] as String).toSet();
   }
 
+  Future<List<IngredientProductModel>> fetchCustomProductsForSync() async {
+    return _fetchCustomProducts();
+  }
+
+  Future<List<String>> fetchDeletedDefaultIdsForSync() async {
+    final ids = await _fetchDeletedDefaultIds();
+    return ids.toList();
+  }
+
+  Future<void> saveDeletedDefaultIdsForSync(List<String> ids) async {
+    final db = await _database.db;
+    final normalized =
+        ids.map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList();
+    await db.transaction((txn) async {
+      await txn.delete(RecipeDatabaseService.ingredientDefaultDeletions);
+      for (final id in normalized) {
+        await txn.insert(
+          RecipeDatabaseService.ingredientDefaultDeletions,
+          {'id': id},
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
+  }
+
   Future<List<IngredientProductModel>> _loadDefaultProducts() async {
     final langCode = _resolvedLanguageCode();
     final cached = _defaultProductsCacheByLang[langCode];
@@ -307,6 +332,7 @@ class IngredientProductRepository {
         final recipeId = row['recipe_id'] as String?;
         if (ingredientId == null || recipeId == null) continue;
         affectedRecipeIds.add(recipeId);
+
         await txn.update(
           RecipeDatabaseService.recipeIngredients,
           {

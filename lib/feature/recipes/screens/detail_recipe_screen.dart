@@ -199,7 +199,9 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                                           SizedBox(height: 6),
                                           Text(step.instruction),
                                           SizedBox(height: 12),
-                                          if (_hasValidImageFile(step.imagePath))
+                                          if (_hasValidImageFile(
+                                            step.imagePath,
+                                          ))
                                             Image.file(File(step.imagePath!)),
 
                                           if (index !=
@@ -487,7 +489,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
         recipeModel.coverImagePath!.isNotEmpty;
 
     return SliverAppBar(
-      expandedHeight: 200,
+      expandedHeight: 300,
       pinned: true,
       foregroundColor: Colors.white,
 
@@ -776,7 +778,31 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
     );
 
     if (shouldDelete != true) return;
-    controller.deleteRecipe(recipeModel);
+    Get.dialog<void>(
+      PopScope(
+        canPop: false,
+        child: AlertDialog.adaptive(
+          content: Row(
+            children: [
+              const CircularProgressIndicator.adaptive(),
+              const SizedBox(width: 14),
+              Expanded(child: Text(AppStrings.deleting.tr)),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+    try {
+      await controller.deleteRecipe(recipeModel);
+    } finally {
+      if (Get.isDialogOpen ?? false) {
+        Get.back<void>();
+      }
+    }
+    if (mounted) {
+      Get.back<void>();
+    }
   }
 }
 

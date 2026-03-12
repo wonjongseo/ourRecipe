@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:our_recipe/core/common/app_functions.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
-import 'package:our_recipe/core/services/app_data_path_service.dart';
+import 'package:our_recipe/core/services/icloud/app_data_path_service.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageService {
@@ -60,7 +60,7 @@ class ImageService {
     );
   }
 
-  /// 카메라로 촬영한 이미지를 가져오고 필요 시 크롭한다.
+  /// 카메라로 촬영한 원본 이미지를 가져온다.
   static Future<File?> _pickImageFromCamera() async {
     try {
       final image = await ImagePicker().pickImage(
@@ -69,12 +69,7 @@ class ImageService {
       );
 
       if (image == null) return null;
-
-      final croppedFile = await _cropImage(image!);
-      final selected =
-          croppedFile == null ? File(image.path) : File(croppedFile.path);
-
-      return selected;
+      return File(image.path);
     } catch (e) {
       LogManager.error("$e");
     }
@@ -106,10 +101,23 @@ class ImageService {
     );
   }
 
-  /// 앱 데이터 경로(iOS는 iCloud)로 이미지를 저장하고 최종 절대경로를 반환한다.
+  /// 선택된 원본 이미지를 사용자가 원할 때만 크롭한다.
+  static Future<File?> cropSelectedImage(File file) async {
+    try {
+      if (!await file.exists()) return null;
+      final croppedFile = await _cropImage(XFile(file.path));
+      if (croppedFile == null) return null;
+      return File(croppedFile.path);
+    } catch (e) {
+      LogManager.error("$e");
+    }
+    return null;
+  }
+
+  /// 앱 로컬 데이터 경로에 이미지를 저장하고 최종 절대경로를 반환한다.
   static Future<String> saveFile(File file) async {
     final imageName = '${const Uuid().v4()}.png';
-    final dataDirPath = await AppDataPathService.getAppDataDirectoryPath();
+    final dataDirPath = await AppDataPathService.getRecipeImagesDirectoryPath();
     final targetPath = '$dataDirPath/$imageName';
     await file.copy(targetPath);
     return targetPath;
@@ -121,17 +129,24 @@ class ImageService {
     final value = pathOrName.trim();
     if (value.isEmpty) return;
     try {
-      final dataDirPath = await AppDataPathService.getAppDataDirectoryPath();
-      final target =
-          p.isAbsolute(value) ? File(value) : File(p.join(dataDirPath, value));
+      final imageDirPath = await AppDataPathService.getRecipeImagesDirectoryPath();
+      final target = p.isAbsolute(value)
+          ? File(value)
+          : File(p.join(imageDirPath, value));
 
-      // 현재 활성 저장소 경로 밖의 절대경로는 삭제하지 않는다.
-      // 예: iCloud OFF 상태에서 iCloud 절대경로 파일을 지워버리는 문제 방지.
-      if (!p.isWithin(dataDirPath, target.path)) {
-        LogManager.warning(
-          '[iCloud][Image] skipped delete outside active storage: ${target.path}',
+      // 앱 로컬 저장소 밖의 절대경로는 삭제하지 않는다.
+      // 화면에 남아 있던 오래된 외부 경로를 실수로 지우지 않기 위한 안전장치다.
+      if (p.isAbsolute(target.path) && !p.isWithin(imageDirPath, target.path)) {
+        final legacyPath = p.join(
+          await AppDataPathService.getAppDataDirectoryPath(),
+          p.basename(target.path),
         );
-        return;
+        if (target.path != legacyPath) {
+          LogManager.warning(
+            '[iCloud][Image] skipped delete outside image storage: ${target.path}',
+          );
+          return;
+        }
       }
 
       if (await target.exists()) {
@@ -142,18 +157,14 @@ class ImageService {
     }
   }
 
-  /// 앨범에서 이미지를 가져오고 필요 시 크롭한다.
+  /// 앨범에서 원본 이미지를 가져온다.
   static Future<File?> _getImageFromLibery() async {
     try {
       final picker = ImagePicker();
       final image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image == null) return null;
-
-      final croppedFile = await _cropImage(image!);
-      final selected =
-          croppedFile == null ? File(image.path) : File(croppedFile.path);
-      return selected;
+      return File(image.path);
     } catch (e) {
       LogManager.error("$e");
     }

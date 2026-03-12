@@ -47,7 +47,9 @@ class AppStrings extends Translations {
           AppStrings.ingredientAmountRequiredJp,
       AppStrings.timeMinute: AppStrings.timeMinuteJp,
       AppStrings.exampleFive: AppStrings.exampleFiveJp,
+      AppStrings.second: AppStrings.secondJp,
       AppStrings.minute: AppStrings.minuteJp,
+      AppStrings.hour: AppStrings.hourJp,
       AppStrings.cancel: AppStrings.cancelJp,
       AppStrings.remove: AppStrings.removeJp,
       AppStrings.confirm: AppStrings.confirmJp,
@@ -77,6 +79,8 @@ class AppStrings extends Translations {
       AppStrings.iCloudMerge: AppStrings.iCloudMergeJp,
       AppStrings.iCloudOverwrite: AppStrings.iCloudOverwriteJp,
       AppStrings.iCloudSyncChanged: AppStrings.iCloudSyncChangedJp,
+      AppStrings.uploadToICloud: AppStrings.uploadToICloudJp,
+      AppStrings.downloadFromICloud: AppStrings.downloadFromICloudJp,
       AppStrings.loading: AppStrings.loadingJp,
       AppStrings.categoryManagement: AppStrings.categoryManagementJp,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementJp,
@@ -115,6 +119,7 @@ class AppStrings extends Translations {
           AppStrings.deleteRecipeConfirmMessageJp,
       AppStrings.deleteRecipeICloudWarning:
           AppStrings.deleteRecipeICloudWarningJp,
+      AppStrings.deleting: AppStrings.deletingJp,
       AppStrings.deleteIngredientConfirmMessage:
           AppStrings.deleteIngredientConfirmMessageJp,
       AppStrings.deleteIngredientICloudWarning:
@@ -154,6 +159,24 @@ class AppStrings extends Translations {
       AppStrings.deleteAllICloudData: AppStrings.deleteAllICloudDataJp,
       AppStrings.deleteAllICloudDataDescription:
           AppStrings.deleteAllICloudDataDescriptionJp,
+      AppStrings.iCloudUploadProgressDescription:
+          AppStrings.iCloudUploadProgressDescriptionJp,
+      AppStrings.iCloudDownloadProgressDescription:
+          AppStrings.iCloudDownloadProgressDescriptionJp,
+      AppStrings.iCloudDeleteProgressDescription:
+          AppStrings.iCloudDeleteProgressDescriptionJp,
+      AppStrings.iCloudUploadCompleted:
+          AppStrings.iCloudUploadCompletedJp,
+      AppStrings.iCloudDownloadCompleted:
+          AppStrings.iCloudDownloadCompletedJp,
+      AppStrings.iCloudDeleteCompleted:
+          AppStrings.iCloudDeleteCompletedJp,
+      AppStrings.iCloudUploadButtonGuide:
+          AppStrings.iCloudUploadButtonGuideJp,
+      AppStrings.iCloudDownloadButtonGuide:
+          AppStrings.iCloudDownloadButtonGuideJp,
+      AppStrings.iCloudDeleteButtonGuide:
+          AppStrings.iCloudDeleteButtonGuideJp,
       AppStrings.recipeName: AppStrings.recipeNameJp,
       AppStrings.websiteLink: AppStrings.websiteLinkJp,
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkJp,
@@ -204,7 +227,9 @@ class AppStrings extends Translations {
           AppStrings.ingredientAmountRequiredKr,
       AppStrings.timeMinute: AppStrings.timeMinuteKr,
       AppStrings.exampleFive: AppStrings.exampleFiveKr,
+      AppStrings.second: AppStrings.secondKr,
       AppStrings.minute: AppStrings.minuteKr,
+      AppStrings.hour: AppStrings.hourKr,
       AppStrings.cancel: AppStrings.cancelKr,
       AppStrings.remove: AppStrings.removeKr,
       AppStrings.confirm: AppStrings.confirmKr,
@@ -234,6 +259,8 @@ class AppStrings extends Translations {
       AppStrings.iCloudMerge: AppStrings.iCloudMergeKr,
       AppStrings.iCloudOverwrite: AppStrings.iCloudOverwriteKr,
       AppStrings.iCloudSyncChanged: AppStrings.iCloudSyncChangedKr,
+      AppStrings.uploadToICloud: AppStrings.uploadToICloudKr,
+      AppStrings.downloadFromICloud: AppStrings.downloadFromICloudKr,
       AppStrings.loading: AppStrings.loadingKr,
       AppStrings.categoryManagement: AppStrings.categoryManagementKr,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementKr,
@@ -272,6 +299,7 @@ class AppStrings extends Translations {
           AppStrings.deleteRecipeConfirmMessageKr,
       AppStrings.deleteRecipeICloudWarning:
           AppStrings.deleteRecipeICloudWarningKr,
+      AppStrings.deleting: AppStrings.deletingKr,
       AppStrings.deleteIngredientConfirmMessage:
           AppStrings.deleteIngredientConfirmMessageKr,
       AppStrings.deleteIngredientICloudWarning:
@@ -311,6 +339,24 @@ class AppStrings extends Translations {
       AppStrings.deleteAllICloudData: AppStrings.deleteAllICloudDataKr,
       AppStrings.deleteAllICloudDataDescription:
           AppStrings.deleteAllICloudDataDescriptionKr,
+      AppStrings.iCloudUploadProgressDescription:
+          AppStrings.iCloudUploadProgressDescriptionKr,
+      AppStrings.iCloudDownloadProgressDescription:
+          AppStrings.iCloudDownloadProgressDescriptionKr,
+      AppStrings.iCloudDeleteProgressDescription:
+          AppStrings.iCloudDeleteProgressDescriptionKr,
+      AppStrings.iCloudUploadCompleted:
+          AppStrings.iCloudUploadCompletedKr,
+      AppStrings.iCloudDownloadCompleted:
+          AppStrings.iCloudDownloadCompletedKr,
+      AppStrings.iCloudDeleteCompleted:
+          AppStrings.iCloudDeleteCompletedKr,
+      AppStrings.iCloudUploadButtonGuide:
+          AppStrings.iCloudUploadButtonGuideKr,
+      AppStrings.iCloudDownloadButtonGuide:
+          AppStrings.iCloudDownloadButtonGuideKr,
+      AppStrings.iCloudDeleteButtonGuide:
+          AppStrings.iCloudDeleteButtonGuideKr,
       AppStrings.recipeName: AppStrings.recipeNameKr,
       AppStrings.websiteLink: AppStrings.websiteLinkKr,
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkKr,
@@ -362,7 +408,9 @@ class AppStrings extends Translations {
           AppStrings.ingredientAmountRequiredEn,
       AppStrings.timeMinute: AppStrings.timeMinuteEn,
       AppStrings.exampleFive: AppStrings.exampleFiveEn,
+      AppStrings.second: AppStrings.secondEn,
       AppStrings.minute: AppStrings.minuteEn,
+      AppStrings.hour: AppStrings.hourEn,
       AppStrings.cancel: AppStrings.cancelEn,
       AppStrings.remove: AppStrings.removeEn,
       AppStrings.confirm: AppStrings.confirmEn,
@@ -392,6 +440,8 @@ class AppStrings extends Translations {
       AppStrings.iCloudMerge: AppStrings.iCloudMergeEn,
       AppStrings.iCloudOverwrite: AppStrings.iCloudOverwriteEn,
       AppStrings.iCloudSyncChanged: AppStrings.iCloudSyncChangedEn,
+      AppStrings.uploadToICloud: AppStrings.uploadToICloudEn,
+      AppStrings.downloadFromICloud: AppStrings.downloadFromICloudEn,
       AppStrings.loading: AppStrings.loadingEn,
       AppStrings.categoryManagement: AppStrings.categoryManagementEn,
       AppStrings.ingredientManagement: AppStrings.ingredientManagementEn,
@@ -430,6 +480,7 @@ class AppStrings extends Translations {
           AppStrings.deleteRecipeConfirmMessageEn,
       AppStrings.deleteRecipeICloudWarning:
           AppStrings.deleteRecipeICloudWarningEn,
+      AppStrings.deleting: AppStrings.deletingEn,
       AppStrings.deleteIngredientConfirmMessage:
           AppStrings.deleteIngredientConfirmMessageEn,
       AppStrings.deleteIngredientICloudWarning:
@@ -469,6 +520,24 @@ class AppStrings extends Translations {
       AppStrings.deleteAllICloudData: AppStrings.deleteAllICloudDataEn,
       AppStrings.deleteAllICloudDataDescription:
           AppStrings.deleteAllICloudDataDescriptionEn,
+      AppStrings.iCloudUploadProgressDescription:
+          AppStrings.iCloudUploadProgressDescriptionEn,
+      AppStrings.iCloudDownloadProgressDescription:
+          AppStrings.iCloudDownloadProgressDescriptionEn,
+      AppStrings.iCloudDeleteProgressDescription:
+          AppStrings.iCloudDeleteProgressDescriptionEn,
+      AppStrings.iCloudUploadCompleted:
+          AppStrings.iCloudUploadCompletedEn,
+      AppStrings.iCloudDownloadCompleted:
+          AppStrings.iCloudDownloadCompletedEn,
+      AppStrings.iCloudDeleteCompleted:
+          AppStrings.iCloudDeleteCompletedEn,
+      AppStrings.iCloudUploadButtonGuide:
+          AppStrings.iCloudUploadButtonGuideEn,
+      AppStrings.iCloudDownloadButtonGuide:
+          AppStrings.iCloudDownloadButtonGuideEn,
+      AppStrings.iCloudDeleteButtonGuide:
+          AppStrings.iCloudDeleteButtonGuideEn,
       AppStrings.recipeName: AppStrings.recipeNameEn,
       AppStrings.websiteLink: AppStrings.websiteLinkEn,
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkEn,
@@ -711,6 +780,16 @@ class AppStrings extends Translations {
   static String iCloudSyncChangedJp = "iCloud共有設定を変更しました。";
   static String iCloudSyncChangedEn = "iCloud sync setting has been changed.";
 
+  static String uploadToICloud = "uploadToICloudTr";
+  static String uploadToICloudKr = "iCloud에 업로드";
+  static String uploadToICloudJp = "iCloudにアップロード";
+  static String uploadToICloudEn = "Upload to iCloud";
+
+  static String downloadFromICloud = "downloadFromICloudTr";
+  static String downloadFromICloudKr = "iCloud에서 가져오기";
+  static String downloadFromICloudJp = "iCloudから取得";
+  static String downloadFromICloudEn = "Download from iCloud";
+
   static String loading = "loadingTr";
   static String loadingKr = "처리 중...";
   static String loadingJp = "処理中...";
@@ -880,6 +959,11 @@ class AppStrings extends Translations {
       "iCloud共有がONのため、\n他のデバイスにも反映される可能性があります。";
   static String deleteRecipeICloudWarningEn =
       "iCloud sync is ON,\nso this may affect other devices.";
+
+  static String deleting = "deletingTr";
+  static String deletingKr = "삭제 중...";
+  static String deletingJp = "削除中...";
+  static String deletingEn = "Deleting...";
 
   static String deleteIngredientConfirmMessage =
       "deleteIngredientConfirmMessageTr";
@@ -1074,11 +1158,11 @@ class AppStrings extends Translations {
 
   static String iCloudSettingsGuide = "iCloudSettingsGuideTr";
   static String iCloudSettingsGuideKr =
-      "iCloud 설정을 확인해주세요.\n설정 > [Apple ID] > iCloud > iCloud Drive ON,\n같은 화면의 Our Recipe 토글 ON";
+      "iCloud 설정을 확인해주세요.\n설정 > [Apple ID] > iCloud 에서 Our Recipe 공유를 허용해주세요.";
   static String iCloudSettingsGuideJp =
-      "iCloud設定を確認してください。\n設定 > [Apple ID] > iCloud > iCloud Drive をON、\n同じ画面で Our Recipe をON";
+      "iCloud設定を確認してください。\n設定 > [Apple ID] > iCloud で Our Recipe の共有を許可してください。";
   static String iCloudSettingsGuideEn =
-      "Check iCloud settings.\nSettings > [Apple ID] > iCloud > iCloud Drive ON,\nand turn ON Our Recipe in the same screen.";
+      "Check your iCloud settings.\nAllow Our Recipe to use iCloud sharing in Settings > [Apple ID] > iCloud.";
 
   static String pleaseCheckSettings = "pleaseCheckSettingsTr";
   static String pleaseCheckSettingsKr = "설정을 확인해주세요.";
@@ -1098,6 +1182,72 @@ class AppStrings extends Translations {
       "iCloudに保存されたレシピと画像をすべて削除します。";
   static String deleteAllICloudDataDescriptionEn =
       "Delete all recipes and images stored in iCloud.";
+
+  static String iCloudUploadProgressDescription =
+      "iCloudUploadProgressDescriptionTr";
+  static String iCloudUploadProgressDescriptionKr =
+      "iCloud에 업로드 중입니다.\n몇 초 정도 걸릴 수 있습니다.";
+  static String iCloudUploadProgressDescriptionJp =
+      "iCloudにアップロード中です。\n数秒かかる場合があります。";
+  static String iCloudUploadProgressDescriptionEn =
+      "Uploading to iCloud.\nThis may take a few seconds.";
+
+  static String iCloudDownloadProgressDescription =
+      "iCloudDownloadProgressDescriptionTr";
+  static String iCloudDownloadProgressDescriptionKr =
+      "iCloud에서 가져오는 중입니다.\n몇 초 정도 걸릴 수 있습니다.";
+  static String iCloudDownloadProgressDescriptionJp =
+      "iCloudから取得中です。\n数秒かかる場合があります。";
+  static String iCloudDownloadProgressDescriptionEn =
+      "Downloading from iCloud.\nThis may take a few seconds.";
+
+  static String iCloudDeleteProgressDescription =
+      "iCloudDeleteProgressDescriptionTr";
+  static String iCloudDeleteProgressDescriptionKr =
+      "iCloud 데이터를 삭제 중입니다.\n몇 초 정도 걸릴 수 있습니다.";
+  static String iCloudDeleteProgressDescriptionJp =
+      "iCloudデータを削除中です。\n数秒かかる場合があります。";
+  static String iCloudDeleteProgressDescriptionEn =
+      "Deleting iCloud data.\nThis may take a few seconds.";
+
+  static String iCloudUploadCompleted = "iCloudUploadCompletedTr";
+  static String iCloudUploadCompletedKr = "iCloud에 업로드되었습니다.";
+  static String iCloudUploadCompletedJp = "iCloudへのアップロードが完了しました。";
+  static String iCloudUploadCompletedEn = "Uploaded to iCloud.";
+
+  static String iCloudDownloadCompleted = "iCloudDownloadCompletedTr";
+  static String iCloudDownloadCompletedKr = "iCloud에서 데이터를 가져왔습니다.";
+  static String iCloudDownloadCompletedJp = "iCloudからデータを取得しました。";
+  static String iCloudDownloadCompletedEn = "Downloaded data from iCloud.";
+
+  static String iCloudDeleteCompleted = "iCloudDeleteCompletedTr";
+  static String iCloudDeleteCompletedKr = "iCloud 데이터가 삭제되었습니다.";
+  static String iCloudDeleteCompletedJp = "iCloudデータを削除しました。";
+  static String iCloudDeleteCompletedEn = "Deleted iCloud data.";
+
+  static String iCloudUploadButtonGuide = "iCloudUploadButtonGuideTr";
+  static String iCloudUploadButtonGuideKr =
+      "현재 이 기기의 레시피 화면에 보이는 데이터와 사진을 iCloud에 반영합니다.";
+  static String iCloudUploadButtonGuideJp =
+      "現在この端末のレシピ画面に表示されているデータと画像をiCloudに反映します。";
+  static String iCloudUploadButtonGuideEn =
+      "Upload the recipes and images currently shown on this device to iCloud.";
+
+  static String iCloudDownloadButtonGuide = "iCloudDownloadButtonGuideTr";
+  static String iCloudDownloadButtonGuideKr =
+      "iCloud에 저장된 데이터와 사진을 이 기기의 로컬 데이터와 병합해서 가져옵니다.";
+  static String iCloudDownloadButtonGuideJp =
+      "iCloudに保存されたデータと画像を、この端末のローカルデータとマージして取得します。";
+  static String iCloudDownloadButtonGuideEn =
+      "Download recipes and images from iCloud and merge them into this device.";
+
+  static String iCloudDeleteButtonGuide = "iCloudDeleteButtonGuideTr";
+  static String iCloudDeleteButtonGuideKr =
+      "iCloud에 저장된 데이터와 사진만 삭제합니다. 이 기기의 로컬 데이터는 유지됩니다.";
+  static String iCloudDeleteButtonGuideJp =
+      "iCloudに保存されたデータと画像のみ削除します。この端末のローカルデータは保持されます。";
+  static String iCloudDeleteButtonGuideEn =
+      "Delete only the data and images stored in iCloud. Local data on this device is kept.";
 
   static String memo = "memoTr";
   static String memoKr = "메모";
@@ -1136,10 +1286,20 @@ class AppStrings extends Translations {
   static String exampleFiveJp = "例: 5";
   static String exampleFiveEn = "e.g. 5";
 
+  static String second = "secondTr";
+  static String secondKr = "초";
+  static String secondJp = "秒";
+  static String secondEn = "sec";
+
   static String minute = "minuteTr";
   static String minuteKr = "분";
   static String minuteJp = "分";
   static String minuteEn = "min";
+
+  static String hour = "hourTr";
+  static String hourKr = "시";
+  static String hourJp = "時間";
+  static String hourEn = "hr";
 
   static String cancel = "cancelTr";
   static String cancelKr = "취소";

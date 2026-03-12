@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
-import 'package:our_recipe/core/services/app_data_path_service.dart';
+import 'package:our_recipe/core/services/icloud/app_data_path_service.dart';
 import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
@@ -17,7 +17,7 @@ class RecipeRepository {
 
   Future<List<RecipeModel>> fetchRecipes() async {
     final db = await _database.db;
-    final docsPath = await AppDataPathService.getAppDataDirectoryPath();
+    final docsPath = await AppDataPathService.getRecipeImagesDirectoryPath();
     final rows = await db.query(
       RecipeDatabaseService.recipes,
       orderBy: 'updated_at DESC',
@@ -255,9 +255,18 @@ class RecipeRepository {
       if (File(trimmed).existsSync()) return trimmed;
       final fallback = p.join(docsPath, p.basename(trimmed));
       if (File(fallback).existsSync()) return fallback;
+      final legacyFallback = p.join(
+        p.dirname(docsPath),
+        p.basename(trimmed),
+      );
+      if (File(legacyFallback).existsSync()) return legacyFallback;
       return fallback;
     }
-    return p.join(docsPath, trimmed);
+    final imagePath = p.join(docsPath, trimmed);
+    if (File(imagePath).existsSync()) return imagePath;
+    final legacyPath = p.join(p.dirname(docsPath), trimmed);
+    if (File(legacyPath).existsSync()) return legacyPath;
+    return imagePath;
   }
 
   IngredientUnit _unitFromName(String name) {

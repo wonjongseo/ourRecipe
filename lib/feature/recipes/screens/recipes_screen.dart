@@ -86,12 +86,27 @@ class RecipesScreen extends GetView<RecipeController> {
                               child:
                                   controller.recipes.isEmpty
                                       ? Center(
-                                        child: Text(
-                                          '등록된 레시피가 없습니다',
-                                          style: TextStyle(
-                                            color:
-                                                AppColors.noRegisteredItemColor,
-                                          ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              '등록된 레시피가 없습니다',
+                                              style: TextStyle(
+                                                color:
+                                                    AppColors.noRegisteredItemColor,
+                                              ),
+                                            ),
+                                            if (controller.isICloudSyncEnabled) ...[
+                                              const SizedBox(height: 16),
+                                              OutlinedButton.icon(
+                                                onPressed: controller.downloadFromICloud,
+                                                icon: const Icon(Icons.sync_rounded),
+                                                label: Text(
+                                                  AppStrings.downloadFromICloud.tr,
+                                                ),
+                                              ),
+                                            ],
+                                          ],
                                         ),
                                       )
                                       : AppRefreshIndicator(

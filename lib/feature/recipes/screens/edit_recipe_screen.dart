@@ -59,12 +59,13 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                         children: [
                           _coverImage(),
                           SizedBox(height: 6),
-                          _recipeCategory(context),
-                          SizedBox(height: 12),
+
                           CustomTextFormField(
                             label: AppStrings.recipeName.tr,
                             controller: controller.recipeNameTextCtrl,
                           ),
+                          SizedBox(height: 12),
+                          _recipeCategory(context),
                           SizedBox(height: 12),
                           CustomTextFormField(
                             label: AppStrings.servings.tr,
@@ -195,11 +196,14 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
               pickImage: (index) {
                 controller.pickImageToCookingStep(index);
               },
+              cropImage: (index) {
+                controller.cropCookingStepImage(index);
+              },
               removeImage: (index) {
                 controller.removeImageFromCookingStep(index);
               },
-              setTimer: (index, minute) {
-                controller.setCookingStepTimer(index, minute);
+              setTimer: (index, value, unit) {
+                controller.setCookingStepTimer(index, value, unit);
               },
             );
           },
@@ -303,12 +307,47 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                       fit: BoxFit.cover,
                     ),
           ),
-          child:
-              controller.coverImage == null
-                  ? controller.isPickingImage
-                      ? Center(child: CircularProgressIndicator.adaptive())
-                      : _pickImageWidget()
-                  : SizedBox(),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child:
+                    controller.coverImage == null
+                        ? controller.isPickingImage
+                            ? Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            )
+                            : _pickImageWidget()
+                        : const SizedBox(),
+              ),
+              if (controller.coverImage != null)
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Row(
+                    children: [
+                      Material(
+                        color: Colors.black54,
+                        shape: const CircleBorder(),
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () async {
+                            await controller.cropCoverImage();
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Icon(
+                              Icons.crop_rounded,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
@@ -91,7 +91,7 @@ class StartCookingController extends GetxController {
       _stopTimer();
       return;
     }
-    final current = remainingSec.value ?? (currentStep.timerSec! * 60);
+    final current = remainingSec.value ?? currentStep.timerSec!;
     if (current <= 0) {
       _resetTimerForCurrentStep();
     }
@@ -104,14 +104,13 @@ class StartCookingController extends GetxController {
       remainingSec.value = null;
       return;
     }
-    remainingSec.value =
-        hasTimerOnCurrentStep ? (currentStep.timerSec! * 60) : null;
+    remainingSec.value = hasTimerOnCurrentStep ? currentStep.timerSec! : null;
   }
 
   void _startTimer() {
     if (!hasTimerOnCurrentStep) return;
     if ((remainingSec.value ?? 0) <= 0) {
-      remainingSec.value = currentStep.timerSec! * 60;
+      remainingSec.value = currentStep.timerSec!;
     }
     isTimerRunning.value = true;
     _timer?.cancel();
@@ -138,6 +137,6 @@ class StartCookingController extends GetxController {
   }
 
   void _notifyTimerFinished() {
-    SystemSound.play(SystemSoundType.alert);
+    FlutterRingtonePlayer().playAlarm();
   }
 }

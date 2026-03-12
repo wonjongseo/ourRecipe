@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/app_theme.dart';
-import 'package:our_recipe/core/services/app_data_path_service.dart';
-import 'package:our_recipe/core/services/icloud/icloud_sync_migration_service.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
+import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/icloud/app_data_path_service.dart';
+import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
 import 'package:our_recipe/core/services/locale_service.dart';
 import 'package:our_recipe/core/services/recipe_database_service.dart';
@@ -20,8 +22,7 @@ class MyPageController extends GetxController {
   final textScale = 1.0.obs;
   final ThemeService _themeService = ThemeService();
   final ICloudSyncSettingsService _iCloudSettings = ICloudSyncSettingsService();
-  final ICloudSyncMigrationService _migrationService =
-      ICloudSyncMigrationService();
+  final ICloudSyncService _iCloudSync = ICloudSyncService();
   final iCloudSyncEnabled = true.obs;
   final isICloudSyncUpdating = false.obs;
   final iCloudStatusMessage = ''.obs;
@@ -146,24 +147,10 @@ class MyPageController extends GetxController {
     isICloudSyncUpdating.value = true;
 
     try {
-      await RecipeDatabaseService.reset();
-      if (enabled) {
-        await _migrationService.syncBidirectionalMerge();
-      } else {
-        // OFF 전환 시 현재 iCloud 내용을 로컬에 1회 반영한다.
-        await _migrationService.syncFromICloudToLocalMerge();
-      }
-
       await _iCloudSettings.setEnabled(enabled);
-      await RecipeDatabaseService.reset();
-      if (Get.isRegistered<RecipeController>()) {
-        await Get.find<RecipeController>().reloadAll();
-      }
       await refreshICloudStatusMessage();
-    } on ICloudUnavailableException {
-      iCloudSyncEnabled.value = !enabled;
-      iCloudStatusMessage.value = AppStrings.pleaseCheckSettings.tr;
-    } catch (_) {
+    } catch (e, s) {
+      LogManager.error('Change iCloud sync failed', error: e, stackTrace: s);
       iCloudSyncEnabled.value = !enabled;
       iCloudStatusMessage.value = AppStrings.dbSaveFailed.tr;
     } finally {
@@ -173,23 +160,73 @@ class MyPageController extends GetxController {
 
   Future<void> deleteAllICloudData() async {
     if (isICloudSyncUpdating.value) return;
-    isICloudSyncUpdating.value = true;
-    try {
-      // 파일 삭제 전에 DB 핸들을 먼저 닫아 잠금 이슈를 방지한다.
-      await RecipeDatabaseService.reset();
-      await _migrationService.deleteAllICloudData();
-      await RecipeDatabaseService.reset();
-      if (Get.isRegistered<RecipeController>()) {
-        await Get.find<RecipeController>().reloadAll();
-      }
-      await refreshICloudStatusMessage();
-    } on ICloudUnavailableException {
-      iCloudStatusMessage.value = AppStrings.pleaseCheckSettings.tr;
-    } catch (_) {
-      iCloudStatusMessage.value = AppStrings.dbSaveFailed.tr;
-    } finally {
-      isICloudSyncUpdating.value = false;
-    }
+    await _runICloudTask(
+      title: AppStrings.deleteAllICloudData.tr,
+      description: AppStrings.iCloudDeleteProgressDescription.tr,
+      successMessage: AppStrings.iCloudDeleteCompleted.tr,
+      task: () async {
+        await RecipeDatabaseService.reset();
+        await _iCloudSync.clearCloudDataIfEnabled();
+        await RecipeDatabaseService.reset();
+        if (Get.isRegistered<RecipeController>()) {
+          await Get.find<RecipeController>().reloadAll();
+        }
+        await refreshICloudStatusMessage();
+      },
+      onError: (e, s) {
+        LogManager.error(
+          'Delete all CloudKit data failed',
+          error: e,
+          stackTrace: s,
+        );
+        iCloudStatusMessage.value = AppStrings.dbSaveFailed.tr;
+      },
+    );
+  }
+
+  Future<void> uploadLocalDataToICloud() async {
+    if (isICloudSyncUpdating.value) return;
+    await _runICloudTask(
+      title: AppStrings.uploadToICloud.tr,
+      description: AppStrings.iCloudUploadProgressDescription.tr,
+      successMessage: AppStrings.iCloudUploadCompleted.tr,
+      task: () async {
+        await _iCloudSync.pushIfEnabled();
+      },
+      onError: (e, s) {
+        LogManager.error(
+          'Upload local data to iCloud failed',
+          error: e,
+          stackTrace: s,
+        );
+        iCloudStatusMessage.value = AppStrings.dbSaveFailed.tr;
+      },
+    );
+  }
+
+  Future<void> downloadICloudDataToLocal() async {
+    if (isICloudSyncUpdating.value) return;
+    await _runICloudTask(
+      title: AppStrings.downloadFromICloud.tr,
+      description: AppStrings.iCloudDownloadProgressDescription.tr,
+      successMessage: AppStrings.iCloudDownloadCompleted.tr,
+      task: () async {
+        await RecipeDatabaseService.reset();
+        await _iCloudSync.pullIfEnabled();
+        await RecipeDatabaseService.reset();
+        if (Get.isRegistered<RecipeController>()) {
+          await Get.find<RecipeController>().reloadAll();
+        }
+      },
+      onError: (e, s) {
+        LogManager.error(
+          'Download iCloud data to local failed',
+          error: e,
+          stackTrace: s,
+        );
+        iCloudStatusMessage.value = AppStrings.dbLoadFailed.tr;
+      },
+    );
   }
 
   Future<void> refreshICloudStatusMessage() async {
@@ -202,5 +239,76 @@ class MyPageController extends GetxController {
     final containerAvailable = status['containerAvailable'] == true;
     iCloudStatusMessage.value =
         tokenPresent && containerAvailable ? '' : AppStrings.pleaseCheckSettings.tr;
+  }
+
+  Future<void> _runICloudTask({
+    required String title,
+    required String description,
+    required String successMessage,
+    required Future<void> Function() task,
+    required void Function(Object error, StackTrace stackTrace) onError,
+  }) async {
+    isICloudSyncUpdating.value = true;
+    _showICloudProgressDialog(title: title, description: description);
+
+    try {
+      await task();
+      SnackBarHelper.showSuccessSnackBar(successMessage);
+    } catch (e, s) {
+      onError(e, s);
+    } finally {
+      if (Get.isDialogOpen == true) {
+        Get.back();
+      }
+      isICloudSyncUpdating.value = false;
+    }
+  }
+
+  void _showICloudProgressDialog({
+    required String title,
+    required String description,
+  }) {
+    Get.dialog(
+      PopScope(
+        canPop: false,
+        child: AlertDialog(
+          contentPadding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
+          content: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 2),
+                child: SizedBox(
+                  width: 22,
+                  height: 22,
+                  child: CircularProgressIndicator(strokeWidth: 2.4),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Get.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      description,
+                      style: Get.textTheme.bodyMedium?.copyWith(height: 1.45),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
   }
 }

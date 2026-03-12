@@ -4,7 +4,6 @@ import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
-import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/core/widgets/app_refresh_indicator.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
@@ -22,7 +21,6 @@ class ShoppingScreen extends StatefulWidget {
 class _ShoppingScreenState extends State<ShoppingScreen> {
   final RecipeController controller = Get.find<RecipeController>();
   final ShoppingTodoRepository _todoRepository = ShoppingTodoRepository();
-  final ICloudSyncService _iCloudSync = ICloudSyncService();
   final RxSet<String> checkedKeys = <String>{}.obs;
   final RxBool _isLoading = true.obs;
 
@@ -219,12 +217,12 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   Future<void> _loadCheckedKeys() async {
     _isLoading.value = true;
     try {
-      await _syncFromICloudIfEnabled();
       final saved = await _todoRepository.fetchCheckedKeys();
       checkedKeys.clear();
-      if (saved.isEmpty) return;
-      checkedKeys.addAll(saved);
-      checkedKeys.refresh();
+      if (saved.isNotEmpty) {
+        checkedKeys.addAll(saved);
+        checkedKeys.refresh();
+      }
     } catch (e, s) {
       LogManager.error('Load shopping todos failed', error: e, stackTrace: s);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
@@ -236,7 +234,6 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   Future<void> _persistCheckedKeys() async {
     try {
       await _todoRepository.saveCheckedKeys(checkedKeys);
-      await _syncPushPullIfEnabled();
     } catch (e, s) {
       LogManager.error('Save shopping todos failed', error: e, stackTrace: s);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
@@ -253,11 +250,4 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     }
   }
 
-  Future<void> _syncPushPullIfEnabled() async {
-    await _iCloudSync.pushPullIfEnabled();
-  }
-
-  Future<void> _syncFromICloudIfEnabled() async {
-    await _iCloudSync.pullIfEnabled();
-  }
 }

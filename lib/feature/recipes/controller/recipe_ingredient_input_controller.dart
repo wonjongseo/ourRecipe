@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
-import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
@@ -21,7 +20,6 @@ class RecipeIngredientInputController extends GetxController {
 
   final IngredientProductRepository _productRepository;
   final IngredientModel? initialIngredient;
-  final ICloudSyncService _iCloudSync = ICloudSyncService();
 
   final amountTextCtl = TextEditingController();
   final memoTextCtl = TextEditingController();
@@ -74,7 +72,6 @@ class RecipeIngredientInputController extends GetxController {
   Future<void> loadProducts() async {
     try {
       _isLoading.value = true;
-      await _syncFromICloudIfEnabled();
       final values = await _productRepository.fetchProducts();
       final grouped = await _productRepository.fetchGroupedProducts();
       values.sort((a, b) => a.name.compareTo(b.name));
@@ -112,10 +109,6 @@ class RecipeIngredientInputController extends GetxController {
     } finally {
       _isLoading.value = false;
     }
-  }
-
-  Future<void> _syncFromICloudIfEnabled() async {
-    await _iCloudSync.pullIfEnabled();
   }
 
   void onChangeUnit(IngredientUnit? unit) {

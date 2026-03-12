@@ -13,6 +13,7 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
   Widget build(BuildContext context) {
     final cardColor = Theme.of(context).cardColor;
     final borderColor = Theme.of(context).colorScheme.outline;
+    final hintColor = Theme.of(context).colorScheme.onSurfaceVariant;
     final canUseICloud = defaultTargetPlatform == TargetPlatform.iOS;
 
     return Scaffold(
@@ -59,6 +60,43 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
                 const SizedBox(height: 12),
                 SizedBox(
                   height: 50,
+                  child: FilledButton(
+                    onPressed:
+                        controller.isICloudSyncUpdating.value
+                            ? null
+                            : controller.uploadLocalDataToICloud,
+                    child: Text(AppStrings.uploadToICloud.tr),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  AppStrings.iCloudUploadButtonGuide.tr,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: hintColor, height: 1.45),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 50,
+                  child: OutlinedButton.icon(
+                    onPressed:
+                        controller.isICloudSyncUpdating.value
+                            ? null
+                            : controller.downloadICloudDataToLocal,
+                    icon: const Icon(Icons.cloud_download_outlined),
+                    label: Text(AppStrings.downloadFromICloud.tr),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  AppStrings.iCloudDownloadButtonGuide.tr,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: hintColor, height: 1.45),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 50,
                   child: FilledButton.tonal(
                     onPressed:
                         controller.isICloudSyncUpdating.value
@@ -74,6 +112,13 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
                     ),
                     child: Text(AppStrings.deleteAllICloudData.tr),
                   ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  AppStrings.iCloudDeleteButtonGuide.tr,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: hintColor, height: 1.45),
                 ),
               ],
             ],

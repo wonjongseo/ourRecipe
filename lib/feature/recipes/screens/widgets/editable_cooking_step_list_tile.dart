@@ -14,6 +14,7 @@ class EditableCookingStepListTile extends StatelessWidget {
     required this.index,
     this.onDelete,
     required this.pickImage,
+    required this.cropImage,
     required this.removeImage,
     required this.setTimer,
   });
@@ -22,8 +23,9 @@ class EditableCookingStepListTile extends StatelessWidget {
   final InputCookingStep inputCookingStep;
   final Function(int)? onDelete;
   final Function(int) pickImage;
+  final Function(int) cropImage;
   final Function(int) removeImage;
-  final Function(int, int) setTimer;
+  final Function(int, int, String) setTimer;
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +72,10 @@ class EditableCookingStepListTile extends StatelessWidget {
                     onPressed: () => _showTimerDialog(context, index),
                     icon: Icon(FontAwesomeIcons.clock),
                     label:
-                        inputCookingStep.timer == 0
+                        inputCookingStep.timerValue == 0
                             ? Text(AppStrings.timer.tr)
                             : Text(
-                              '${inputCookingStep.timer}${AppStrings.minute.tr}',
+                              '${inputCookingStep.timerValue}${_timerUnitLabel(inputCookingStep.timerUnit)}',
                             ),
                   ),
                   IconButton(
@@ -148,6 +150,27 @@ class EditableCookingStepListTile extends StatelessWidget {
                         ),
                         Positioned(
                           top: 8,
+                          right: 44,
+                          child: Material(
+                            color: Colors.black54,
+                            shape: const CircleBorder(),
+                            elevation: 2,
+                            child: InkWell(
+                              customBorder: const CircleBorder(),
+                              onTap: () => cropImage(index),
+                              child: const Padding(
+                                padding: EdgeInsets.all(6),
+                                child: Icon(
+                                  Icons.crop_rounded,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 8,
                           right: 8,
                           child: Material(
                             color: Colors.black54,
@@ -177,12 +200,29 @@ class EditableCookingStepListTile extends StatelessWidget {
   }
 
   Future<void> _showTimerDialog(BuildContext context, int index) async {
-    final result = await Get.dialog(SetTimerDialog());
+    final result = await Get.dialog(
+      SetTimerDialog(
+        initialValue: inputCookingStep.timerValue,
+        initialUnit: inputCookingStep.timerUnit,
+      ),
+    );
 
     if (result == null) return;
+    final value = result['value'] as int?;
+    final unit = result['unit'] as String?;
+    if (value == null || unit == null) return;
+    setTimer(index, value, unit);
+  }
 
-    int? minute = int.tryParse(result);
-    if (minute == null) return;
-    setTimer(index, minute);
+  String _timerUnitLabel(String unit) {
+    switch (unit) {
+      case 'second':
+        return AppStrings.second.tr;
+      case 'hour':
+        return AppStrings.hour.tr;
+      case 'minute':
+      default:
+        return AppStrings.minute.tr;
+    }
   }
 }

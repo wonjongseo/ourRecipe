@@ -8,6 +8,7 @@ import UIKit
   private let snapshotRecordType = "AppSnapshot"
   private let imageRecordType = "AppImage"
   private let snapshotRecordName = "shared_snapshot"
+  private let imageExtensions: Set<String> = ["png", "jpg", "jpeg", "heic", "webp"]
 
   override func application(
     _ application: UIApplication,
@@ -55,6 +56,8 @@ import UIKit
             return
           }
           self.downloadCloudKitSnapshot(imagesDirPath: imagesDirPath, result: result)
+        case "downloadCloudKitSnapshotPayload":
+          self.downloadCloudKitSnapshotPayload(result: result)
         case "clearCloudKitData":
           self.clearCloudKitData(result: result)
         default:
@@ -83,6 +86,7 @@ import UIKit
     result: @escaping FlutterResult
   ) {
     NSLog("[CloudKit] upload start snapshotPath=\(snapshotPath) imageCount=\(imagePaths.count)")
+    NSLog("[CloudKit] upload imageNames=\(imagePaths.map { URL(fileURLWithPath: $0).lastPathComponent })")
     let database = CKContainer.default().privateCloudDatabase
     let snapshotID = CKRecord.ID(recordName: snapshotRecordName)
     database.fetch(withRecordID: snapshotID) { record, _ in
@@ -90,18 +94,35 @@ import UIKit
       snapshotRecord["updatedAt"] = Date() as CKRecordValue
       snapshotRecord["payload"] = CKAsset(fileURL: URL(fileURLWithPath: snapshotPath))
 
-      database.save(snapshotRecord) { _, error in
-        if let error {
-          NSLog("[CloudKit] snapshot save failed: \(error.localizedDescription)")
-          result(
-            FlutterError(code: "cloudkit_upload_failed", message: error.localizedDescription, details: nil)
-          )
-          return
-        }
-        NSLog("[CloudKit] snapshot save success")
-        self.syncImageRecords(database: database, imagePaths: imagePaths, result: result)
-      }
+      self.saveSnapshotRecord(
+        database: database,
+        snapshotRecord: snapshotRecord,
+        imagePaths: imagePaths,
+        result: result
+      )
     }
+  }
+
+  private func saveSnapshotRecord(
+    database: CKDatabase,
+    snapshotRecord: CKRecord,
+    imagePaths: [String],
+    result: @escaping FlutterResult
+  ) {
+    let operation = CKModifyRecordsOperation(recordsToSave: [snapshotRecord], recordIDsToDelete: nil)
+    operation.savePolicy = .allKeys
+    operation.modifyRecordsCompletionBlock = { _, _, error in
+      if let error {
+        NSLog("[CloudKit] snapshot save failed: \(error.localizedDescription)")
+        result(
+          FlutterError(code: "cloudkit_upload_failed", message: error.localizedDescription, details: nil)
+        )
+        return
+      }
+      NSLog("[CloudKit] snapshot save success")
+      self.syncImageRecords(database: database, imagePaths: imagePaths, result: result)
+    }
+    database.add(operation)
   }
 
   private func syncImageRecords(
@@ -109,34 +130,40 @@ import UIKit
     imagePaths: [String],
     result: @escaping FlutterResult
   ) {
-    let saveRecords = imagePaths.map { path -> CKRecord in
+    if imagePaths.isEmpty {
+      result(nil)
+      return
+    }
+    let group = DispatchGroup()
+
+    for path in imagePaths {
       let fileName = URL(fileURLWithPath: path).lastPathComponent
       let recordID = CKRecord.ID(recordName: fileName)
-      let record = CKRecord(recordType: imageRecordType, recordID: recordID)
-      record["fileName"] = fileName as CKRecordValue
-      record["updatedAt"] = Date() as CKRecordValue
-      record["asset"] = CKAsset(fileURL: URL(fileURLWithPath: path))
-      return record
-    }
+      group.enter()
+      database.fetch(withRecordID: recordID) { record, _ in
+        let imageRecord = record ?? CKRecord(recordType: self.imageRecordType, recordID: recordID)
+        imageRecord["fileName"] = fileName as CKRecordValue
+        imageRecord["updatedAt"] = Date() as CKRecordValue
+        imageRecord["asset"] = CKAsset(fileURL: URL(fileURLWithPath: path))
 
-    let modify = CKModifyRecordsOperation(recordsToSave: saveRecords, recordIDsToDelete: nil)
-    modify.savePolicy = .changedKeys
-    modify.modifyRecordsCompletionBlock = { _, _, error in
-      if let error {
-        NSLog("[CloudKit] image sync failed: \(error.localizedDescription)")
-        result(
-          FlutterError(
-            code: "cloudkit_image_sync_failed",
-            message: error.localizedDescription,
-            details: nil
-          )
-        )
-      } else {
-        NSLog("[CloudKit] image sync success saveCount=\(saveRecords.count)")
-        result(nil)
+        let modify = CKModifyRecordsOperation(recordsToSave: [imageRecord], recordIDsToDelete: nil)
+        modify.savePolicy = .allKeys
+        modify.modifyRecordsCompletionBlock = { _, _, error in
+          if let error {
+            NSLog("[CloudKit] image sync warning record=\(fileName) error=\(error.localizedDescription)")
+          } else {
+            NSLog("[CloudKit] image sync uploaded record=\(fileName)")
+          }
+          group.leave()
+        }
+        database.add(modify)
       }
     }
-    database.add(modify)
+
+    group.notify(queue: .main) {
+      NSLog("[CloudKit] image sync finished saveCount=\(imagePaths.count)")
+      result(nil)
+    }
   }
 
   private func downloadCloudKitSnapshot(
@@ -183,12 +210,57 @@ import UIKit
         return
       }
 
+      NSLog("[CloudKit] snapshot received path=\(snapshotURL.path)")
       self.downloadImageRecords(
         database: database,
         imagesDirPath: imagesDirPath,
         snapshotPath: snapshotURL.path,
         result: result
       )
+    }
+  }
+
+  private func downloadCloudKitSnapshotPayload(result: @escaping FlutterResult) {
+    let database = CKContainer.default().privateCloudDatabase
+    let snapshotID = CKRecord.ID(recordName: snapshotRecordName)
+    database.fetch(withRecordID: snapshotID) { record, error in
+      if let ckError = error as? CKError, ckError.code == .unknownItem {
+        result(["found": false])
+        return
+      }
+      if let error {
+        result(
+          FlutterError(code: "cloudkit_download_failed", message: error.localizedDescription, details: nil)
+        )
+        return
+      }
+      guard
+        let record,
+        let asset = record["payload"] as? CKAsset,
+        let sourceURL = asset.fileURL
+      else {
+        result(["found": false])
+        return
+      }
+
+      let tempDir = FileManager.default.temporaryDirectory
+      let snapshotURL = tempDir.appendingPathComponent("cloudkit_snapshot_payload.json")
+      do {
+        if FileManager.default.fileExists(atPath: snapshotURL.path) {
+          try FileManager.default.removeItem(at: snapshotURL)
+        }
+        try FileManager.default.copyItem(at: sourceURL, to: snapshotURL)
+      } catch {
+        result(
+          FlutterError(code: "cloudkit_snapshot_copy_failed", message: error.localizedDescription, details: nil)
+        )
+        return
+      }
+
+      result([
+        "found": true,
+        "snapshotPath": snapshotURL.path,
+      ])
     }
   }
 
@@ -205,24 +277,27 @@ import UIKit
     } catch {
       NSLog("[CloudKit] image directory create failed: \(error.localizedDescription)")
       result(
-        FlutterError(code: "cloudkit_image_dir_failed", message: error.localizedDescription, details: nil)
+        FlutterError(code: "cloudkit_image_directory_failed", message: error.localizedDescription, details: nil)
       )
       return
     }
 
     let imageNames = extractImageNames(snapshotPath: snapshotPath)
+    NSLog("[CloudKit] download imageNames=\(imageNames)")
     if let existing = try? fileManager.contentsOfDirectory(
       at: imagesDirURL,
       includingPropertiesForKeys: nil
     ) {
       let remoteNames = Set(imageNames)
-      for fileURL in existing where !remoteNames.contains(fileURL.lastPathComponent) {
+      for fileURL in existing {
+        guard self.isManagedImageFile(fileURL) else { continue }
+        if remoteNames.contains(fileURL.lastPathComponent) { continue }
         try? fileManager.removeItem(at: fileURL)
       }
     }
 
     if imageNames.isEmpty {
-      NSLog("[CloudKit] image download success count=0")
+      NSLog("[CloudKit] pull completed with image warnings: no images in snapshot")
       result([
         "found": true,
         "snapshotPath": snapshotPath,
@@ -244,13 +319,13 @@ import UIKit
     operation.fetchRecordsCompletionBlock = { _, error in
       if let ckError = error as? CKError,
          ckError.code != .partialFailure {
-        NSLog("[CloudKit] image fetch failed: \(ckError.localizedDescription)")
+        NSLog("[CloudKit] image sync failed: \(ckError.localizedDescription)")
         result(
           FlutterError(code: "cloudkit_image_download_failed", message: ckError.localizedDescription, details: nil)
         )
         return
       } else if let error, (error as? CKError) == nil {
-        NSLog("[CloudKit] image fetch failed: \(error.localizedDescription)")
+        NSLog("[CloudKit] image sync failed: \(error.localizedDescription)")
         result(
           FlutterError(code: "cloudkit_image_download_failed", message: error.localizedDescription, details: nil)
         )
@@ -269,12 +344,18 @@ import UIKit
             try fileManager.removeItem(at: targetURL)
           }
           try fileManager.copyItem(at: sourceURL, to: targetURL)
+          NSLog("[CloudKit] image copied fileName=\(fileName)")
         } catch {
+          NSLog("[CloudKit] image copy skipped fileName=\(fileName) error=\(error.localizedDescription)")
           continue
         }
       }
 
-      NSLog("[CloudKit] image download success fetchedCount=\(fetchedRecords.count) requestedCount=\(imageNames.count)")
+      if fetchedRecords.count != imageNames.count {
+        NSLog("[CloudKit] pull completed with image warnings fetchedCount=\(fetchedRecords.count) requestedCount=\(imageNames.count)")
+      } else {
+        NSLog("[CloudKit] image sync success fetchedCount=\(fetchedRecords.count)")
+      }
       result([
         "found": true,
         "snapshotPath": snapshotPath,
@@ -364,5 +445,10 @@ import UIKit
     }
 
     return Array(names)
+  }
+
+  private func isManagedImageFile(_ url: URL) -> Bool {
+    let ext = url.pathExtension.lowercased()
+    return imageExtensions.contains(ext)
   }
 }

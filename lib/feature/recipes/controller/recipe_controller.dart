@@ -4,6 +4,7 @@ import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
+import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
 import 'package:our_recipe/core/services/image_service.dart';
 import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
@@ -53,6 +54,7 @@ class RecipeController extends GetxController {
   final RecipeCategoryRepository _categoryRepository;
   RecipeController(this._repository, this._categoryRepository);
   final ICloudSyncService _iCloudSync = ICloudSyncService();
+  final ICloudSyncSettingsService _iCloudSettings = ICloudSyncSettingsService();
 
   final _recipes = <RecipeModel>[].obs;
   final _filteredRecipes = <RecipeModel>[].obs;
@@ -66,7 +68,9 @@ class RecipeController extends GetxController {
   final selectedFilter = const RecipeFilter.all().obs;
   final _searchQuery = ''.obs;
   final _isLoading = false.obs;
+  final _isICloudSyncEnabled = false.obs;
   bool get isLoading => _isLoading.value;
+  bool get isICloudSyncEnabled => _isICloudSyncEnabled.value;
   final searchTextCtrl = TextEditingController();
   String get searchQuery => _searchQuery.value;
 
@@ -84,7 +88,7 @@ class RecipeController extends GetxController {
   Future<void> _setUp() async {
     _isLoading.value = true;
     try {
-      await _syncFromICloudIfEnabled();
+      await _refreshICloudEnabledState();
       await _fetchCategories();
       await _fetchRecipes();
     } catch (e, s) {
@@ -98,10 +102,18 @@ class RecipeController extends GetxController {
   }
 
   Future<void> reloadAll() async {
-    // iCloud에서 외부 변경된 SQLite 파일을 반영하기 위해
-    // 기존 연결 캐시를 닫고 다시 연다.
-    await RecipeDatabaseService.reset();
-    await _setUp();
+    _isLoading.value = true;
+    try {
+      await _refreshICloudEnabledState();
+      await RecipeDatabaseService.reset();
+      await _fetchCategories();
+      await _fetchRecipes();
+    } catch (e, s) {
+      LogManager.error('Reload recipes failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<void> _fetchRecipes() async {
@@ -152,12 +164,13 @@ class RecipeController extends GetxController {
     try {
       await _fetchCategories();
       if (result is! RecipeModel) return null;
+      await _iCloudSettings.clearDeletedRecipe(result.id);
       await _repository.saveRecipe(result);
-      await _syncPushPullIfEnabled();
       await _fetchRecipes();
       return result;
     } catch (e, s) {
       LogManager.error('Save recipe failed', error: e, stackTrace: s);
+      LogManager.error('Save recipe target: ${result.name}', error: e);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
       return null;
     } finally {
@@ -169,7 +182,6 @@ class RecipeController extends GetxController {
     await Get.toNamed(DetailRecipeScreen.name, arguments: recipeModel);
     _isLoading.value = true;
     try {
-      await _syncFromICloudIfEnabled();
       await _fetchCategories();
       await _fetchRecipes();
     } catch (e, s) {
@@ -180,24 +192,22 @@ class RecipeController extends GetxController {
     }
   }
 
-  void deleteRecipe(RecipeModel recipe) async {
+  Future<void> deleteRecipe(RecipeModel recipe) async {
     _isLoading.value = true;
     try {
-      final shouldDeleteICloud = await _isICloudEnabledOnIOS();
-      if (shouldDeleteICloud) {
-        await _iCloudSync.deleteRecipeIfEnabled(recipe.id);
-      }
-
       await ImageService.deleteSavedFile(recipe.coverImagePath);
       for (final step in recipe.steps) {
         await ImageService.deleteSavedFile(step.imagePath);
       }
+      await _iCloudSettings.markRecipeDeleted(recipe.id, DateTime.now());
       await _repository.deleteRecipe(recipe.id);
-      await _syncFromICloudIfEnabled();
       await _fetchRecipes();
-      Get.back();
     } catch (e, s) {
       LogManager.error('Delete recipe failed', error: e, stackTrace: s);
+      LogManager.error(
+        'Delete recipe target: ${recipe.id}/${recipe.name}',
+        error: e,
+      );
       SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
     } finally {
       _isLoading.value = false;
@@ -215,11 +225,12 @@ class RecipeController extends GetxController {
     );
     _isLoading.value = true;
     try {
+      await _iCloudSettings.clearDeletedRecipe(toggled.id);
       await _repository.saveRecipe(toggled);
-      await _syncPushPullIfEnabled();
       await _fetchRecipes();
     } catch (e, s) {
       LogManager.error('Toggle bookmark failed', error: e, stackTrace: s);
+      LogManager.error('Toggle bookmark recipeId: $recipeId', error: e);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
     } finally {
       _isLoading.value = false;
@@ -274,15 +285,27 @@ class RecipeController extends GetxController {
     Get.toNamed(StartCookingScreen.name, arguments: recipeModel);
   }
 
-  Future<void> _syncPushPullIfEnabled() async {
-    await _iCloudSync.pushPullIfEnabled();
-  }
-
-  Future<void> _syncFromICloudIfEnabled() async {
-    await _iCloudSync.pullIfEnabled();
+  Future<void> downloadFromICloud() async {
+    _isLoading.value = true;
+    try {
+      await RecipeDatabaseService.reset();
+      await _iCloudSync.pullIfEnabled();
+      await RecipeDatabaseService.reset();
+      await _fetchCategories();
+      await _fetchRecipes();
+    } catch (e, s) {
+      LogManager.error('Manual iCloud download failed', error: e, stackTrace: s);
+      SnackBarHelper.showErrorSnackBar(AppStrings.dbLoadFailed.tr);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 
   Future<bool> _isICloudEnabledOnIOS() async {
-    return _iCloudSync.isEnabledOnIOS();
+    return await _iCloudSync.isEnabledOnIOS();
+  }
+
+  Future<void> _refreshICloudEnabledState() async {
+    _isICloudSyncEnabled.value = await _isICloudEnabledOnIOS();
   }
 }
