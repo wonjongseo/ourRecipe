@@ -5,6 +5,7 @@ import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/app_theme.dart';
 import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/pages/app_pages.dart';
+import 'package:our_recipe/core/services/ad_interstitial_service.dart';
 import 'package:our_recipe/core/services/locale_service.dart';
 import 'package:our_recipe/core/services/theme_service.dart';
 import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
@@ -12,6 +13,7 @@ import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
+  AdInterstitialService.instance.initialize();
   final savedLocale = await LocaleService().getSavedLocale();
   final themeService = ThemeService();
   final savedThemeMode = await themeService.getSavedThemeMode();
@@ -43,9 +45,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = initialLocale ?? const Locale('ko', 'KR');
     final fontKey =
-        AppFonts.options.any((option) => option.key == initialFontKey)
+        initialFontKey != null && AppFonts.isValidKey(initialFontKey!)
             ? initialFontKey!
-            : AppFonts.system;
+            : AppFonts.defaultKeyFor(locale);
     return GetMaterialApp(
       title: AppStrings.appTitle.tr,
       theme: AppTheme.lightThemeFor(locale, fontKey: fontKey),

@@ -182,6 +182,7 @@ class AppStrings extends Translations {
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkJp,
       AppStrings.openWebsiteFailed: AppStrings.openWebsiteFailedJp,
       AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenJp,
+      AppStrings.adLabel: AppStrings.adLabelJp,
     },
     'ko_KR': {
       AppStrings.appName: AppStrings.appNameKr,
@@ -362,6 +363,7 @@ class AppStrings extends Translations {
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkKr,
       AppStrings.openWebsiteFailed: AppStrings.openWebsiteFailedKr,
       AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenKr,
+      AppStrings.adLabel: AppStrings.adLabelKr,
     },
 
     'en_US': {
@@ -543,6 +545,7 @@ class AppStrings extends Translations {
       AppStrings.invalidWebsiteLink: AppStrings.invalidWebsiteLinkEn,
       AppStrings.openWebsiteFailed: AppStrings.openWebsiteFailedEn,
       AppStrings.ingredientManageScreen: AppStrings.ingredientManageScreenEn,
+      AppStrings.adLabel: AppStrings.adLabelEn,
     },
   };
 
@@ -1145,6 +1148,11 @@ class AppStrings extends Translations {
   static String ingredientManageScreenKr = "재료 관리 화면";
   static String ingredientManageScreenJp = "材料管理画面";
   static String ingredientManageScreenEn = "Ingredient Management";
+
+  static String adLabel = "adLabelTr";
+  static String adLabelKr = "광고";
+  static String adLabelJp = "広告";
+  static String adLabelEn = "Ad";
 
   static String dbLoadFailed = "dbLoadFailedTr";
   static String dbLoadFailedKr = "데이터를 불러오지 못했어요. 다시 시도해주세요.";

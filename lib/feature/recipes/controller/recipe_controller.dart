@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/ad_interstitial_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
 import 'package:our_recipe/core/services/image_service.dart';
@@ -167,6 +168,7 @@ class RecipeController extends GetxController {
       await _iCloudSettings.clearDeletedRecipe(result.id);
       await _repository.saveRecipe(result);
       await _fetchRecipes();
+      AdInterstitialService.instance.registerCompletion();
       return result;
     } catch (e, s) {
       LogManager.error('Save recipe failed', error: e, stackTrace: s);
@@ -202,6 +204,7 @@ class RecipeController extends GetxController {
       await _iCloudSettings.markRecipeDeleted(recipe.id, DateTime.now());
       await _repository.deleteRecipe(recipe.id);
       await _fetchRecipes();
+      AdInterstitialService.instance.registerCompletion();
     } catch (e, s) {
       LogManager.error('Delete recipe failed', error: e, stackTrace: s);
       LogManager.error(

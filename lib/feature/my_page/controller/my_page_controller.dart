@@ -18,7 +18,7 @@ import 'package:our_recipe/feature/my_page/screens/icloud_sync_settings_screen.d
 
 class MyPageController extends GetxController {
   final themeMode = ThemeMode.system.obs;
-  final fontKey = AppFonts.system.obs;
+  final fontKey = AppFonts.defaultKeyFor(const Locale('ja', 'JP')).obs;
   final textScale = 1.0.obs;
   final ThemeService _themeService = ThemeService();
   final ICloudSyncSettingsService _iCloudSettings = ICloudSyncSettingsService();
@@ -48,7 +48,7 @@ class MyPageController extends GetxController {
   Future<void> _initFontKey() async {
     final saved = await _themeService.getSavedFontKey();
     if (saved == null || saved.isEmpty) return;
-    final isValid = AppFonts.options.any((option) => option.key == saved);
+    final isValid = AppFonts.isValidKey(saved);
     if (!isValid) return;
     fontKey.value = saved;
   }
@@ -78,6 +78,10 @@ class MyPageController extends GetxController {
 
   Future<void> changeLanguage(Locale locale) async {
     await LocaleService().saveLocale(locale);
+    if (!AppFonts.isValidKeyForLocale(fontKey.value, locale)) {
+      fontKey.value = AppFonts.defaultKeyFor(locale);
+      await _themeService.saveFontKey(fontKey.value);
+    }
     await Get.updateLocale(locale);
     _applyTheme(locale: locale, mode: themeMode.value);
   }
@@ -94,6 +98,10 @@ class MyPageController extends GetxController {
     fontKey.value = key;
     await _themeService.saveFontKey(key);
     _applyTheme(locale: currentLocale(), mode: themeMode.value);
+  }
+
+  List<AppFontOption> fontOptionsForCurrentLocale() {
+    return AppFonts.optionsFor(currentLocale());
   }
 
   void previewTextScale(double value) {

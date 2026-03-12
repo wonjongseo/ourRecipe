@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
+import 'package:our_recipe/core/widgets/app_native_ad_list_tile.dart';
 import 'package:our_recipe/core/widgets/app_refresh_indicator.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/models/recipe_model.dart';
@@ -13,6 +14,8 @@ import 'package:our_recipe/feature/recipes/screens/widgets/custom_search_bar.dar
 
 class RecipesScreen extends GetView<RecipeController> {
   const RecipesScreen({super.key});
+
+  static const int _nativeAdInterval = 6;
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +121,18 @@ class RecipesScreen extends GetView<RecipeController> {
                                               (context, index) =>
                                                   SizedBox(height: 12),
                                           shrinkWrap: false,
-                                          itemCount: controller.recipes.length,
+                                          itemCount: _itemCount(
+                                            controller.recipes.length,
+                                          ),
                                           itemBuilder: (context, index) {
+                                            if (_isNativeAdIndex(index)) {
+                                              return const AppNativeAdListTile();
+                                            }
+                                            final recipeIndex = _recipeIndexFor(
+                                              index,
+                                            );
                                             final recipe =
-                                                controller.recipes[index];
+                                                controller.recipes[recipeIndex];
 
                                             return recipeListTIle(recipe);
                                           },
@@ -297,5 +308,18 @@ class RecipesScreen extends GetView<RecipeController> {
         ),
       ),
     );
+  }
+
+  int _itemCount(int recipeCount) {
+    if (recipeCount < _nativeAdInterval) return recipeCount;
+    return recipeCount + (recipeCount ~/ _nativeAdInterval);
+  }
+
+  bool _isNativeAdIndex(int index) {
+    return (index + 1) % (_nativeAdInterval + 1) == 0;
+  }
+
+  int _recipeIndexFor(int index) {
+    return index - ((index + 1) ~/ (_nativeAdInterval + 1));
   }
 }

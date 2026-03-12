@@ -58,13 +58,12 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _coverImage(),
-                          SizedBox(height: 6),
-
+                          SizedBox(height: 24),
                           CustomTextFormField(
                             label: AppStrings.recipeName.tr,
                             controller: controller.recipeNameTextCtrl,
                           ),
-                          SizedBox(height: 12),
+
                           _recipeCategory(context),
                           SizedBox(height: 12),
                           CustomTextFormField(

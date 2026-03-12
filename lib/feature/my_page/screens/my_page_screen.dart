@@ -132,11 +132,12 @@ class MyPageScreen extends GetView<MyPageController> {
                   ),
                   dropdownColor: Theme.of(context).colorScheme.surface,
                   items:
-                      AppFonts.options
+                      controller
+                          .fontOptionsForCurrentLocale()
                           .map(
                             (option) => DropdownMenuItem<String>(
                               value: option.key,
-                              child: Text(option.labelKey.tr),
+                              child: Text(option.label),
                             ),
                           )
                           .toList(),

@@ -28,10 +28,10 @@ class AppTheme {
 
   static ThemeData lightThemeFor(
     Locale locale, {
-    String fontKey = AppFonts.system,
+    String? fontKey,
   }) {
     final textTheme = AppFonts.textThemeFor(
-      fontKey: fontKey,
+      fontKey: fontKey ?? AppFonts.defaultKeyFor(locale),
       locale: locale,
       base: ThemeData.light(useMaterial3: true).textTheme,
     );
@@ -63,10 +63,10 @@ class AppTheme {
 
   static ThemeData darkThemeFor(
     Locale locale, {
-    String fontKey = AppFonts.system,
+    String? fontKey,
   }) {
     final textTheme = AppFonts.textThemeFor(
-      fontKey: fontKey,
+      fontKey: fontKey ?? AppFonts.defaultKeyFor(locale),
       locale: locale,
       base: ThemeData.dark(useMaterial3: true).textTheme,
     );
