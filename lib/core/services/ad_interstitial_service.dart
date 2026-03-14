@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:our_recipe/core/common/admob_unit_ids.dart';
+import 'package:our_recipe/core/services/premium_service.dart';
 
 class AdInterstitialService {
   AdInterstitialService._();
@@ -27,6 +29,10 @@ class AdInterstitialService {
 
   Future<void> showIfEligible() async {
     if (kIsWeb) return;
+    if (Get.isRegistered<PremiumService>() &&
+        Get.find<PremiumService>().shouldRemoveAds) {
+      return;
+    }
     if (_isShowing) return;
     if (_completedActions < _minCompletedActionsBeforeShow) {
       _load();
@@ -67,6 +73,10 @@ class AdInterstitialService {
 
   void _load() {
     if (kIsWeb || _isLoading || AdMobUnitIds.interstitial.isEmpty) return;
+    if (Get.isRegistered<PremiumService>() &&
+        Get.find<PremiumService>().shouldRemoveAds) {
+      return;
+    }
     if (_interstitialAd != null) return;
 
     _isLoading = true;

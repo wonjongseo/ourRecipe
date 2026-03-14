@@ -4124,6 +4124,19 @@
             "fiber": 8.3,
             "ash": 0.1,
             "sodium": 48
+          },
+          {
+            "foodCode": "03034",
+            "indexCode": "0277-1",
+            "name": "てんさい糖",
+            "kcal": 395,
+            "water": null,
+            "protein": 0,
+            "fat": 0,
+            "carbohydrate": 98.8,
+            "fiber": null,
+            "ash": null,
+            "sodium": 4
           }
         ]
       }

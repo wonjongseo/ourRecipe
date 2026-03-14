@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:our_recipe/core/common/admob_unit_ids.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/services/premium_service.dart';
 
 class AppNativeAdListTile extends StatefulWidget {
   const AppNativeAdListTile({super.key});
@@ -55,40 +56,46 @@ class _AppNativeAdListTileState extends State<AppNativeAdListTile> {
 
   @override
   Widget build(BuildContext context) {
-    final ad = _nativeAd;
-    if (!_loaded || ad == null) return const SizedBox.shrink();
+    final premium = Get.find<PremiumService>();
+    return Obx(() {
+      if (premium.shouldRemoveAds) return const SizedBox.shrink();
+      final ad = _nativeAd;
+      if (!_loaded || ad == null) return const SizedBox.shrink();
 
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Text(
-              AppStrings.adLabel.tr,
-              style: Theme.of(
-                context,
-              ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700),
-            ),
+      return Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outlineVariant,
           ),
-          const SizedBox(height: 12),
-          SizedBox(
-            width: double.infinity,
-            height: 128,
-            child: AdWidget(ad: ad),
-          ),
-        ],
-      ),
-    );
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Text(
+                AppStrings.adLabel.tr,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              height: 128,
+              child: AdWidget(ad: ad),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

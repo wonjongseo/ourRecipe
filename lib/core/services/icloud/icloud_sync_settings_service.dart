@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:get/get.dart';
+import 'package:our_recipe/core/services/premium_service.dart';
 import 'package:our_recipe/core/services/shared_preferences_service.dart';
 
 class ICloudSyncSettingsService {
@@ -11,11 +15,23 @@ class ICloudSyncSettingsService {
 
   Future<bool> isEnabled() async {
     final saved = await _storage.getBool(_iCloudSyncEnabledKey);
-    // 기본값은 OFF.
-    return saved ?? false;
+    if (!Platform.isIOS) return false;
+    final isPremium =
+        Get.isRegistered<PremiumService>() && Get.find<PremiumService>().canUseICloud;
+    return (saved ?? false) && isPremium;
   }
 
   Future<void> setEnabled(bool enabled) async {
+    if (!Platform.isIOS) {
+      await _storage.setBool(_iCloudSyncEnabledKey, false);
+      return;
+    }
+    final isPremium =
+        Get.isRegistered<PremiumService>() && Get.find<PremiumService>().canUseICloud;
+    if (enabled && !isPremium) {
+      await _storage.setBool(_iCloudSyncEnabledKey, false);
+      return;
+    }
     await _storage.setBool(_iCloudSyncEnabledKey, enabled);
   }
 

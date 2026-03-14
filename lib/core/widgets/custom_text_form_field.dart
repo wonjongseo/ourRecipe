@@ -18,8 +18,12 @@ class CustomTextFormField extends StatelessWidget {
     this.autoFocus = false,
     this.borderRadius = UiConstants.formFieldRadius,
     this.onFieldSubmitted,
+    this.hintStyle,
     this.prefixIcon,
+    this.suffixIcon,
+    this.onChanged,
     this.height,
+    this.onTap,
   });
 
   final bool readOnly;
@@ -28,14 +32,18 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle? labelStyle;
   final String? hintText;
   final String? suffixText;
+  final Widget? suffixIcon;
   final int? maxLine;
   final Widget? prefixIcon;
   final double? height;
   final double borderRadius;
+  final TextStyle? hintStyle;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
+  final Function(String)? onChanged;
+  final Function()? onTap;
 
   get formFieldFontSize => null;
 
@@ -51,16 +59,19 @@ class CustomTextFormField extends StatelessWidget {
       style: TextStyle(fontSize: formFieldFontSize),
       maxLines: maxLine,
       readOnly: readOnly,
-
+      onTap: onTap,
       controller: controller,
       keyboardType: resolvedKeyboardType,
       autofocus: autoFocus,
       textInputAction: textInputAction,
+      onChanged: onChanged,
       onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
         filled: true,
+
         fillColor: Theme.of(context).colorScheme.surface,
         label: label != null ? Text(label!) : null,
+
         labelStyle:
             labelStyle ??
             TextStyle(
@@ -72,7 +83,7 @@ class CustomTextFormField extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: hintStyle ?? TextStyle(color: Colors.grey),
         suffix:
             suffixText == null
                 ? null
@@ -85,6 +96,7 @@ class CustomTextFormField extends StatelessWidget {
                     ).colorScheme.onSurface.withValues(alpha: 0.65),
                   ),
                 ),
+        suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         contentPadding:
             height == null ? null : EdgeInsets.symmetric(horizontal: 12),

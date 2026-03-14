@@ -22,10 +22,12 @@ import 'package:our_recipe/feature/recipes/screens/ingredient_edit_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
 import 'package:our_recipe/feature/my_page/controller/my_page_controller.dart';
 import 'package:our_recipe/feature/my_page/screens/icloud_sync_settings_screen.dart';
+import 'package:our_recipe/feature/my_page/screens/premium_purchase_screen.dart';
 import 'package:our_recipe/feature/splash/controller/splash_controller.dart';
 import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
 import 'package:our_recipe/feature/start_cooking/controller/start_cooking_controller.dart';
 import 'package:our_recipe/feature/start_cooking/screen/start_cooking_screen.dart';
+import 'package:our_recipe/core/services/premium_service.dart';
 
 class AppPages {
   const AppPages._();
@@ -46,6 +48,7 @@ class AppPages {
           Get.put(CookLogRepository());
           Get.put(IngredientProductRepository());
           Get.put(IngredientCategoryRepository());
+          Get.put(PremiumService(), permanent: true);
           Get.put(RecipeController(Get.find(), Get.find()));
           Get.put(MyPageController(), permanent: true);
         }
@@ -121,6 +124,10 @@ class AppPages {
     GetPage(
       name: ICloudSyncSettingsScreen.name,
       page: () => const ICloudSyncSettingsScreen(),
+    ),
+    GetPage(
+      name: PremiumPurchaseScreen.name,
+      page: () => const PremiumPurchaseScreen(),
     ),
   ];
 }

@@ -270,9 +270,7 @@ class _RecipeIngredientInputSheetState
 
   @override
   void dispose() {
-    Get.delete<RecipeIngredientInputController>(
-      tag: _controllerTag,
-    );
+    Get.delete<RecipeIngredientInputController>(tag: _controllerTag);
     super.dispose();
   }
 }
@@ -293,18 +291,12 @@ class _IngredientNameField extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
         onTap: onTapField,
-        child: Obx(
-          () => InputDecorator(
+        child: Obx(() {
+          return InputDecorator(
             decoration: InputDecoration(
-              isDense: true,
-              constraints: const BoxConstraints(
-                minHeight: UiConstants.formFieldHeight,
-                maxHeight: UiConstants.formFieldHeight,
-              ),
               labelText: AppStrings.ingredientName.tr,
               filled: true,
               hintStyle: TextStyle(color: Colors.grey),
-              hintText: AppStrings.ingredientSearchHint.tr,
               labelStyle: TextStyle(
                 color: Theme.of(
                   context,
@@ -333,8 +325,8 @@ class _IngredientNameField extends StatelessWidget {
                         : Theme.of(context).colorScheme.onSurface,
               ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

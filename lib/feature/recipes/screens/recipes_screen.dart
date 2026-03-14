@@ -216,6 +216,8 @@ class RecipesScreen extends GetView<RecipeController> {
         coverPath.isNotEmpty &&
         File(coverPath).existsSync() &&
         File(coverPath).lengthSync() > 0;
+    Size size = MediaQuery.of(context).size;
+
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () => controller.goToDetailScreen(recipe),
@@ -242,6 +244,7 @@ class RecipesScreen extends GetView<RecipeController> {
         // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         padding: EdgeInsets.fromLTRB(14, 15, 7, 15),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Row(
@@ -249,8 +252,8 @@ class RecipesScreen extends GetView<RecipeController> {
                   Hero(
                     tag: recipe.id,
                     child: Container(
-                      width: 70,
-                      height: 70,
+                      width: 70, // size.width * .175,
+                      height: 70, // size.width * .175,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         image:
@@ -267,7 +270,7 @@ class RecipesScreen extends GetView<RecipeController> {
                               : null,
                     ),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 14),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -366,6 +369,7 @@ class RecipesScreen extends GetView<RecipeController> {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (icon != null) ...[
             Icon(icon, size: 13, color: resolvedForeground),

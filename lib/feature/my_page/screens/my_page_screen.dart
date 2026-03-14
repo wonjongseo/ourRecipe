@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
@@ -27,9 +28,10 @@ class MyPageScreen extends GetView<MyPageController> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            _settingsManagement(cardColor, borderColor),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8),
             _settingsGeneral(cardColor, borderColor, context),
+            const SizedBox(height: 24),
+            _settingsManagement(cardColor, borderColor),
             const SizedBox(height: 24),
             _settingsAppearance(cardColor, borderColor, context),
             const SizedBox(height: 24),
@@ -210,55 +212,98 @@ class MyPageScreen extends GetView<MyPageController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionHeader(AppStrings.settingsGeneral.tr),
-        _card(
-          cardColor: cardColor,
-          borderColor: borderColor,
-          child: ListTile(
-            onTap: controller.goToICloudSyncSettings,
-            leading: const Icon(Icons.cloud_sync_outlined),
-            title: Text(AppStrings.iCloudSync.tr),
-            subtitle: Text(AppStrings.iCloudSyncDescription.tr),
-            trailing: const Icon(Icons.chevron_right),
-          ),
-        ),
-        const SizedBox(height: 8),
-        _card(
-          cardColor: cardColor,
-          borderColor: borderColor,
-          child: ListTile(
-            leading: const Icon(Icons.language_outlined),
-            title: Text(AppStrings.language.tr),
-            trailing: _styledDropdown(
-              context: context,
-              child: DropdownButton<Locale>(
-                value: controller.currentLocale(),
-                isDense: true,
-                borderRadius: BorderRadius.circular(
-                  UiConstants.formFieldRadius,
+        Obx(() {
+          final isPremium = controller.premiumService.isPremium.value;
+          final canUseICloud = Platform.isIOS && controller.canUseICloud;
+          final tiles = <Widget>[];
+
+          if (canUseICloud) {
+            tiles.add(
+              _card(
+                cardColor: cardColor,
+                borderColor: borderColor,
+                child: ListTile(
+                  onTap: controller.goToICloudSyncSettings,
+                  leading: const Icon(Icons.cloud_sync_outlined),
+                  title: Text(AppStrings.iCloudSync.tr),
+                  subtitle: Text(AppStrings.iCloudSyncDescription.tr),
+                  trailing: const Icon(Icons.chevron_right),
                 ),
-                dropdownColor: Theme.of(context).colorScheme.surface,
-                items: [
-                  DropdownMenuItem(
-                    value: Locale('ja', 'JP'),
-                    child: Text(AppStrings.languageJapanese.tr),
+              ),
+            );
+          }
+
+          if (!isPremium) {
+            if (tiles.isNotEmpty) {
+              tiles.add(const SizedBox(height: 8));
+            }
+            tiles.add(
+              _card(
+                cardColor: cardColor,
+                borderColor: borderColor,
+                child: ListTile(
+                  leading: const Icon(Icons.workspace_premium_outlined),
+                  title: Text(AppStrings.premiumPurchase.tr),
+                  subtitle: Text(
+                    Platform.isIOS
+                        ? AppStrings.premiumDescriptionIOS.tr
+                        : AppStrings.premiumDescriptionAndroid.tr,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  DropdownMenuItem(
-                    value: Locale('ko', 'KR'),
-                    child: Text(AppStrings.languageKorean.tr),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: controller.goToPremiumPurchase,
+                ),
+              ),
+            );
+          }
+
+          if (tiles.isNotEmpty) {
+            tiles.add(const SizedBox(height: 8));
+          }
+
+          tiles.add(
+            _card(
+              cardColor: cardColor,
+              borderColor: borderColor,
+              child: ListTile(
+                leading: const Icon(Icons.language_outlined),
+                title: Text(AppStrings.language.tr),
+                trailing: _styledDropdown(
+                  context: context,
+                  child: DropdownButton<Locale>(
+                    value: controller.currentLocale(),
+                    isDense: true,
+                    borderRadius: BorderRadius.circular(
+                      UiConstants.formFieldRadius,
+                    ),
+                    dropdownColor: Theme.of(context).colorScheme.surface,
+                    items: [
+                      DropdownMenuItem(
+                        value: Locale('ja', 'JP'),
+                        child: Text(AppStrings.languageJapanese.tr),
+                      ),
+                      DropdownMenuItem(
+                        value: Locale('ko', 'KR'),
+                        child: Text(AppStrings.languageKorean.tr),
+                      ),
+                      DropdownMenuItem(
+                        value: Locale('en', 'US'),
+                        child: Text(AppStrings.languageEnglish.tr),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value == null) return;
+                      controller.changeLanguage(value);
+                    },
                   ),
-                  DropdownMenuItem(
-                    value: Locale('en', 'US'),
-                    child: Text(AppStrings.languageEnglish.tr),
-                  ),
-                ],
-                onChanged: (value) {
-                  if (value == null) return;
-                  controller.changeLanguage(value);
-                },
+                ),
               ),
             ),
-          ),
-        ),
+          );
+
+          return Column(children: tiles);
+        }),
       ],
     );
   }

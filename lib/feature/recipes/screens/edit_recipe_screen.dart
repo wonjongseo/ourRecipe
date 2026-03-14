@@ -59,6 +59,7 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(height: 16),
                           _coverImage(),
                           SizedBox(height: 24),
                           CustomTextFormField(
@@ -116,7 +117,6 @@ class EditRecipeScreen extends GetView<EditRecipeController> {
         SizedBox(
           height: UiConstants.formFieldHeight,
           child: DropdownButtonFormField<String>(
-            isExpanded: true,
             icon: Icon(
               Icons.keyboard_arrow_down_rounded,
               color:

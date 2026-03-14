@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/feature/my_page/controller/my_page_controller.dart';
+import 'package:our_recipe/feature/my_page/screens/premium_purchase_screen.dart';
 
 class ICloudSyncSettingsScreen extends GetView<MyPageController> {
   const ICloudSyncSettingsScreen({super.key});
@@ -14,15 +15,49 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
     final cardColor = Theme.of(context).cardColor;
     final borderColor = Theme.of(context).colorScheme.outline;
     final hintColor = Theme.of(context).colorScheme.onSurfaceVariant;
-    final canUseICloud = defaultTargetPlatform == TargetPlatform.iOS;
 
     return Scaffold(
       appBar: AppBar(title: Text(AppStrings.iCloudSync.tr)),
       body: SafeArea(
-        child: Obx(
-          () => ListView(
+        child: Obx(() {
+          final canUseICloud =
+              defaultTargetPlatform == TargetPlatform.iOS &&
+              controller.canUseICloud;
+          return ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              if (!canUseICloud) ...[
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        defaultTargetPlatform == TargetPlatform.iOS
+                            ? AppStrings.premiumICloudLocked.tr
+                            : AppStrings.iCloudIOSOnly.tr,
+                      ),
+                      if (defaultTargetPlatform == TargetPlatform.iOS) ...[
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: 48,
+                          child: FilledButton(
+                            onPressed:
+                                () => Get.toNamed(PremiumPurchaseScreen.name),
+                            child: Text(AppStrings.premiumPurchase.tr),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+              ],
               if (controller.iCloudStatusMessage.value.isNotEmpty) ...[
                 Container(
                   padding: const EdgeInsets.all(12),
@@ -71,11 +106,12 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
                 const SizedBox(height: 8),
                 Text(
                   AppStrings.iCloudUploadButtonGuide.tr,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: hintColor, height: 1.45),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: hintColor,
+                    height: 1.45,
+                  ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 30),
                 SizedBox(
                   height: 50,
                   child: OutlinedButton.icon(
@@ -90,62 +126,63 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
                 const SizedBox(height: 8),
                 Text(
                   AppStrings.iCloudDownloadButtonGuide.tr,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: hintColor, height: 1.45),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: hintColor,
+                    height: 1.45,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
-                SizedBox(
-                  height: 50,
-                  child: FilledButton.tonal(
-                    onPressed:
-                        controller.isICloudSyncUpdating.value
-                            ? null
-                            : _onTapDeleteAll,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.errorContainer,
-                      foregroundColor: Theme.of(
-                        context,
-                      ).colorScheme.onErrorContainer,
-                    ),
-                    child: Text(AppStrings.deleteAllICloudData.tr),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  AppStrings.iCloudDeleteButtonGuide.tr,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: hintColor, height: 1.45),
-                ),
+                // SizedBox(
+                //   height: 50,
+                //   child: FilledButton.tonal(
+                //     onPressed:
+                //         controller.isICloudSyncUpdating.value
+                //             ? null
+                //             : _onTapDeleteAll,
+                //     style: FilledButton.styleFrom(
+                //       backgroundColor:
+                //           Theme.of(context).colorScheme.errorContainer,
+                //       foregroundColor:
+                //           Theme.of(context).colorScheme.onErrorContainer,
+                //     ),
+                //     child: Text(AppStrings.deleteAllICloudData.tr),
+                //   ),
+                // ),
+                // const SizedBox(height: 8),
+                // Text(
+                //   AppStrings.iCloudDeleteButtonGuide.tr,
+                //   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                //     color: hintColor,
+                //     height: 1.45,
+                //   ),
+                // ),
               ],
             ],
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
 
-  Future<void> _onTapDeleteAll() async {
-    final confirmed = await Get.dialog<bool>(
-      AlertDialog(
-        title: Text(AppStrings.deleteAllICloudData.tr),
-        content: Text(AppStrings.deleteAllICloudDataDescription.tr),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(result: false),
-            child: Text(AppStrings.cancel.tr),
-          ),
-          FilledButton(
-            onPressed: () => Get.back(result: true),
-            child: Text(AppStrings.delete.tr),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true) return;
-    await controller.deleteAllICloudData();
-  }
+  // Future<void> _onTapDeleteAll() async {
+  //   final confirmed = await Get.dialog<bool>(
+  //     AlertDialog(
+  //       title: Text(AppStrings.deleteAllICloudData.tr),
+  //       content: Text(AppStrings.deleteAllICloudDataDescription.tr),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Get.back(result: false),
+  //           child: Text(AppStrings.cancel.tr),
+  //         ),
+  //         FilledButton(
+  //           onPressed: () => Get.back(result: true),
+  //           child: Text(AppStrings.delete.tr),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //   if (confirmed != true) return;
+  //   await controller.deleteAllICloudData();
+  // }
 }

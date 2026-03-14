@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "Our Recipe Note";
+"CFBundleName" = "Our Recipe Note";
+"NSCameraUsageDescription" = "Camera access is required to take recipe and cooking step photos.";
+"NSPhotoLibraryUsageDescription" = "Photo library access is required to import recipe and cooking step photos.";

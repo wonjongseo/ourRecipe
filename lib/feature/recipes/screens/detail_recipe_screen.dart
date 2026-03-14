@@ -303,6 +303,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
         return ListTile(
           dense: true,
           minLeadingWidth: 10,
+          minTileHeight: 35,
           leading: Container(
             width: 5,
             height: 5,

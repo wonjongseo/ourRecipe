@@ -4,15 +4,15 @@
 <dict>
 
 <key>NSCameraUsageDescription</key>
-<string>カメラを使用する理由を記述</string>
+<string>Camera access is required to take recipe and cooking step photos.</string>
 <key>NSPhotoLibraryUsageDescription</key>
-<string>フォトライブラリを使用する理由を記述</string>
+<string>Photo library access is required to import recipe and cooking step photos.</string>
 
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Our Recipe</string>
+	<string>Our Recipe Note</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,7 +20,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>our_recipe</string>
+	<string>Our Recipe Note</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

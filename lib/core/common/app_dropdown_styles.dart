@@ -27,7 +27,6 @@ class AppDropdownStyles {
       border: AppInputBorders.normal(),
       enabledBorder: AppInputBorders.normal(),
       focusedBorder: AppInputBorders.focused(),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
       suffixIcon: suffixIcon,
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,10 +15,12 @@ import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dar
 import 'package:our_recipe/core/services/locale_service.dart';
 import 'package:our_recipe/core/services/recipe_database_service.dart';
 import 'package:our_recipe/core/services/theme_service.dart';
+import 'package:our_recipe/core/services/premium_service.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/screens/category_management_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
 import 'package:our_recipe/feature/my_page/screens/icloud_sync_settings_screen.dart';
+import 'package:our_recipe/feature/my_page/screens/premium_purchase_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyPageController extends GetxController {
@@ -29,9 +32,11 @@ class MyPageController extends GetxController {
   final ThemeService _themeService = ThemeService();
   final ICloudSyncSettingsService _iCloudSettings = ICloudSyncSettingsService();
   final ICloudSyncService _iCloudSync = ICloudSyncService();
+  final PremiumService premiumService = Get.find<PremiumService>();
   final iCloudSyncEnabled = true.obs;
   final isICloudSyncUpdating = false.obs;
   final iCloudStatusMessage = ''.obs;
+  Worker? _premiumWorker;
 
   @override
   void onInit() {
@@ -41,6 +46,7 @@ class MyPageController extends GetxController {
     _initTextScale();
     _initICloudSync();
     _initAppVersion();
+    _bindPremiumState();
   }
 
   Future<void> _initThemeMode() async {
@@ -71,6 +77,20 @@ class MyPageController extends GetxController {
   Future<void> _initICloudSync() async {
     iCloudSyncEnabled.value = await _iCloudSettings.isEnabled();
   }
+
+  void _bindPremiumState() {
+    _premiumWorker = ever<bool>(premiumService.isPremium, (isPremium) async {
+      if (!premiumService.canUseICloud) {
+        await _iCloudSettings.setEnabled(false);
+        iCloudSyncEnabled.value = false;
+      } else {
+        iCloudSyncEnabled.value = await _iCloudSettings.isEnabled();
+      }
+      await refreshICloudStatusMessage();
+    });
+  }
+
+  bool get canUseICloud => premiumService.canUseICloud;
 
   Future<void> _initAppVersion() async {
     try {
@@ -179,8 +199,21 @@ class MyPageController extends GetxController {
   }
 
   Future<void> goToICloudSyncSettings() async {
+    if (!GetPlatform.isIOS) {
+      await refreshICloudStatusMessage();
+      await Get.toNamed(ICloudSyncSettingsScreen.name);
+      return;
+    }
+    if (!canUseICloud) {
+      await Get.toNamed(PremiumPurchaseScreen.name);
+      return;
+    }
     await refreshICloudStatusMessage();
     await Get.toNamed(ICloudSyncSettingsScreen.name);
+  }
+
+  Future<void> goToPremiumPurchase() async {
+    await Get.toNamed(PremiumPurchaseScreen.name);
   }
 
   Future<void> openReviewPage() async {
@@ -246,6 +279,11 @@ class MyPageController extends GetxController {
   }
 
   Future<void> changeICloudSync(bool enabled) async {
+    if (!GetPlatform.isIOS) return;
+    if (!canUseICloud) {
+      await Get.toNamed(PremiumPurchaseScreen.name);
+      return;
+    }
     if (isICloudSyncUpdating.value) return;
     if (iCloudSyncEnabled.value == enabled) return;
     iCloudSyncEnabled.value = enabled;
@@ -335,6 +373,14 @@ class MyPageController extends GetxController {
   }
 
   Future<void> refreshICloudStatusMessage() async {
+    if (!GetPlatform.isIOS) {
+      iCloudStatusMessage.value = AppStrings.iCloudIOSOnly.tr;
+      return;
+    }
+    if (!canUseICloud) {
+      iCloudStatusMessage.value = AppStrings.premiumICloudLocked.tr;
+      return;
+    }
     final status = await AppDataPathService.getICloudStatus();
     if (status == null) {
       iCloudStatusMessage.value = '';
@@ -343,7 +389,9 @@ class MyPageController extends GetxController {
     final tokenPresent = status['tokenPresent'] == true;
     final containerAvailable = status['containerAvailable'] == true;
     iCloudStatusMessage.value =
-        tokenPresent && containerAvailable ? '' : AppStrings.pleaseCheckSettings.tr;
+        tokenPresent && containerAvailable
+            ? ''
+            : AppStrings.pleaseCheckSettings.tr;
   }
 
   Future<void> _runICloudTask({
@@ -355,10 +403,11 @@ class MyPageController extends GetxController {
   }) async {
     isICloudSyncUpdating.value = true;
     _showICloudProgressDialog(title: title, description: description);
+    var isSuccess = false;
 
     try {
       await task();
-      SnackBarHelper.showSuccessSnackBar(successMessage);
+      isSuccess = true;
     } catch (e, s) {
       onError(e, s);
     } finally {
@@ -366,6 +415,9 @@ class MyPageController extends GetxController {
         Get.back();
       }
       isICloudSyncUpdating.value = false;
+      if (isSuccess) {
+        SnackBarHelper.showSuccessSnackBar(successMessage);
+      }
     }
   }
 
@@ -415,5 +467,11 @@ class MyPageController extends GetxController {
       ),
       barrierDismissible: false,
     );
+  }
+
+  @override
+  void onClose() {
+    _premiumWorker?.dispose();
+    super.onClose();
   }
 }

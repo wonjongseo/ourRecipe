@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "우리의 레시피";
+"CFBundleName" = "우리의 레시피";
+"NSCameraUsageDescription" = "레시피와 조리 단계 사진을 촬영하기 위해 카메라 권한이 필요합니다.";
+"NSPhotoLibraryUsageDescription" = "레시피와 조리 단계 사진을 불러오기 위해 사진 보관함 권한이 필요합니다.";

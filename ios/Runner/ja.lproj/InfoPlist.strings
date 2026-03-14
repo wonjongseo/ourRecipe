@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "レシピメイト";
+"CFBundleName" = "レシピメイト";
+"NSCameraUsageDescription" = "レシピや調理手順の写真を撮影するためにカメラの使用が必要です。";
+"NSPhotoLibraryUsageDescription" = "レシピや調理手順の写真を読み込むために写真ライブラリへのアクセスが必要です。";

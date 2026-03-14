@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:our_recipe/core/common/admob_unit_ids.dart';
+import 'package:get/get.dart';
+import 'package:our_recipe/core/services/premium_service.dart';
 
 class AdBannerBottomSheet extends StatefulWidget {
   const AdBannerBottomSheet({super.key});
@@ -46,27 +48,31 @@ class _AdBannerBottomSheetState extends State<AdBannerBottomSheet> {
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) return SizedBox.shrink();
-    final ad = _bannerAd;
-    if (!_loaded || ad == null) return const SizedBox.shrink();
-    return ColoredBox(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: SizedBox(
-            width: double.infinity,
-            height: ad.size.height.toDouble(),
-            child: Center(
-              child: SizedBox(
-                width: ad.size.width.toDouble(),
-                height: ad.size.height.toDouble(),
-                child: AdWidget(ad: ad),
+    final premium = Get.find<PremiumService>();
+    return Obx(() {
+      if (premium.shouldRemoveAds) return const SizedBox.shrink();
+      final ad = _bannerAd;
+      if (!_loaded || ad == null) return const SizedBox.shrink();
+      return ColoredBox(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: SizedBox(
+              width: double.infinity,
+              height: ad.size.height.toDouble(),
+              child: Center(
+                child: SizedBox(
+                  width: ad.size.width.toDouble(),
+                  height: ad.size.height.toDouble(),
+                  child: AdWidget(ad: ad),
+                ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -80,13 +80,32 @@ class AppStrings extends Translations {
       AppStrings.appVersion: AppStrings.appVersionJp,
       AppStrings.leaveReview: AppStrings.leaveReviewJp,
       AppStrings.contactAndBugReport: AppStrings.contactAndBugReportJp,
-      AppStrings.mailAppUnavailableTitle:
-          AppStrings.mailAppUnavailableTitleJp,
+      AppStrings.mailAppUnavailableTitle: AppStrings.mailAppUnavailableTitleJp,
       AppStrings.mailAppUnavailableMessage:
           AppStrings.mailAppUnavailableMessageJp,
       AppStrings.copyEmail: AppStrings.copyEmailJp,
       AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedJp,
       AppStrings.emailCopied: AppStrings.emailCopiedJp,
+      AppStrings.premiumPurchase: AppStrings.premiumPurchaseJp,
+      AppStrings.buyPremium: AppStrings.buyPremiumJp,
+      AppStrings.restorePurchase: AppStrings.restorePurchaseJp,
+      AppStrings.removeAds: AppStrings.removeAdsJp,
+      AppStrings.removeAdsDescription: AppStrings.removeAdsDescriptionJp,
+      AppStrings.premiumDescriptionIOS: AppStrings.premiumDescriptionIOSJp,
+      AppStrings.premiumDescriptionAndroid:
+          AppStrings.premiumDescriptionAndroidJp,
+      AppStrings.premiumHeadline: AppStrings.premiumHeadlineJp,
+      AppStrings.premiumActivated: AppStrings.premiumActivatedJp,
+      AppStrings.premiumICloudDescription:
+          AppStrings.premiumICloudDescriptionJp,
+      AppStrings.premiumICloudLocked: AppStrings.premiumICloudLockedJp,
+      AppStrings.iCloudIOSOnly: AppStrings.iCloudIOSOnlyJp,
+      AppStrings.storeUnavailable: AppStrings.storeUnavailableJp,
+      AppStrings.premiumPurchaseSuccess: AppStrings.premiumPurchaseSuccessJp,
+      AppStrings.purchasePending: AppStrings.purchasePendingJp,
+      AppStrings.purchaseCancelled: AppStrings.purchaseCancelledJp,
+      AppStrings.purchaseFailed: AppStrings.purchaseFailedJp,
+      AppStrings.purchaseRestored: AppStrings.purchaseRestoredJp,
       AppStrings.iCloudSync: AppStrings.iCloudSyncJp,
       AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionJp,
       AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleJp,
@@ -281,13 +300,32 @@ class AppStrings extends Translations {
       AppStrings.appVersion: AppStrings.appVersionKr,
       AppStrings.leaveReview: AppStrings.leaveReviewKr,
       AppStrings.contactAndBugReport: AppStrings.contactAndBugReportKr,
-      AppStrings.mailAppUnavailableTitle:
-          AppStrings.mailAppUnavailableTitleKr,
+      AppStrings.mailAppUnavailableTitle: AppStrings.mailAppUnavailableTitleKr,
       AppStrings.mailAppUnavailableMessage:
           AppStrings.mailAppUnavailableMessageKr,
       AppStrings.copyEmail: AppStrings.copyEmailKr,
       AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedKr,
       AppStrings.emailCopied: AppStrings.emailCopiedKr,
+      AppStrings.premiumPurchase: AppStrings.premiumPurchaseKr,
+      AppStrings.buyPremium: AppStrings.buyPremiumKr,
+      AppStrings.restorePurchase: AppStrings.restorePurchaseKr,
+      AppStrings.removeAds: AppStrings.removeAdsKr,
+      AppStrings.removeAdsDescription: AppStrings.removeAdsDescriptionKr,
+      AppStrings.premiumDescriptionIOS: AppStrings.premiumDescriptionIOSKr,
+      AppStrings.premiumDescriptionAndroid:
+          AppStrings.premiumDescriptionAndroidKr,
+      AppStrings.premiumHeadline: AppStrings.premiumHeadlineKr,
+      AppStrings.premiumActivated: AppStrings.premiumActivatedKr,
+      AppStrings.premiumICloudDescription:
+          AppStrings.premiumICloudDescriptionKr,
+      AppStrings.premiumICloudLocked: AppStrings.premiumICloudLockedKr,
+      AppStrings.iCloudIOSOnly: AppStrings.iCloudIOSOnlyKr,
+      AppStrings.storeUnavailable: AppStrings.storeUnavailableKr,
+      AppStrings.premiumPurchaseSuccess: AppStrings.premiumPurchaseSuccessKr,
+      AppStrings.purchasePending: AppStrings.purchasePendingKr,
+      AppStrings.purchaseCancelled: AppStrings.purchaseCancelledKr,
+      AppStrings.purchaseFailed: AppStrings.purchaseFailedKr,
+      AppStrings.purchaseRestored: AppStrings.purchaseRestoredKr,
       AppStrings.iCloudSync: AppStrings.iCloudSyncKr,
       AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionKr,
       AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleKr,
@@ -483,13 +521,32 @@ class AppStrings extends Translations {
       AppStrings.appVersion: AppStrings.appVersionEn,
       AppStrings.leaveReview: AppStrings.leaveReviewEn,
       AppStrings.contactAndBugReport: AppStrings.contactAndBugReportEn,
-      AppStrings.mailAppUnavailableTitle:
-          AppStrings.mailAppUnavailableTitleEn,
+      AppStrings.mailAppUnavailableTitle: AppStrings.mailAppUnavailableTitleEn,
       AppStrings.mailAppUnavailableMessage:
           AppStrings.mailAppUnavailableMessageEn,
       AppStrings.copyEmail: AppStrings.copyEmailEn,
       AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedEn,
       AppStrings.emailCopied: AppStrings.emailCopiedEn,
+      AppStrings.premiumPurchase: AppStrings.premiumPurchaseEn,
+      AppStrings.buyPremium: AppStrings.buyPremiumEn,
+      AppStrings.restorePurchase: AppStrings.restorePurchaseEn,
+      AppStrings.removeAds: AppStrings.removeAdsEn,
+      AppStrings.removeAdsDescription: AppStrings.removeAdsDescriptionEn,
+      AppStrings.premiumDescriptionIOS: AppStrings.premiumDescriptionIOSEn,
+      AppStrings.premiumDescriptionAndroid:
+          AppStrings.premiumDescriptionAndroidEn,
+      AppStrings.premiumHeadline: AppStrings.premiumHeadlineEn,
+      AppStrings.premiumActivated: AppStrings.premiumActivatedEn,
+      AppStrings.premiumICloudDescription:
+          AppStrings.premiumICloudDescriptionEn,
+      AppStrings.premiumICloudLocked: AppStrings.premiumICloudLockedEn,
+      AppStrings.iCloudIOSOnly: AppStrings.iCloudIOSOnlyEn,
+      AppStrings.storeUnavailable: AppStrings.storeUnavailableEn,
+      AppStrings.premiumPurchaseSuccess: AppStrings.premiumPurchaseSuccessEn,
+      AppStrings.purchasePending: AppStrings.purchasePendingEn,
+      AppStrings.purchaseCancelled: AppStrings.purchaseCancelledEn,
+      AppStrings.purchaseFailed: AppStrings.purchaseFailedEn,
+      AppStrings.purchaseRestored: AppStrings.purchaseRestoredEn,
       AppStrings.iCloudSync: AppStrings.iCloudSyncEn,
       AppStrings.iCloudSyncDescription: AppStrings.iCloudSyncDescriptionEn,
       AppStrings.iCloudConflictTitle: AppStrings.iCloudConflictTitleEn,
@@ -872,6 +929,104 @@ class AppStrings extends Translations {
   static String emailCopiedKr = "이메일 주소를 복사했어요.";
   static String emailCopiedJp = "メールアドレスをコピーしました。";
   static String emailCopiedEn = "Email address copied.";
+
+  static String premiumPurchase = "premiumPurchaseTr";
+  static String premiumPurchaseKr = "프리미엄 구매";
+  static String premiumPurchaseJp = "プレミアム購入";
+  static String premiumPurchaseEn = "Buy Premium";
+
+  static String buyPremium = "buyPremiumTr";
+  static String buyPremiumKr = "프리미엄 구매하기";
+  static String buyPremiumJp = "プレミアムを購入";
+  static String buyPremiumEn = "Buy Premium";
+
+  static String restorePurchase = "restorePurchaseTr";
+  static String restorePurchaseKr = "구매 복원";
+  static String restorePurchaseJp = "購入を復元";
+  static String restorePurchaseEn = "Restore Purchase";
+
+  static String removeAds = "removeAdsTr";
+  static String removeAdsKr = "광고 제거";
+  static String removeAdsJp = "広告を削除";
+  static String removeAdsEn = "Remove Ads";
+
+  static String removeAdsDescription = "removeAdsDescriptionTr";
+  static String removeAdsDescriptionKr = "배너, 전면, 리스트 광고가 표시되지 않습니다.";
+  static String removeAdsDescriptionJp = "バナー、全画面、リスト広告が表示されなくなります。";
+  static String removeAdsDescriptionEn =
+      "Banner, interstitial, and list ads will be removed.";
+
+  static String premiumDescriptionIOS = "premiumDescriptionIOSTr";
+  static String premiumDescriptionIOSKr =
+      "한 번 구매하면 광고가 제거되고 iCloud 동기화를 사용할 수 있습니다.";
+  static String premiumDescriptionIOSJp = "一度購入すると広告が削除され、iCloud同期を利用できます。";
+  static String premiumDescriptionIOSEn =
+      "One purchase removes ads and unlocks iCloud sync.";
+
+  static String premiumDescriptionAndroid = "premiumDescriptionAndroidTr";
+  static String premiumDescriptionAndroidKr = "한 번 구매하면 광고가 제거됩니다.";
+  static String premiumDescriptionAndroidJp = "一度購入すると広告が削除されます。";
+  static String premiumDescriptionAndroidEn =
+      "One purchase removes ads permanently.";
+
+  static String premiumHeadline = "premiumHeadlineTr";
+  static String premiumHeadlineKr = "프리미엄으로 광고 없이 사용하세요";
+  static String premiumHeadlineJp = "プレミアムで広告なしで使いましょう";
+  static String premiumHeadlineEn = "Use the app without ads";
+
+  static String premiumActivated = "premiumActivatedTr";
+  static String premiumActivatedKr = "프리미엄 사용 중";
+  static String premiumActivatedJp = "プレミアム利用中";
+  static String premiumActivatedEn = "Premium Active";
+
+  static String premiumICloudDescription = "premiumICloudDescriptionTr";
+  static String premiumICloudDescriptionKr =
+      "여러 Apple 기기에서 레시피와 사진을 iCloud로 이어서 사용할 수 있습니다.";
+  static String premiumICloudDescriptionJp =
+      "複数のAppleデバイスで、レシピや写真をiCloud経由で続けて利用できます。";
+  static String premiumICloudDescriptionEn =
+      "Use your recipes and photos seamlessly across Apple devices with iCloud.";
+
+  static String premiumICloudLocked = "premiumICloudLockedTr";
+  static String premiumICloudLockedKr = "iCloud 동기화는 프리미엄 구매 후 사용할 수 있습니다.";
+  static String premiumICloudLockedJp = "iCloud同期はプレミアム購入後に利用できます。";
+  static String premiumICloudLockedEn =
+      "iCloud sync is available after purchasing premium.";
+
+  static String iCloudIOSOnly = "iCloudIOSOnlyTr";
+  static String iCloudIOSOnlyKr = "iCloud 기능은 iOS에서만 사용할 수 있습니다.";
+  static String iCloudIOSOnlyJp = "iCloud機能はiOSでのみ利用できます。";
+  static String iCloudIOSOnlyEn = "iCloud features are only available on iOS.";
+
+  static String storeUnavailable = "storeUnavailableTr";
+  static String storeUnavailableKr = "스토어에 연결할 수 없습니다.";
+  static String storeUnavailableJp = "ストアに接続できません。";
+  static String storeUnavailableEn = "The store is currently unavailable.";
+
+  static String premiumPurchaseSuccess = "premiumPurchaseSuccessTr";
+  static String premiumPurchaseSuccessKr = "프리미엄 구매가 완료되었습니다.";
+  static String premiumPurchaseSuccessJp = "プレミアム購入が完了しました。";
+  static String premiumPurchaseSuccessEn = "Premium purchase completed.";
+
+  static String purchasePending = "purchasePendingTr";
+  static String purchasePendingKr = "구매를 처리 중입니다.";
+  static String purchasePendingJp = "購入を処理中です。";
+  static String purchasePendingEn = "Purchase is being processed.";
+
+  static String purchaseCancelled = "purchaseCancelledTr";
+  static String purchaseCancelledKr = "구매가 취소되었습니다.";
+  static String purchaseCancelledJp = "購入がキャンセルされました。";
+  static String purchaseCancelledEn = "Purchase was cancelled.";
+
+  static String purchaseFailed = "purchaseFailedTr";
+  static String purchaseFailedKr = "구매를 완료하지 못했습니다.";
+  static String purchaseFailedJp = "購入を完了できませんでした。";
+  static String purchaseFailedEn = "Could not complete the purchase.";
+
+  static String purchaseRestored = "purchaseRestoredTr";
+  static String purchaseRestoredKr = "구매 내역을 복원했습니다.";
+  static String purchaseRestoredJp = "購入履歴を復元しました。";
+  static String purchaseRestoredEn = "Purchase restored.";
 
   static String iCloudSync = "iCloudSyncTr";
   static String iCloudSyncKr = "iCloud 공유";
@@ -1392,11 +1547,11 @@ class AppStrings extends Translations {
 
   static String iCloudDownloadButtonGuide = "iCloudDownloadButtonGuideTr";
   static String iCloudDownloadButtonGuideKr =
-      "iCloud에 저장된 데이터와 사진을 이 기기의 로컬 데이터와 병합해서 가져옵니다.";
+      "iCloud에 저장된 데이터와 사진을\n이 기기의 로컬 데이터와 병합해서 가져옵니다.";
   static String iCloudDownloadButtonGuideJp =
-      "iCloudに保存されたデータと画像を、この端末のローカルデータとマージして取得します。";
+      "iCloudに保存されたデータと画像を\nこの端末のローカルデータとマージして取得します。";
   static String iCloudDownloadButtonGuideEn =
-      "Download recipes and images from iCloud and merge them into this device.";
+      "Download recipes and images from iCloud\nand merge them into this device.";
 
   static String iCloudDeleteButtonGuide = "iCloudDeleteButtonGuideTr";
   static String iCloudDeleteButtonGuideKr =
@@ -1434,10 +1589,8 @@ class AppStrings extends Translations {
       "Please enter the ingredient amount";
 
   static String noNutritionInfoConfirmSave = "noNutritionInfoConfirmSaveTr";
-  static String noNutritionInfoConfirmSaveKr =
-      "영양 성분의 정보 없습니다.\n저장하시겠습니까?";
-  static String noNutritionInfoConfirmSaveJp =
-      "栄養成分の情報がありません。\n保存しますか？";
+  static String noNutritionInfoConfirmSaveKr = "영양 성분의 정보 없습니다.\n저장하시겠습니까?";
+  static String noNutritionInfoConfirmSaveJp = "栄養成分の情報がありません。\n保存しますか？";
   static String noNutritionInfoConfirmSaveEn =
       "There is no nutrition information.\nDo you want to save it?";
 

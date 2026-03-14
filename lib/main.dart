@@ -11,6 +11,8 @@ import 'package:our_recipe/core/services/local_notification_service.dart';
 import 'package:our_recipe/core/services/theme_service.dart';
 import 'package:our_recipe/feature/splash/screen/splash_screen.dart';
 
+bool canUseICloudMaster = true;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();

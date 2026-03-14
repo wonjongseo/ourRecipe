@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_unit.dart';
@@ -22,10 +23,20 @@ class TestDataService {
   final IngredientProductRepository _ingredientProductRepository;
 
   Future<void> seedSampleRecipes() async {
-    await seedSampleRecipesKr();
+    switch (Get.locale?.languageCode ?? 'ja') {
+      case 'ko':
+        await _seedSampleRecipesKr();
+        break;
+      case 'en':
+        await _seedSampleRecipesEn();
+        break;
+      default:
+        await _seedSampleRecipesJp();
+        break;
+    }
   }
 
-  Future<void> seedSampleRecipesKr() async {
+  Future<void> _seedSampleRecipesKr() async {
     await _seedRecipes(
       categories: const ['치킨', '찌개', '볶음밥', '탕/조림'],
       products: [
@@ -36,23 +47,21 @@ class TestDataService {
     );
   }
 
-  Future<void> seedSampleRecipesJp() async {
+  Future<void> _seedSampleRecipesJp() async {
     await _seedRecipes(
-      categories: const ['면', '밥', '철판', '덮밥'],
+      categories: const ['麺料理', 'ご飯もの', '鉄板料理', '丼もの'],
       products: [
-        ..._sharedProducts,
-        ..._japaneseProducts,
+        ..._localizedJapaneseProducts,
       ],
       buildRecipes: _buildJapaneseRecipes,
     );
   }
 
-  Future<void> seedSampleRecipesEn() async {
+  Future<void> _seedSampleRecipesEn() async {
     await _seedRecipes(
-      categories: const ['버거', '파스타', '치킨', '브런치'],
+      categories: const ['Burgers', 'Pasta', 'Chicken', 'Brunch'],
       products: [
-        ..._sharedProducts,
-        ..._americanProducts,
+        ..._localizedAmericanProducts,
       ],
       buildRecipes: _buildAmericanRecipes,
     );
@@ -196,9 +205,9 @@ class TestDataService {
     return [
       _recipe(
         id: 'sample_recipe_shoyu_ramen',
-        name: '쇼유라멘',
-        category: '면',
-        description: '간장 베이스 국물과 면을 곁들인 기본 라멘',
+        name: '醤油ラーメン',
+        category: '麺料理',
+        description: '醤油ベースのスープで作る定番ラーメン',
         ingredients: [
           _ingredient('sample_recipe_shoyu_ramen', products, 'sample_product_ramen_noodle', 220),
           _ingredient('sample_recipe_shoyu_ramen', products, 'sample_product_pork_belly', 120),
@@ -213,17 +222,17 @@ class TestDataService {
           ),
         ],
         steps: [
-          _step('sample_recipe_shoyu_ramen', 1, '면을 삶고 따로 건져둡니다.'),
-          _step('sample_recipe_shoyu_ramen', 2, '간장과 물을 섞어 간단한 국물을 만들고 돼지고기를 데워 올립니다.'),
-          _step('sample_recipe_shoyu_ramen', 3, '면, 국물, 계란, 대파를 담아 마무리합니다.'),
+          _step('sample_recipe_shoyu_ramen', 1, '麺をゆでて湯を切り、別にしておきます。'),
+          _step('sample_recipe_shoyu_ramen', 2, '醤油と水で簡単なスープを作り、豚肉を温めてのせます。'),
+          _step('sample_recipe_shoyu_ramen', 3, '麺、スープ、卵、ねぎを盛り付けて仕上げます。'),
         ],
         createdAt: DateTime(2024, 2, 1),
       ),
       _recipe(
         id: 'sample_recipe_curry_rice',
-        name: '카레라이스',
-        category: '밥',
-        description: '일본식 카레 루와 밥으로 만드는 기본 카레라이스',
+        name: 'カレーライス',
+        category: 'ご飯もの',
+        description: 'カレールーとご飯で作る定番のカレーライス',
         ingredients: [
           _ingredient('sample_recipe_curry_rice', products, 'sample_product_cooked_rice', 500),
           _ingredient('sample_recipe_curry_rice', products, 'sample_product_curry_roux', 100),
@@ -233,17 +242,17 @@ class TestDataService {
           _ingredient('sample_recipe_curry_rice', products, 'sample_product_beef_patty', 150),
         ],
         steps: [
-          _step('sample_recipe_curry_rice', 1, '양파, 감자, 당근, 고기를 먼저 볶습니다.'),
-          _step('sample_recipe_curry_rice', 2, '물을 붓고 재료가 부드러워질 때까지 끓인 뒤 카레 루를 녹입니다.'),
-          _step('sample_recipe_curry_rice', 3, '걸쭉해지면 밥과 함께 담아냅니다.'),
+          _step('sample_recipe_curry_rice', 1, '玉ねぎ、じゃがいも、にんじん、肉を先に炒めます。'),
+          _step('sample_recipe_curry_rice', 2, '水を加えて具材がやわらかくなるまで煮て、カレールーを溶かします。'),
+          _step('sample_recipe_curry_rice', 3, 'とろみがついたらご飯と一緒に盛り付けます。'),
         ],
         createdAt: DateTime(2024, 2, 2),
       ),
       _recipe(
         id: 'sample_recipe_okonomiyaki',
-        name: '오코노미야키',
-        category: '철판',
-        description: '양배추와 반죽을 철판에서 구운 일본식 부침',
+        name: 'お好み焼き',
+        category: '鉄板料理',
+        description: 'キャベツ入りの生地を焼き上げる定番のお好み焼き',
         ingredients: [
           _ingredient('sample_recipe_okonomiyaki', products, 'sample_product_cabbage', 180),
           _ingredient('sample_recipe_okonomiyaki', products, 'sample_product_flour', 120),
@@ -258,17 +267,17 @@ class TestDataService {
           ),
         ],
         steps: [
-          _step('sample_recipe_okonomiyaki', 1, '양배추를 잘게 썰고 밀가루와 계란을 섞어 반죽을 만듭니다.'),
-          _step('sample_recipe_okonomiyaki', 2, '팬에 식용유를 두르고 반죽과 돼지고기를 올려 앞뒤로 익힙니다.'),
-          _step('sample_recipe_okonomiyaki', 3, '노릇하게 익으면 접시에 담아 완성합니다.'),
+          _step('sample_recipe_okonomiyaki', 1, 'キャベツを細かく切り、小麦粉と卵を混ぜて生地を作ります。'),
+          _step('sample_recipe_okonomiyaki', 2, 'フライパンに油をひき、生地と豚肉をのせて両面を焼きます。'),
+          _step('sample_recipe_okonomiyaki', 3, 'こんがり焼けたら皿に盛って完成です。'),
         ],
         createdAt: DateTime(2024, 2, 3),
       ),
       _recipe(
         id: 'sample_recipe_oyakodon',
-        name: '오야코동',
-        category: '덮밥',
-        description: '닭고기와 계란을 밥 위에 올린 일본식 덮밥',
+        name: '親子丼',
+        category: '丼もの',
+        description: '鶏肉と卵をのせた定番の丼もの',
         ingredients: [
           _ingredient('sample_recipe_oyakodon', products, 'sample_product_cooked_rice', 500),
           _ingredient('sample_recipe_oyakodon', products, 'sample_product_whole_chicken', 250),
@@ -283,9 +292,9 @@ class TestDataService {
           ),
         ],
         steps: [
-          _step('sample_recipe_oyakodon', 1, '양파와 닭고기를 간장과 물 약간에 익힙니다.'),
-          _step('sample_recipe_oyakodon', 2, '계란을 풀어 넣고 살짝 반숙으로 익힙니다.'),
-          _step('sample_recipe_oyakodon', 3, '밥 위에 올려 덮밥으로 완성합니다.'),
+          _step('sample_recipe_oyakodon', 1, '玉ねぎと鶏肉を醤油と少量の水で煮ます。'),
+          _step('sample_recipe_oyakodon', 2, '溶き卵を流し入れ、半熟状に火を通します。'),
+          _step('sample_recipe_oyakodon', 3, 'ご飯の上にのせて丼に仕上げます。'),
         ],
         createdAt: DateTime(2024, 2, 4),
       ),
@@ -298,9 +307,9 @@ class TestDataService {
     return [
       _recipe(
         id: 'sample_recipe_cheeseburger',
-        name: '치즈버거',
-        category: '버거',
-        description: '소고기 패티와 치즈를 넣은 기본 버거',
+        name: 'Cheeseburger',
+        category: 'Burgers',
+        description: 'A classic burger made with a beef patty and cheddar cheese.',
         ingredients: [
           _ingredient('sample_recipe_cheeseburger', products, 'sample_product_burger_bun', 150),
           _ingredient('sample_recipe_cheeseburger', products, 'sample_product_beef_patty', 150),
@@ -309,17 +318,17 @@ class TestDataService {
           _ingredient('sample_recipe_cheeseburger', products, 'sample_product_cabbage', 20),
         ],
         steps: [
-          _step('sample_recipe_cheeseburger', 1, '패티를 팬에 굽고 마지막에 치즈를 올려 녹입니다.'),
-          _step('sample_recipe_cheeseburger', 2, '번을 살짝 굽고 양파와 양배추를 준비합니다.'),
-          _step('sample_recipe_cheeseburger', 3, '번 사이에 패티와 치즈, 채소를 넣어 완성합니다.'),
+          _step('sample_recipe_cheeseburger', 1, 'Cook the patty in a pan and melt the cheese on top at the end.'),
+          _step('sample_recipe_cheeseburger', 2, 'Lightly toast the buns and prepare the onion and cabbage.'),
+          _step('sample_recipe_cheeseburger', 3, 'Assemble the patty, cheese, and vegetables between the buns.'),
         ],
         createdAt: DateTime(2024, 3, 1),
       ),
       _recipe(
         id: 'sample_recipe_mac_and_cheese',
-        name: '맥앤치즈',
-        category: '파스타',
-        description: '마카로니와 체다치즈로 만든 진한 치즈 파스타',
+        name: 'Mac and Cheese',
+        category: 'Pasta',
+        description: 'A rich and creamy pasta made with macaroni and cheddar cheese.',
         ingredients: [
           _ingredient('sample_recipe_mac_and_cheese', products, 'sample_product_macaroni', 200),
           _ingredient('sample_recipe_mac_and_cheese', products, 'sample_product_cheddar_cheese', 120),
@@ -328,17 +337,17 @@ class TestDataService {
           _ingredient('sample_recipe_mac_and_cheese', products, 'sample_product_flour', 20),
         ],
         steps: [
-          _step('sample_recipe_mac_and_cheese', 1, '마카로니를 삶아 준비합니다.'),
-          _step('sample_recipe_mac_and_cheese', 2, '버터와 밀가루를 볶다가 우유를 넣어 소스를 만듭니다.'),
-          _step('sample_recipe_mac_and_cheese', 3, '치즈를 녹인 뒤 삶은 마카로니를 넣고 섞습니다.'),
+          _step('sample_recipe_mac_and_cheese', 1, 'Boil the macaroni until tender and set it aside.'),
+          _step('sample_recipe_mac_and_cheese', 2, 'Cook the butter and flour, then add milk to make a sauce.'),
+          _step('sample_recipe_mac_and_cheese', 3, 'Melt in the cheese and stir in the cooked macaroni.'),
         ],
         createdAt: DateTime(2024, 3, 2),
       ),
       _recipe(
         id: 'sample_recipe_buffalo_wings',
-        name: '버팔로 윙',
-        category: '치킨',
-        description: '매콤한 핫소스를 입힌 미국식 치킨 윙',
+        name: 'Buffalo Wings',
+        category: 'Chicken',
+        description: 'American-style chicken wings coated in a spicy hot sauce.',
         ingredients: [
           _ingredient('sample_recipe_buffalo_wings', products, 'sample_product_whole_chicken', 800),
           _ingredient('sample_recipe_buffalo_wings', products, 'sample_product_hot_sauce', 70, unit: IngredientUnit.ml),
@@ -352,17 +361,17 @@ class TestDataService {
           ),
         ],
         steps: [
-          _step('sample_recipe_buffalo_wings', 1, '닭은 먹기 좋은 크기로 나누어 노릇하게 익힙니다.'),
-          _step('sample_recipe_buffalo_wings', 2, '버터와 핫소스를 섞어 소스를 만듭니다.'),
-          _step('sample_recipe_buffalo_wings', 3, '익힌 닭에 소스를 버무려 완성합니다.'),
+          _step('sample_recipe_buffalo_wings', 1, 'Cut the chicken into wing portions and cook until golden.'),
+          _step('sample_recipe_buffalo_wings', 2, 'Mix the butter and hot sauce to make the wing sauce.'),
+          _step('sample_recipe_buffalo_wings', 3, 'Toss the cooked wings in the sauce and serve.'),
         ],
         createdAt: DateTime(2024, 3, 3),
       ),
       _recipe(
         id: 'sample_recipe_pancake',
-        name: '팬케이크',
-        category: '브런치',
-        description: '버터와 시럽을 곁들이는 기본 팬케이크',
+        name: 'Pancakes',
+        category: 'Brunch',
+        description: 'Classic pancakes served with butter and maple syrup.',
         ingredients: [
           _ingredient('sample_recipe_pancake', products, 'sample_product_flour', 180),
           _ingredient('sample_recipe_pancake', products, 'sample_product_egg', 110),
@@ -372,9 +381,9 @@ class TestDataService {
           _ingredient('sample_recipe_pancake', products, 'sample_product_maple_syrup', 40, unit: IngredientUnit.ml),
         ],
         steps: [
-          _step('sample_recipe_pancake', 1, '밀가루, 계란, 우유, 설탕을 섞어 반죽을 만듭니다.'),
-          _step('sample_recipe_pancake', 2, '팬에 버터를 녹이고 반죽을 올려 앞뒤로 노릇하게 굽습니다.'),
-          _step('sample_recipe_pancake', 3, '메이플 시럽을 곁들여 완성합니다.'),
+          _step('sample_recipe_pancake', 1, 'Mix the flour, eggs, milk, and sugar into a smooth batter.'),
+          _step('sample_recipe_pancake', 2, 'Melt butter in a pan and cook the batter on both sides until golden.'),
+          _step('sample_recipe_pancake', 3, 'Serve with maple syrup to finish.'),
         ],
         createdAt: DateTime(2024, 3, 4),
       ),
@@ -963,4 +972,215 @@ class TestDataService {
       sodium: 12,
     ),
   ];
+
+  static final List<IngredientProductModel> _localizedJapaneseProducts =
+      _localizeJapanesePrices(
+        _localizeProducts([
+          ..._sharedProducts,
+          ..._japaneseProducts,
+          _koreanProducts.firstWhere(
+            (product) => product.id == 'sample_product_pork_belly',
+          ),
+        ], _jpProductNames, _jpCategoryNames, _jpManufacturers),
+      );
+
+  static final List<IngredientProductModel> _localizedAmericanProducts =
+      _localizeAmericanPrices(
+        _localizeProducts([
+          ..._sharedProducts,
+          ..._americanProducts,
+          _japaneseProducts.firstWhere(
+            (product) => product.id == 'sample_product_cabbage',
+          ),
+          _japaneseProducts.firstWhere(
+            (product) => product.id == 'sample_product_beef_patty',
+          ),
+        ], _enProductNames, _enCategoryNames, _enManufacturers),
+      );
+
+  static List<IngredientProductModel> _localizeProducts(
+    List<IngredientProductModel> products,
+    Map<String, String> names,
+    Map<String, String> categories,
+    Map<String, String> manufacturers,
+  ) {
+    return products
+        .map(
+          (product) => product.copyWith(
+            name: names[product.id] ?? product.name,
+            category: categories[product.category] ?? product.category,
+            manufacturer:
+                manufacturers[product.manufacturer] ?? product.manufacturer,
+          ),
+        )
+        .toList();
+  }
+
+  static List<IngredientProductModel> _localizeAmericanPrices(
+    List<IngredientProductModel> products,
+  ) {
+    return products
+        .map(
+          (product) => product.copyWith(
+            price: _enPrices[product.id] ?? product.price,
+          ),
+        )
+        .toList();
+  }
+
+  static List<IngredientProductModel> _localizeJapanesePrices(
+    List<IngredientProductModel> products,
+  ) {
+    return products
+        .map(
+          (product) => product.copyWith(
+            price: _jpPrices[product.id] ?? product.price,
+          ),
+        )
+        .toList();
+  }
+
+  static const Map<String, String> _jpProductNames = {
+    'sample_product_whole_chicken': '鶏丸ごと一羽',
+    'sample_product_cooking_oil': '食用油',
+    'sample_product_garlic': 'にんにく',
+    'sample_product_potato': 'じゃがいも',
+    'sample_product_onion': '玉ねぎ',
+    'sample_product_green_onion': '長ねぎ',
+    'sample_product_cooked_rice': 'ご飯',
+    'sample_product_egg': '卵',
+    'sample_product_carrot': 'にんじん',
+    'sample_product_soy_sauce': 'しょうゆ',
+    'sample_product_sugar': '砂糖',
+    'sample_product_flour': '小麦粉',
+    'sample_product_milk': '牛乳',
+    'sample_product_butter': 'バター',
+    'sample_product_ramen_noodle': 'ラーメン麺',
+    'sample_product_curry_roux': 'カレールー',
+    'sample_product_cabbage': 'キャベツ',
+    'sample_product_beef_patty': 'ビーフパティ',
+  };
+
+  static const Map<String, String> _enProductNames = {
+    'sample_product_whole_chicken': 'Whole Chicken',
+    'sample_product_cooking_oil': 'Cooking Oil',
+    'sample_product_garlic': 'Garlic',
+    'sample_product_potato': 'Potato',
+    'sample_product_onion': 'Onion',
+    'sample_product_green_onion': 'Green Onion',
+    'sample_product_cooked_rice': 'Cooked Rice',
+    'sample_product_egg': 'Egg',
+    'sample_product_carrot': 'Carrot',
+    'sample_product_soy_sauce': 'Soy Sauce',
+    'sample_product_sugar': 'Sugar',
+    'sample_product_flour': 'Flour',
+    'sample_product_milk': 'Milk',
+    'sample_product_butter': 'Butter',
+    'sample_product_burger_bun': 'Burger Bun',
+    'sample_product_cheddar_cheese': 'Cheddar Cheese',
+    'sample_product_macaroni': 'Macaroni',
+    'sample_product_hot_sauce': 'Hot Sauce',
+    'sample_product_maple_syrup': 'Maple Syrup',
+  };
+
+  static const Map<String, String> _jpCategoryNames = {
+    '육류': '肉類',
+    '오일/소스': '油・ソース類',
+    '채소류': '野菜類',
+    '곡류': '穀類',
+    '난류': '卵類',
+    '가루/양념': '粉・調味料',
+    '유제품': '乳製品',
+    '면류': '麺類',
+    '소스/장류': 'ソース・調味料',
+  };
+
+  static const Map<String, String> _enCategoryNames = {
+    '육류': 'Meat',
+    '오일/소스': 'Oil & Sauce',
+    '채소류': 'Vegetables',
+    '곡류': 'Grains',
+    '난류': 'Eggs',
+    '가루/양념': 'Flour & Seasoning',
+    '유제품': 'Dairy',
+    '빵류': 'Bread',
+    '면류': 'Pasta & Noodles',
+    '소스/장류': 'Sauce & Condiments',
+  };
+
+  static const Map<String, String> _jpManufacturers = {
+    '테스트 정육점': 'テスト精肉店',
+    '테스트오일': 'テストオイル',
+    '테스트마트': 'テストマート',
+    '테스트주방': 'テストキッチン',
+    '테스트팜': 'テストファーム',
+    '테스트장': 'テスト醸造',
+    '테스트푸드': 'テストフード',
+    '테스트밀크': 'テストミルク',
+    '테스트누들': 'テストヌードル',
+    '테스트카레': 'テストカレー',
+    '테스트미트': 'テストミート',
+  };
+
+  static const Map<String, String> _enManufacturers = {
+    '테스트 정육점': 'Test Butcher',
+    '테스트오일': 'Test Oil',
+    '테스트마트': 'Test Market',
+    '테스트주방': 'Test Kitchen',
+    '테스트팜': 'Test Farm',
+    '테스트장': 'Test Pantry',
+    '테스트푸드': 'Test Foods',
+    '테스트밀크': 'Test Milk',
+    '테스트베이커리': 'Test Bakery',
+    '테스트치즈': 'Test Cheese',
+    '테스트파스타': 'Test Pasta',
+    '테스트소스': 'Test Sauce',
+    '테스트시럽': 'Test Syrup',
+  };
+
+  static const Map<String, double> _jpPrices = {
+    'sample_product_whole_chicken': 980,
+    'sample_product_cooking_oil': 680,
+    'sample_product_garlic': 260,
+    'sample_product_potato': 320,
+    'sample_product_onion': 220,
+    'sample_product_green_onion': 198,
+    'sample_product_cooked_rice': 280,
+    'sample_product_egg': 320,
+    'sample_product_carrot': 180,
+    'sample_product_soy_sauce': 320,
+    'sample_product_sugar': 210,
+    'sample_product_flour': 240,
+    'sample_product_milk': 240,
+    'sample_product_butter': 540,
+    'sample_product_ramen_noodle': 260,
+    'sample_product_curry_roux': 380,
+    'sample_product_cabbage': 260,
+    'sample_product_beef_patty': 620,
+    'sample_product_pork_belly': 680,
+  };
+
+  static const Map<String, double> _enPrices = {
+    'sample_product_whole_chicken': 8.9,
+    'sample_product_cooking_oil': 6.5,
+    'sample_product_garlic': 2.8,
+    'sample_product_potato': 3.5,
+    'sample_product_onion': 2.5,
+    'sample_product_green_onion': 1.9,
+    'sample_product_cooked_rice': 3.0,
+    'sample_product_egg': 4.2,
+    'sample_product_carrot': 2.2,
+    'sample_product_soy_sauce': 3.8,
+    'sample_product_sugar': 2.4,
+    'sample_product_flour': 2.9,
+    'sample_product_milk': 2.7,
+    'sample_product_butter': 5.2,
+    'sample_product_burger_bun': 3.6,
+    'sample_product_cheddar_cheese': 4.8,
+    'sample_product_macaroni': 2.6,
+    'sample_product_hot_sauce': 4.1,
+    'sample_product_maple_syrup': 8.5,
+    'sample_product_cabbage': 3.1,
+    'sample_product_beef_patty': 6.9,
+  };
 }
