@@ -85,6 +85,17 @@ class AppStrings extends Translations {
           AppStrings.mailAppUnavailableMessageJp,
       AppStrings.copyEmail: AppStrings.copyEmailJp,
       AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedJp,
+      AppStrings.supportMailIntro: AppStrings.supportMailIntroJp,
+      AppStrings.supportMailIssueType: AppStrings.supportMailIssueTypeJp,
+      AppStrings.supportMailIssueSummary:
+          AppStrings.supportMailIssueSummaryJp,
+      AppStrings.supportMailReproductionSteps:
+          AppStrings.supportMailReproductionStepsJp,
+      AppStrings.supportMailExpectedResult:
+          AppStrings.supportMailExpectedResultJp,
+      AppStrings.supportMailActualResult: AppStrings.supportMailActualResultJp,
+      AppStrings.supportMailAttachmentNote:
+          AppStrings.supportMailAttachmentNoteJp,
       AppStrings.emailCopied: AppStrings.emailCopiedJp,
       AppStrings.premiumPurchase: AppStrings.premiumPurchaseJp,
       AppStrings.buyPremium: AppStrings.buyPremiumJp,
@@ -305,6 +316,17 @@ class AppStrings extends Translations {
           AppStrings.mailAppUnavailableMessageKr,
       AppStrings.copyEmail: AppStrings.copyEmailKr,
       AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedKr,
+      AppStrings.supportMailIntro: AppStrings.supportMailIntroKr,
+      AppStrings.supportMailIssueType: AppStrings.supportMailIssueTypeKr,
+      AppStrings.supportMailIssueSummary:
+          AppStrings.supportMailIssueSummaryKr,
+      AppStrings.supportMailReproductionSteps:
+          AppStrings.supportMailReproductionStepsKr,
+      AppStrings.supportMailExpectedResult:
+          AppStrings.supportMailExpectedResultKr,
+      AppStrings.supportMailActualResult: AppStrings.supportMailActualResultKr,
+      AppStrings.supportMailAttachmentNote:
+          AppStrings.supportMailAttachmentNoteKr,
       AppStrings.emailCopied: AppStrings.emailCopiedKr,
       AppStrings.premiumPurchase: AppStrings.premiumPurchaseKr,
       AppStrings.buyPremium: AppStrings.buyPremiumKr,
@@ -526,6 +548,17 @@ class AppStrings extends Translations {
           AppStrings.mailAppUnavailableMessageEn,
       AppStrings.copyEmail: AppStrings.copyEmailEn,
       AppStrings.reviewOpenFailed: AppStrings.reviewOpenFailedEn,
+      AppStrings.supportMailIntro: AppStrings.supportMailIntroEn,
+      AppStrings.supportMailIssueType: AppStrings.supportMailIssueTypeEn,
+      AppStrings.supportMailIssueSummary:
+          AppStrings.supportMailIssueSummaryEn,
+      AppStrings.supportMailReproductionSteps:
+          AppStrings.supportMailReproductionStepsEn,
+      AppStrings.supportMailExpectedResult:
+          AppStrings.supportMailExpectedResultEn,
+      AppStrings.supportMailActualResult: AppStrings.supportMailActualResultEn,
+      AppStrings.supportMailAttachmentNote:
+          AppStrings.supportMailAttachmentNoteEn,
       AppStrings.emailCopied: AppStrings.emailCopiedEn,
       AppStrings.premiumPurchase: AppStrings.premiumPurchaseEn,
       AppStrings.buyPremium: AppStrings.buyPremiumEn,
@@ -924,6 +957,48 @@ class AppStrings extends Translations {
   static String reviewOpenFailedKr = "리뷰 화면을 열 수 없어요.";
   static String reviewOpenFailedJp = "レビュー画面を開けません。";
   static String reviewOpenFailedEn = "Could not open the review page.";
+
+  static String supportMailIntro = "supportMailIntroTr";
+  static String supportMailIntroKr =
+      "문의해주셔서 감사합니다.\n아래 내용을 함께 적어주시면 더 빠르게 확인하고 답변드릴 수 있어요.";
+  static String supportMailIntroJp =
+      "お問い合わせありがとうございます。\n以下の内容をご記入いただけると、より早く確認してご案内できます。";
+  static String supportMailIntroEn =
+      "Thank you for reaching out.\nIf you fill out the details below, we can review your report and respond more quickly.";
+
+  static String supportMailIssueType = "supportMailIssueTypeTr";
+  static String supportMailIssueTypeKr = "문의 유형 또는 문제 종류";
+  static String supportMailIssueTypeJp = "お問い合わせの種類 / 問題の種類";
+  static String supportMailIssueTypeEn = "Issue Type";
+
+  static String supportMailIssueSummary = "supportMailIssueSummaryTr";
+  static String supportMailIssueSummaryKr = "간단한 설명";
+  static String supportMailIssueSummaryJp = "簡単な説明";
+  static String supportMailIssueSummaryEn = "Summary";
+
+  static String supportMailReproductionSteps =
+      "supportMailReproductionStepsTr";
+  static String supportMailReproductionStepsKr = "문제가 발생한 과정";
+  static String supportMailReproductionStepsJp = "問題が発生した手順";
+  static String supportMailReproductionStepsEn = "Steps to Reproduce";
+
+  static String supportMailExpectedResult = "supportMailExpectedResultTr";
+  static String supportMailExpectedResultKr = "원래 기대한 동작";
+  static String supportMailExpectedResultJp = "本来期待していた動作";
+  static String supportMailExpectedResultEn = "Expected Result";
+
+  static String supportMailActualResult = "supportMailActualResultTr";
+  static String supportMailActualResultKr = "실제로 나타난 문제";
+  static String supportMailActualResultJp = "実際に起きた問題";
+  static String supportMailActualResultEn = "Actual Result";
+
+  static String supportMailAttachmentNote = "supportMailAttachmentNoteTr";
+  static String supportMailAttachmentNoteKr =
+      "가능하다면 스크린샷이나 화면 녹화도 함께 보내주세요.";
+  static String supportMailAttachmentNoteJp =
+      "可能であれば、スクリーンショットや画面録画も一緒に送ってください。";
+  static String supportMailAttachmentNoteEn =
+      "If possible, please also attach a screenshot or screen recording.";
 
   static String emailCopied = "emailCopiedTr";
   static String emailCopiedKr = "이메일 주소를 복사했어요.";

@@ -232,12 +232,49 @@ class MyPageController extends GetxController {
 
   Future<void> contactSupport() async {
     final version = appVersionLabel.value.isEmpty ? '-' : appVersionLabel.value;
+    final locale = Get.locale;
+    final languageTag =
+        locale == null
+            ? '-'
+            : '${locale.languageCode}${locale.countryCode == null ? '' : '-${locale.countryCode}'}';
+    final platformName =
+        defaultTargetPlatform.name +
+        (GetPlatform.isIOS
+            ? ' / iOS'
+            : GetPlatform.isAndroid
+            ? ' / Android'
+            : '');
+    final body = [
+      AppStrings.supportMailIntro.tr,
+      '',
+      '${AppStrings.supportMailIssueType.tr}: ',
+      '  - ',
+      '',
+      '${AppStrings.supportMailIssueSummary.tr}: ',
+      '  - ',
+      '',
+      '${AppStrings.supportMailReproductionSteps.tr}:',
+      '1. ',
+      '2. ',
+      '3. ',
+      '',
+      '${AppStrings.supportMailExpectedResult.tr}:',
+      '',
+      '${AppStrings.supportMailActualResult.tr}:',
+      '',
+      AppStrings.supportMailAttachmentNote.tr,
+      '',
+      '---',
+      '${AppStrings.appVersion.tr}: $version',
+      'Platform: $platformName',
+      'Language: $languageTag',
+    ].join('\n');
     final uri = Uri(
       scheme: 'mailto',
       path: supportEmail,
       queryParameters: {
         'subject': '[Our Recipe] ${AppStrings.contactAndBugReport.tr}',
-        'body': 'App Version: $version\n\n',
+        'body': body,
       },
     );
 
