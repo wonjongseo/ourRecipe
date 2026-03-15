@@ -154,6 +154,14 @@ class IngredientProductRepository {
     return [...filteredDefaults, ...customGroups];
   }
 
+  Future<List<String>> fetchDefaultCategoryIds() async {
+    final grouped = await _loadDefaultGroupedProducts();
+    return grouped
+        .map((group) => group.name.trim())
+        .where((value) => value.isNotEmpty)
+        .toList(growable: false);
+  }
+
   Future<List<IngredientProductGroup>> _loadDefaultGroupedProducts() async {
     final langCode = _resolvedLanguageCode();
     final cached = _defaultGroupedCacheByLang[langCode];

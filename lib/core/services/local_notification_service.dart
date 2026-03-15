@@ -1,6 +1,8 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
+import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -63,11 +65,11 @@ class LocalNotificationService {
         ?.requestPermissions(alert: true, badge: true, sound: true);
   }
 
-  NotificationDetails get _notificationDetails => const NotificationDetails(
+  NotificationDetails get _notificationDetails => NotificationDetails(
     android: AndroidNotificationDetails(
       'cooking_done_channel',
-      'cooking_done_channel_name',
-      channelDescription: 'cooking_done',
+      AppStrings.cookingDoneChannelName.tr,
+      channelDescription: AppStrings.cookingDoneChannelDescription.tr,
       importance: Importance.max,
       priority: Priority.high,
     ),
@@ -90,14 +92,31 @@ class LocalNotificationService {
 
   Future<void> scheduleCookingDoneNotification(Duration delay) async {
     if (delay <= Duration.zero) return;
-    await _plugin.zonedSchedule(
-      cookingDoneNotificationId,
-      AppStrings.appTitle.tr,
-      AppStrings.cookingCompleted.tr,
-      tz.TZDateTime.now(tz.local).add(delay),
-      _notificationDetails,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
+    final scheduledAt = tz.TZDateTime.now(tz.local).add(delay);
+    try {
+      await _plugin.zonedSchedule(
+        cookingDoneNotificationId,
+        AppStrings.appTitle.tr,
+        AppStrings.cookingCompleted.tr,
+        scheduledAt,
+        _notificationDetails,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      );
+    } on PlatformException catch (e, s) {
+      LogManager.warning(
+        'Schedule cooking notification fallback',
+        error: e,
+        stackTrace: s,
+      );
+      await _plugin.zonedSchedule(
+        cookingDoneNotificationId,
+        AppStrings.appTitle.tr,
+        AppStrings.cookingCompleted.tr,
+        scheduledAt,
+        _notificationDetails,
+        androidScheduleMode: AndroidScheduleMode.inexact,
+      );
+    }
   }
 
   Future<void> showCookingDoneNotification() async {

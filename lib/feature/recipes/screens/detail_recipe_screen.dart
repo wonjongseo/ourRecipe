@@ -435,6 +435,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
               SizedBox(width: 12),
               ElevatedButton(
                 onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
                   final value = _servingsController.text;
                   final parsed = int.tryParse(value.trim());
                   if (parsed == null || parsed <= 0) return;

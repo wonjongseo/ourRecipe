@@ -11,6 +11,7 @@ class AppDropdownStyles {
     String? labelText,
     String? hintText,
     Widget? suffixIcon,
+    bool isPaddingZero = false,
   }) {
     return InputDecoration(
       labelText: labelText,
@@ -27,6 +28,7 @@ class AppDropdownStyles {
       border: AppInputBorders.normal(),
       enabledBorder: AppInputBorders.normal(),
       focusedBorder: AppInputBorders.focused(),
+      contentPadding: isPaddingZero ? EdgeInsets.zero : null,
       suffixIcon: suffixIcon,
     );
   }

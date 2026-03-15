@@ -23,6 +23,7 @@ class AppStrings extends Translations {
       AppStrings.selectCategoryHint: AppStrings.selectCategoryHintJp,
       AppStrings.pleaseRegisterCategory: AppStrings.pleaseRegisterCategoryJp,
       AppStrings.addRecipe: AppStrings.addRecipeJp,
+      AppStrings.editRecipe: AppStrings.editRecipeJp,
       AppStrings.edit: AppStrings.editJp,
       AppStrings.save: AppStrings.saveJp,
       AppStrings.addStep: AppStrings.addStepJp,
@@ -254,6 +255,7 @@ class AppStrings extends Translations {
       AppStrings.selectCategoryHint: AppStrings.selectCategoryHintKr,
       AppStrings.pleaseRegisterCategory: AppStrings.pleaseRegisterCategoryKr,
       AppStrings.addRecipe: AppStrings.addRecipeKr,
+      AppStrings.editRecipe: AppStrings.editRecipeKr,
       AppStrings.edit: AppStrings.editKr,
       AppStrings.save: AppStrings.saveKr,
       AppStrings.addStep: AppStrings.addStepKr,
@@ -486,6 +488,7 @@ class AppStrings extends Translations {
       AppStrings.selectCategoryHint: AppStrings.selectCategoryHintEn,
       AppStrings.pleaseRegisterCategory: AppStrings.pleaseRegisterCategoryEn,
       AppStrings.addRecipe: AppStrings.addRecipeEn,
+      AppStrings.editRecipe: AppStrings.editRecipeEn,
       AppStrings.edit: AppStrings.editEn,
       AppStrings.save: AppStrings.saveEn,
       AppStrings.addStep: AppStrings.addStepEn,
@@ -793,6 +796,11 @@ class AppStrings extends Translations {
   static String addRecipeKr = "레시피 추가";
   static String addRecipeJp = "レシピ追加";
   static String addRecipeEn = "Add Recipe";
+
+  static String editRecipe = "editRecipeTr";
+  static String editRecipeKr = "레시피 수정";
+  static String editRecipeJp = "レシピ編集";
+  static String editRecipeEn = "Edit Recipe";
 
   static String edit = "editTr";
   static String editKr = "수정";

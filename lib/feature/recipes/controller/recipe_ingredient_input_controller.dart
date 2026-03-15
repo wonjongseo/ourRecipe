@@ -58,7 +58,7 @@ class RecipeIngredientInputController extends GetxController {
     amountTextCtl.text = ingredient.amount.toString();
     memoTextCtl.text = ingredient.memo;
     ingredientUnit.value = ingredient.unit;
-    _hasPrice.value = ingredient.price != null;
+    _hasPrice.value = (ingredient.price ?? 0) > 0;
     selectedProductIdRx.value = null;
   }
 
@@ -82,16 +82,6 @@ class RecipeIngredientInputController extends GetxController {
         ..addEntries(values.map((item) => MapEntry(item.id, item)));
       groupedProducts.assignAll(grouped);
 
-      final selected = selectedIngredientName.value;
-      if (selected == null) return;
-      final matched = values
-          .where((item) => item.name == selected)
-          .toList(growable: false);
-      if (matched.isEmpty) {
-        selectedIngredientName.value = null;
-        selectedProductIdRx.value = null;
-        return;
-      }
       final preferredId = selectedProductIdRx.value;
       if (preferredId != null && _productById.containsKey(preferredId)) {
         if (isAppProvidedProductSelected) {
@@ -99,7 +89,16 @@ class RecipeIngredientInputController extends GetxController {
         }
         return;
       }
-      selectedProductIdRx.value = matched.first.id;
+
+      final selected = selectedIngredientName.value;
+      if (selected == null || selected.trim().isEmpty) return;
+      final matched = _findMatchedProduct(values, selected);
+      if (matched == null) {
+        return;
+      }
+
+      selectedProductIdRx.value = matched.id;
+      _hasPrice.value = matched.price > 0;
       if (isAppProvidedProductSelected) {
         ingredientUnit.value = IngredientUnit.gram;
       }
@@ -131,6 +130,20 @@ class RecipeIngredientInputController extends GetxController {
     if (product.isDefault) {
       ingredientUnit.value = IngredientUnit.gram;
     }
+  }
+
+  IngredientProductModel? _findMatchedProduct(
+    List<IngredientProductModel> values,
+    String selectedName,
+  ) {
+    final normalizedSelected = selectedName.trim().toLowerCase();
+    if (normalizedSelected.isEmpty) return null;
+    for (final item in values) {
+      final itemName = item.name.trim().toLowerCase();
+      if (itemName == normalizedSelected) return item;
+      if (normalizedSelected.endsWith(' $itemName')) return item;
+    }
+    return null;
   }
 
   List<IngredientProductGroup> filterGroupedProducts(String query) {
@@ -192,6 +205,7 @@ class RecipeIngredientInputController extends GetxController {
 
     final product = selectedProduct;
     final resolvedUnit = ingredientUnit.value;
+    final fallback = initialIngredient;
 
     return IngredientModel(
       id: initialIngredient?.id ?? Uuid().v4(),
@@ -199,20 +213,20 @@ class RecipeIngredientInputController extends GetxController {
       amount: amount,
       unit: resolvedUnit,
       memo: memoTextCtl.text.trim(),
-      price: product?.price,
-      productAmount: product?.baseGram,
+      price: product?.price ?? fallback?.price,
+      productAmount: product?.baseGram ?? fallback?.productAmount,
       productUnit:
-          product == null || product.baseGram <= 0
-              ? null
-              : IngredientUnit.gram,
-      kcal: product?.kcal,
-      water: product?.water,
-      protein: product?.protein,
-      fat: product?.fat,
-      carbohydrate: product?.carbohydrate,
-      fiber: product?.fiber,
-      ash: product?.ash,
-      sodium: product?.sodium,
+          product != null && product.baseGram > 0
+              ? IngredientUnit.gram
+              : fallback?.productUnit,
+      kcal: product?.kcal ?? fallback?.kcal,
+      water: product?.water ?? fallback?.water,
+      protein: product?.protein ?? fallback?.protein,
+      fat: product?.fat ?? fallback?.fat,
+      carbohydrate: product?.carbohydrate ?? fallback?.carbohydrate,
+      fiber: product?.fiber ?? fallback?.fiber,
+      ash: product?.ash ?? fallback?.ash,
+      sodium: product?.sodium ?? fallback?.sodium,
     );
   }
 }

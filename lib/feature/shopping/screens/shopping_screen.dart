@@ -4,6 +4,7 @@ import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/analytics_service.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/core/widgets/app_refresh_indicator.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
@@ -150,7 +151,12 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                   Obx(
                     () => CheckboxListTile(
                       value: checkedKeys.contains(key),
-                      onChanged: (_) => _toggleCheck(key),
+                      onChanged:
+                          (_) => _toggleCheck(
+                            key: key,
+                            recipe: recipe,
+                            ingredient: ingredient,
+                          ),
                       controlAffinity: ListTileControlAffinity.leading,
                       visualDensity: VisualDensity.compact,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 8),
@@ -204,14 +210,24 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     return '${recipe.id}_${ingredient.id}_$index';
   }
 
-  void _toggleCheck(String key) {
-    if (checkedKeys.contains(key)) {
+  Future<void> _toggleCheck({
+    required String key,
+    required RecipeModel recipe,
+    required IngredientModel ingredient,
+  }) async {
+    final isChecked = checkedKeys.contains(key);
+    if (isChecked) {
       checkedKeys.remove(key);
     } else {
       checkedKeys.add(key);
     }
     checkedKeys.refresh();
-    _persistCheckedKeys();
+    await _persistCheckedKeys();
+    await AnalyticsService.instance.shoppingChecked(
+      recipeId: recipe.id,
+      ingredientName: ingredient.name,
+      checked: !isChecked,
+    );
   }
 
   Future<void> _loadCheckedKeys() async {

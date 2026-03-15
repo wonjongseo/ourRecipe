@@ -16,19 +16,18 @@ class TimerAlertService {
     await LocalNotificationService.instance.showCookingDoneNotification();
     unawaited(_vibratePattern());
     try {
-      await _player.setReleaseMode(ReleaseMode.stop);
-      await _player.setAudioContext(
-        AudioContextConfig(
-          route: AudioContextConfigRoute.system,
-          focus: AudioContextConfigFocus.gain,
-          respectSilence: false,
-        ).build(),
-      );
+      await _configurePlayer();
       await _player.stop();
       await _player.play(
         AssetSource('sounds/timer_done.wav'),
         volume: 1,
         mode: PlayerMode.mediaPlayer,
+      ).timeout(const Duration(seconds: 2));
+    } on TimeoutException catch (e, s) {
+      LogManager.warning(
+        'Skipping timer alert sound after timeout',
+        error: e,
+        stackTrace: s,
       );
     } catch (e, s) {
       LogManager.error(
@@ -57,5 +56,16 @@ class TimerAlertService {
     HapticFeedback.mediumImpact();
     await Future<void>.delayed(const Duration(milliseconds: 180));
     HapticFeedback.heavyImpact();
+  }
+
+  Future<void> _configurePlayer() async {
+    await _player.setReleaseMode(ReleaseMode.stop);
+    await _player.setAudioContext(
+      AudioContextConfig(
+        route: AudioContextConfigRoute.system,
+        focus: AudioContextConfigFocus.gain,
+        respectSilence: false,
+      ).build(),
+    );
   }
 }

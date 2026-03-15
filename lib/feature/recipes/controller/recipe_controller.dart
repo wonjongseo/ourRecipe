@@ -4,6 +4,7 @@ import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/core/services/ad_interstitial_service.dart';
+import 'package:our_recipe/core/services/analytics_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
 import 'package:our_recipe/core/services/image_service.dart';
@@ -165,8 +166,24 @@ class RecipeController extends GetxController {
     try {
       await _fetchCategories();
       if (result is! RecipeModel) return null;
+      final isEdit = recipeModel != null;
       await _iCloudSettings.clearDeletedRecipe(result.id);
       await _repository.saveRecipe(result);
+      if (isEdit) {
+        await AnalyticsService.instance.recipeUpdated(
+          recipeId: result.id,
+          category: result.category,
+          ingredientCount: result.ingredients.length,
+          stepCount: result.steps.length,
+        );
+      } else {
+        await AnalyticsService.instance.recipeCreated(
+          recipeId: result.id,
+          category: result.category,
+          ingredientCount: result.ingredients.length,
+          stepCount: result.steps.length,
+        );
+      }
       await _fetchRecipes();
       AdInterstitialService.instance.registerCompletion();
       return result;
@@ -203,6 +220,10 @@ class RecipeController extends GetxController {
       }
       await _iCloudSettings.markRecipeDeleted(recipe.id, DateTime.now());
       await _repository.deleteRecipe(recipe.id);
+      await AnalyticsService.instance.recipeDeleted(
+        recipeId: recipe.id,
+        category: recipe.category,
+      );
       await _fetchRecipes();
       AdInterstitialService.instance.registerCompletion();
     } catch (e, s) {
@@ -221,22 +242,22 @@ class RecipeController extends GetxController {
     final index = _recipes.indexWhere((recipe) => recipe.id == recipeId);
     if (index == -1) return;
 
-    final recipe = _recipes[index];
-    final toggled = recipe.copyWith(
-      isLiked: !recipe.isLiked,
+    final original = _recipes[index];
+    final toggled = original.copyWith(
+      isLiked: !original.isLiked,
       updatedAt: DateTime.now(),
     );
-    _isLoading.value = true;
+    _recipes[index] = toggled;
+    _applyFilters();
     try {
       await _iCloudSettings.clearDeletedRecipe(toggled.id);
       await _repository.saveRecipe(toggled);
-      await _fetchRecipes();
     } catch (e, s) {
+      _recipes[index] = original;
+      _applyFilters();
       LogManager.error('Toggle bookmark failed', error: e, stackTrace: s);
       LogManager.error('Toggle bookmark recipeId: $recipeId', error: e);
       SnackBarHelper.showErrorSnackBar(AppStrings.dbSaveFailed.tr);
-    } finally {
-      _isLoading.value = false;
     }
   }
 

@@ -535,7 +535,9 @@ class EditRecipeController extends GetxController {
     final key = name.trim().toLowerCase();
     if (key.isEmpty) return null;
     for (final product in products) {
-      if (product.name.trim().toLowerCase() == key) return product;
+      final productKey = product.name.trim().toLowerCase();
+      if (productKey == key) return product;
+      if (key.endsWith(' $productKey')) return product;
     }
     return null;
   }

@@ -12,38 +12,49 @@ import 'package:our_recipe/feature/recipes/controller/edit_recipe_controller.dar
 import 'package:our_recipe/feature/recipes/screens/widgets/editable_cooking_step_list_tile.dart';
 import 'package:our_recipe/feature/recipes/screens/widgets/editable_ingredient_list_tile.dart';
 
+//
 class EditRecipeScreen extends GetView<EditRecipeController> {
   const EditRecipeScreen({super.key});
   static String name = '/edit_recipe';
 
   @override
   Widget build(BuildContext context) {
+    final appBarForegroundColor =
+        Theme.of(context).appBarTheme.foregroundColor ??
+        Theme.of(context).colorScheme.onSurface;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         bottomNavigationBar: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Obx(
-                () => CustomBottomButton(
-                  label:
-                      controller.isEdit
-                          ? AppStrings.edit.tr
-                          : AppStrings.save.tr,
-                  icon: controller.isEdit ? Icons.edit : Icons.add,
-                  onPressed:
-                      controller.isLoading
-                          ? null
-                          : () => controller.saveRecipeModel(),
-                ),
-              ),
-              const AdBannerBottomSheet(),
-            ],
+            children: [const AdBannerBottomSheet()],
           ),
         ),
         appBar: AppBar(
-          title: Text(controller.isEdit ? '레시피 수정' : AppStrings.addRecipe.tr),
+          title: Text(
+            controller.isEdit
+                ? AppStrings.editRecipe.tr
+                : AppStrings.addRecipe.tr,
+          ),
+          actions: [
+            Obx(
+              () => TextButton.icon(
+                style: TextButton.styleFrom(
+                  iconColor: appBarForegroundColor,
+                  foregroundColor: appBarForegroundColor,
+                ),
+                icon: Icon(controller.isEdit ? Icons.edit : Icons.add),
+                onPressed:
+                    controller.isLoading
+                        ? null
+                        : () => controller.saveRecipeModel(),
+                label: Text(
+                  controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+                ),
+              ),
+            ),
+          ],
         ),
         body: SafeArea(
           child: Obx(

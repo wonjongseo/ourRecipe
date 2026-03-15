@@ -9,7 +9,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -18,7 +19,12 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(AppImages.appImage, width: size.width * .8),
-              Text(AppStrings.appTitle.tr),
+              Text(
+                AppStrings.appTitle.tr,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),

@@ -9,6 +9,7 @@ import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/app_theme.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/analytics_service.dart';
 import 'package:our_recipe/core/services/icloud/app_data_path_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
@@ -371,7 +372,9 @@ class MyPageController extends GetxController {
       description: AppStrings.iCloudUploadProgressDescription.tr,
       successMessage: AppStrings.iCloudUploadCompleted.tr,
       task: () async {
+        await AnalyticsService.instance.iCloudUploadStarted();
         await _iCloudSync.pushIfEnabled();
+        await AnalyticsService.instance.iCloudUploadCompleted();
       },
       onError: (e, s) {
         LogManager.error(
@@ -397,6 +400,7 @@ class MyPageController extends GetxController {
         if (Get.isRegistered<RecipeController>()) {
           await Get.find<RecipeController>().reloadAll();
         }
+        await AnalyticsService.instance.iCloudDownloadCompleted();
       },
       onError: (e, s) {
         LogManager.error(

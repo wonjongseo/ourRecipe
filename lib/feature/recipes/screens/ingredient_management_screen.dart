@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
-import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
-import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/core/widgets/app_refresh_indicator.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
 import 'package:our_recipe/feature/recipes/controller/ingredient_management_controller.dart';
-import 'package:our_recipe/feature/recipes/screens/widgets/custom_search_bar.dart';
 import 'package:our_recipe/feature/recipes/screens/widgets/ingredient_product_grouped_expansion_list.dart';
 
 class IngredientManagementScreen
@@ -47,36 +44,8 @@ class IngredientManagementScreen
                           size: 13,
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: TextFormField(
-                      //     autofocus: true,
-                      //     onChanged: controller.updateQuery,
-                      //     decoration: InputDecoration(
-                      //       isDense: true,
-                      //       constraints: const BoxConstraints(
-                      //         minHeight: UiConstants.formFieldHeight,
-                      //         maxHeight: UiConstants.formFieldHeight,
-                      //       ),
-                      //       labelText: AppStrings.ingredientName.tr,
-                      //       filled: true,
-                      //       hintText: AppStrings.search.tr,
-                      //       fillColor: Theme.of(context).colorScheme.surface,
-                      //       hintStyle: TextStyle(color: Colors.grey),
-                      //       border: AppInputBorders.normal(),
-                      //       enabledBorder: AppInputBorders.normal(),
-                      //       focusedBorder: AppInputBorders.focused(),
-                      //       contentPadding: const EdgeInsets.symmetric(
-                      //         horizontal: 12,
-                      //       ),
-                      //       prefixIcon: Icon(
-                      //         FontAwesomeIcons.magnifyingGlass,
-                      //         size: 13,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      const SizedBox(height: 8),
+
+                      const SizedBox(height: 12),
                       if (controller.userAddedGroups.isEmpty &&
                           controller.appProvidedGroups.isEmpty)
                         Padding(

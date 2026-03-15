@@ -26,14 +26,15 @@ class IngredientManagementController extends GetxController {
     for (final group in groupedProducts) {
       final filteredItems = <IngredientProductSubGroup>[];
       for (final item in group.items) {
-        final filteredProducts =
-            item.products.where((product) {
+        final filteredProducts = item.products
+            .where((product) {
               return product.name.toLowerCase().contains(keyword) ||
                   product.category.toLowerCase().contains(keyword) ||
                   product.manufacturer.toLowerCase().contains(keyword) ||
                   item.name.toLowerCase().contains(keyword) ||
                   group.name.toLowerCase().contains(keyword);
-            }).toList(growable: false);
+            })
+            .toList(growable: false);
         if (filteredProducts.isEmpty) continue;
         filteredItems.add(
           IngredientProductSubGroup(
@@ -54,10 +55,9 @@ class IngredientManagementController extends GetxController {
     }
     return results;
   }
+
   List<IngredientProductGroup> get appProvidedGroups =>
-      filteredGroups
-          .where((group) => !group.id.startsWith('custom_'))
-          .toList();
+      filteredGroups.where((group) => !group.id.startsWith('custom_')).toList();
   List<IngredientProductGroup> get userAddedGroups =>
       filteredGroups.where((group) => group.id.startsWith('custom_')).toList();
 
@@ -81,6 +81,8 @@ class IngredientManagementController extends GetxController {
   }
 
   Future<void> goToEdit({IngredientProductModel? product}) async {
+    print('product : ${product}');
+
     final changed = await Get.toNamed(
       IngredientEditScreen.name,
       arguments: product,

@@ -66,9 +66,9 @@ class CustomTextFormField extends StatelessWidget {
       textInputAction: textInputAction,
       onChanged: onChanged,
       onFieldSubmitted: onFieldSubmitted,
+
       decoration: InputDecoration(
         filled: true,
-
         fillColor: Theme.of(context).colorScheme.surface,
         label: label != null ? Text(label!) : null,
 

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
+import 'package:our_recipe/core/services/analytics_service.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
@@ -94,20 +95,21 @@ class IngredientEditController extends GetxController {
   Future<void> _loadCategories() async {
     try {
       _isLoading.value = true;
-      final values = await _categoryRepository.fetchAllCategories();
+      final defaultValues = await _productRepository.fetchDefaultCategoryIds();
+      final customValues = await _categoryRepository.fetchCustomCategories();
       final custom = <String>[];
       final defaults = <String>[];
-      for (final value in values) {
-        if (IngredientCategoryCatalog.isDefaultId(value)) {
-          defaults.add(value);
-        } else {
-          custom.add(value);
-        }
+      for (final value in defaultValues) {
+        final normalized = IngredientCategoryCatalog.normalizeDefaultId(value);
+        defaults.add(normalized);
+      }
+      for (final value in customValues) {
+        custom.add(value);
       }
       custom.sort();
       categories
         ..clear()
-        ..addAll(defaults)
+        ..addAll(defaults.toSet())
         ..addAll(custom);
 
       final selected = selectedCategory.value;
@@ -225,6 +227,13 @@ class IngredientEditController extends GetxController {
         product: saved,
         previousName: previousName,
       );
+      if (!isEdit) {
+        await AnalyticsService.instance.ingredientCreated(
+          ingredientId: saved.id,
+          category: saved.category,
+          isDefault: saved.isDefault,
+        );
+      }
       await _reloadRecipeCacheIfNeeded();
       Get.back(result: true);
     } catch (e, s) {

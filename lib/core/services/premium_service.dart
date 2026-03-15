@@ -8,6 +8,7 @@ import 'package:in_app_purchase_storekit/store_kit_2_wrappers.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/in_app_product_ids.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
+import 'package:our_recipe/core/services/analytics_service.dart';
 import 'package:our_recipe/main.dart' show canUseICloudMaster;
 
 class PremiumService extends GetxService {
@@ -107,6 +108,10 @@ class PremiumService extends GetxService {
       if (purchase.status == PurchaseStatus.purchased ||
           purchase.status == PurchaseStatus.restored) {
         isPremium.value = true;
+        await AnalyticsService.instance.premiumPurchaseCompleted(
+          productId: purchase.productID,
+          platform: Platform.isIOS ? 'ios' : Platform.isAndroid ? 'android' : 'unknown',
+        );
         _setPurchaseMessage(
           purchase.status == PurchaseStatus.restored
               ? AppStrings.purchaseRestored.tr
@@ -135,6 +140,10 @@ class PremiumService extends GetxService {
     _setPurchaseMessage(AppStrings.purchasePending.tr);
     _startPurchaseTimeout();
     try {
+      await AnalyticsService.instance.premiumPurchaseStarted(
+        productId: product.id,
+        platform: Platform.isIOS ? 'ios' : Platform.isAndroid ? 'android' : 'unknown',
+      );
       final param = PurchaseParam(productDetails: product);
       final started = await _inAppPurchase.buyNonConsumable(
         purchaseParam: param,

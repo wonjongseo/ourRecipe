@@ -35,22 +35,7 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
       () => GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          bottomNavigationBar: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CustomBottomButton(
-                  label:
-                      controller.isEdit
-                          ? AppStrings.edit.tr
-                          : AppStrings.save.tr,
-                  onPressed: controller.save,
-                  icon: controller.isEdit ? Icons.edit : Icons.add,
-                ),
-                const AdBannerBottomSheet(),
-              ],
-            ),
-          ),
+          bottomNavigationBar: const AdBannerBottomSheet(),
           appBar: _appBar(),
           body: SafeArea(
             child:
@@ -83,96 +68,7 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
                                       icon: Icon(Icons.add),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: UiConstants.formFieldHeight,
-                                    child: DropdownButtonFormField2<String>(
-                                      value: controller.selectedCategory.value,
-                                      isExpanded: true,
-                                      buttonStyleData:
-                                          AppDropdownStyles.dropdown2ButtonStyle(
-                                            height: UiConstants.formFieldHeight,
-                                            padding: const EdgeInsets.only(
-                                              left: 2,
-                                              right: 8,
-                                            ),
-                                          ),
-                                      dropdownStyleData:
-                                          AppDropdownStyles.dropdown2MenuStyle(
-                                            context,
-                                            maxHeight: 400,
-                                          ),
-                                      menuItemStyleData:
-                                          AppDropdownStyles.dropdown2ItemStyle(),
-                                      decoration:
-                                          AppDropdownStyles.formFieldDecoration(
-                                            context,
-                                            labelText:
-                                                AppStrings
-                                                    .ingredientCategory
-                                                    .tr,
-                                            // suffixIcon: IconButton(
-                                            //   onPressed:
-                                            //       controller.goToCategoryManagement,
-                                            //   icon: const Icon(
-                                            //     Icons.settings_outlined,
-                                            //     size: 18,
-                                            //   ),
-                                            // ),
-                                          ),
-                                      dropdownSearchData: DropdownSearchData(
-                                        searchController: _categorySearchCtrl,
-                                        searchInnerWidgetHeight: 56,
-                                        searchInnerWidget: SizedBox(
-                                          height: 56,
-                                          child: TextFormField(
-                                            controller: _categorySearchCtrl,
-                                            expands: true,
-                                            maxLines: null,
-                                            decoration:
-                                                AppDropdownStyles.formFieldDecoration(
-                                                  context,
-                                                  hintText:
-                                                      AppStrings.search.tr,
-                                                ),
-                                          ),
-                                        ),
-                                        searchMatchFn: (item, searchValue) {
-                                          final value = item.value ?? '';
-                                          final query = searchValue.trim();
-                                          if (query.isEmpty) return true;
-                                          return IngredientCategoryCatalog.displayName(
-                                                value,
-                                                controller.languageCode,
-                                              ).toLowerCase().contains(
-                                                query.toLowerCase(),
-                                              ) ||
-                                              value.toLowerCase().contains(
-                                                query.toLowerCase(),
-                                              );
-                                        },
-                                      ),
-                                      items: [
-                                        ...controller.categories.map(
-                                          (
-                                            category,
-                                          ) => DropdownMenuItem<String>(
-                                            value: category,
-                                            child: Text(
-                                              IngredientCategoryCatalog.displayName(
-                                                category,
-                                                controller.languageCode,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                      onChanged: controller.setSelectedCategory,
-                                      onMenuStateChange: (isOpen) {
-                                        if (!isOpen)
-                                          _categorySearchCtrl.clear();
-                                      },
-                                    ),
-                                  ),
+                                  _category(context),
                                 ],
                               ),
                               gap,
@@ -303,6 +199,83 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
     );
   }
 
+  SizedBox _category(BuildContext context) {
+    return SizedBox(
+      height: UiConstants.formFieldHeight,
+      child: DropdownButtonFormField2<String>(
+        value: controller.selectedCategory.value,
+        isExpanded: true,
+        buttonStyleData: AppDropdownStyles.dropdown2ButtonStyle(
+          height: UiConstants.formFieldHeight,
+          padding: const EdgeInsets.only(left: 2, right: 8),
+        ),
+        dropdownStyleData: AppDropdownStyles.dropdown2MenuStyle(
+          context,
+          maxHeight: 400,
+          horizontalPadding: 0,
+        ),
+        menuItemStyleData: AppDropdownStyles.dropdown2ItemStyle(),
+        decoration: AppDropdownStyles.formFieldDecoration(
+          context,
+          labelText: '  ${AppStrings.ingredientCategory.tr}',
+          isPaddingZero: true,
+        ),
+        dropdownSearchData: DropdownSearchData(
+          searchController: _categorySearchCtrl,
+
+          searchInnerWidgetHeight: 56,
+
+          searchInnerWidget: Container(
+            height: 65,
+            padding: EdgeInsets.only(top: 8, left: 12, right: 12),
+            child: TextFormField(
+              controller: _categorySearchCtrl,
+              expands: true,
+              maxLines: null,
+              decoration: AppDropdownStyles.formFieldDecoration(
+                context,
+                hintText: AppStrings.search.tr,
+              ),
+            ),
+          ),
+          searchMatchFn: (item, searchValue) {
+            final value = item.value ?? '';
+            final query = searchValue.trim().toLowerCase();
+            if (query.isEmpty) return true;
+            final displayName =
+                IngredientCategoryCatalog.displayName(
+                  value,
+                  controller.languageCode,
+                ).toLowerCase();
+            return displayName.contains(query) ||
+                value.toLowerCase().contains(query);
+          },
+        ),
+        items:
+            controller.categories
+                .map(
+                  (category) => DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(
+                      IngredientCategoryCatalog.displayName(
+                        category,
+                        controller.languageCode,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+                .toList(),
+        onChanged: controller.setSelectedCategory,
+        onMenuStateChange: (isOpen) {
+          if (!isOpen) {
+            _categorySearchCtrl.clear();
+          }
+        },
+      ),
+    );
+  }
+
   Future<void> _confirmDelete() async {
     final showICloudWarning = await controller.isICloudDeleteWarningVisible();
     final confirmed = await showAdaptiveDialog<bool>(
@@ -399,6 +372,9 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
   }
 
   AppBar _appBar() {
+    final appBarForegroundColor =
+        Theme.of(context).appBarTheme.foregroundColor ??
+        Theme.of(context).colorScheme.onSurface;
     return AppBar(
       title: Text(
         controller.isEdit
@@ -411,6 +387,22 @@ class _IngredientEditScreenState extends State<IngredientEditScreen> {
             onPressed: _confirmDelete,
             icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
           ),
+        TextButton(
+          style: TextButton.styleFrom(
+            iconColor: appBarForegroundColor,
+            foregroundColor: appBarForegroundColor,
+          ),
+
+          onPressed: controller.save,
+          child: Text(
+            controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+          ),
+        ),
+        // CustomBottomButton(
+        //   label: controller.isEdit ? AppStrings.edit.tr : AppStrings.save.tr,
+        //   onPressed: controller.save,
+        //   icon: controller.isEdit ? Icons.edit : Icons.add,
+        // ),
       ],
     );
   }
