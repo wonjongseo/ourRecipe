@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/core/widgets/app_refresh_indicator.dart';
@@ -41,7 +42,7 @@ class IngredientManagementScreen
                         label: AppStrings.ingredientName.tr,
                         prefixIcon: Icon(
                           FontAwesomeIcons.magnifyingGlass,
-                          size: 13,
+                          size: AppScale.size(13),
                         ),
                       ),
 
@@ -84,7 +85,7 @@ class IngredientManagementScreen
                             color: Theme.of(
                               context,
                             ).colorScheme.onSurface.withValues(alpha: 0.7),
-                            fontSize: 12,
+                            fontSize: AppScale.text(12),
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -121,7 +122,10 @@ class IngredientManagementScreen
   Widget _sectionTitle(String text) {
     return Text(
       text,
-      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+      style: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: AppScale.text(15),
+      ),
     );
   }
 

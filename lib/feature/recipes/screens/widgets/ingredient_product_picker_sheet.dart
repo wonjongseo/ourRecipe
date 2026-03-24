@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/feature/recipes/controller/ingredient_product_picker_controller.dart';
@@ -142,20 +143,26 @@ class _IngredientProductPickerSheetState
         onChanged: controller.updateQuery,
         decoration: InputDecoration(
           isDense: true,
-          constraints: const BoxConstraints(
-            minHeight: UiConstants.formFieldHeight,
-            maxHeight: UiConstants.formFieldHeight,
+          constraints: BoxConstraints(
+            minHeight: UiConstants.scaledFormFieldHeight(),
+            maxHeight: UiConstants.scaledFormFieldHeight(),
           ),
           labelText: AppStrings.ingredientName.tr,
           filled: true,
           hintText: AppStrings.search.tr,
           fillColor: Theme.of(context).colorScheme.surface,
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: UiConstants.scaledFormFieldHintSize(),
+          ),
           border: AppInputBorders.normal(),
           enabledBorder: AppInputBorders.normal(),
           focusedBorder: AppInputBorders.focused(),
           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-          prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass, size: 13),
+          prefixIcon: Icon(
+            FontAwesomeIcons.magnifyingGlass,
+            size: AppScale.size(13),
+          ),
         ),
       ),
     );
@@ -173,7 +180,10 @@ class _IngredientProductPickerSheetState
         children: [
           Text(
             appOrData,
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: AppScale.text(14),
+            ),
           ),
           if (description != null)
             Text(
@@ -182,7 +192,7 @@ class _IngredientProductPickerSheetState
                 color: Theme.of(
                   context,
                 ).colorScheme.onSurface.withValues(alpha: 0.7),
-                fontSize: 12,
+                fontSize: AppScale.text(12),
               ),
             ),
         ],

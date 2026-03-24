@@ -108,6 +108,7 @@ class PremiumService extends GetxService {
       if (purchase.status == PurchaseStatus.purchased ||
           purchase.status == PurchaseStatus.restored) {
         isPremium.value = true;
+        isPurchaseMessageError.value = false;
         await AnalyticsService.instance.premiumPurchaseCompleted(
           productId: purchase.productID,
           platform: Platform.isIOS ? 'ios' : Platform.isAndroid ? 'android' : 'unknown',
@@ -201,6 +202,9 @@ class PremiumService extends GetxService {
         isPremium.value = transactions.any(
           (transaction) => transaction.productId == InAppProductIds.premium,
         );
+        if (isPremium.value) {
+          isPurchaseMessageError.value = false;
+        }
         return;
       }
       isPremium.value = false;

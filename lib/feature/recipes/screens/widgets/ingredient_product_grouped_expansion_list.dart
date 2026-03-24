@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_category_catalog.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_product_model.dart';
 import 'package:our_recipe/feature/recipes/repository/ingredient_product_repository.dart';
@@ -71,7 +72,10 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
             ),
             subtitle: Text(
               '$totalProducts',
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 11),
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: AppScale.text(11),
+              ),
             ),
             childrenPadding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
             children:
@@ -102,13 +106,13 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                           item.name,
                           languageCode,
                         ),
-                        style: const TextStyle(fontSize: 13),
+                        style: TextStyle(fontSize: AppScale.text(13)),
                       ),
                       subtitle: Text(
                         '${item.products.length}',
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontSize: 11,
+                          fontSize: AppScale.text(11),
                         ),
                       ),
                       children:
@@ -133,7 +137,7 @@ class IngredientProductGroupedExpansionList extends StatelessWidget {
                               ),
                               title: Text(
                                 product.name,
-                                style: const TextStyle(fontSize: 13),
+                                style: TextStyle(fontSize: AppScale.text(13)),
                               ),
                               subtitle:
                                   subtitle == null ? null : Text(subtitle),

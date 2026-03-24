@@ -6,6 +6,7 @@ import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_dropdown_styles.dart';
 import 'package:our_recipe/core/common/app_functions.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/widgets/custom_text_form_field.dart';
@@ -136,7 +137,7 @@ class _RecipeIngredientInputSheetState
                   child: Text(
                     AppStrings.appProvidedUnitFixedGuide.tr,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: AppScale.text(12),
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -155,7 +156,7 @@ class _RecipeIngredientInputSheetState
                 TextSpan(
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    fontSize: 11,
+                    fontSize: AppScale.text(11),
                   ),
                   children: [
                     TextSpan(text: '${AppStrings.priceNotRegistered.tr}\n'),
@@ -176,7 +177,7 @@ class _RecipeIngredientInputSheetState
       onTap: _add,
       child: Container(
         width: double.infinity,
-        height: 50,
+        height: AppScale.size(50),
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(8),
@@ -184,10 +185,10 @@ class _RecipeIngredientInputSheetState
         alignment: Alignment.center,
         child: Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 18,
+            fontSize: AppScale.text(18),
           ),
         ),
       ),
@@ -196,7 +197,7 @@ class _RecipeIngredientInputSheetState
 
   Widget _ingredientAmountField() {
     return SizedBox(
-      height: UiConstants.formFieldHeight,
+      height: UiConstants.scaledFormFieldHeight(),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
@@ -212,7 +213,9 @@ class _RecipeIngredientInputSheetState
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                style: TextStyle(fontSize: UiConstants.formFieldFontSize),
+                style: TextStyle(
+                  fontSize: UiConstants.scaledFormFieldFontSize(),
+                ),
                 decoration: InputDecoration(
                   label: Text(AppStrings.quantity.tr),
                   labelStyle: TextStyle(
@@ -260,7 +263,9 @@ class _RecipeIngredientInputSheetState
                   value: unit,
                   child: Text(
                     unit.displayName,
-                    style: TextStyle(fontSize: UiConstants.formFieldFontSize),
+                    style: TextStyle(
+                      fontSize: UiConstants.scaledFormFieldFontSize(),
+                    ),
                   ),
                 ),
               )
@@ -287,7 +292,7 @@ class _IngredientNameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: UiConstants.formFieldHeight,
+      height: UiConstants.scaledFormFieldHeight(),
       child: InkWell(
         borderRadius: BorderRadius.circular(UiConstants.formFieldRadius),
         onTap: onTapField,
@@ -296,7 +301,10 @@ class _IngredientNameField extends StatelessWidget {
             decoration: InputDecoration(
               labelText: AppStrings.ingredientName.tr,
               filled: true,
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: UiConstants.scaledFormFieldHintSize(),
+              ),
               labelStyle: TextStyle(
                 color: Theme.of(
                   context,
@@ -309,7 +317,10 @@ class _IngredientNameField extends StatelessWidget {
               border: AppInputBorders.normal(),
               enabledBorder: AppInputBorders.normal(),
               focusedBorder: AppInputBorders.focused(),
-              prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass, size: 13),
+              prefixIcon: Icon(
+                FontAwesomeIcons.magnifyingGlass,
+                size: AppScale.size(13),
+              ),
               suffixIcon: const Icon(Icons.arrow_drop_down),
             ),
             child: Text(
@@ -318,7 +329,7 @@ class _IngredientNameField extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: AppScale.text(14),
                 color:
                     selectedIngredientNameRx.value == null
                         ? Colors.grey.shade600

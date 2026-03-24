@@ -47,7 +47,8 @@ class PremiumPurchaseScreen extends GetView<PremiumService> {
                   title: AppStrings.iCloudSync.tr,
                   subtitle: AppStrings.premiumICloudDescription.tr,
                 ),
-              if (!controller.isStoreAvailable.value) ...[
+              if (!controller.isPremium.value &&
+                  !controller.isStoreAvailable.value) ...[
                 const SizedBox(height: 16),
                 Text(
                   AppStrings.storeUnavailable.tr,
@@ -102,13 +103,45 @@ class PremiumPurchaseScreen extends GetView<PremiumService> {
                 height: 48,
                 child: OutlinedButton(
                   onPressed:
-                      controller.isPurchasing.value
+                      controller.isPurchasing.value || controller.isPremium.value
                           ? null
                           : controller.restorePurchases,
                   child: Text(AppStrings.restorePurchase.tr),
                 ),
               ),
-              if (controller.purchaseMessage.value != null) ...[
+              if (controller.isPremium.value) ...[
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        size: 18,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          AppStrings.premiumActivated.tr,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ] else if (controller.purchaseMessage.value != null) ...[
                 const SizedBox(height: 16),
                 Container(
                   padding: const EdgeInsets.all(12),

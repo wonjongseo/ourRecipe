@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/feature/recipes/models/ingredient_model.dart';
 
 class EditableIngredientListTile extends StatelessWidget {
@@ -49,17 +50,20 @@ class EditableIngredientListTile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(ingredient.name, style: TextStyle(fontSize: 13)),
+                      Text(
+                        ingredient.name,
+                        style: TextStyle(fontSize: AppScale.text(13)),
+                      ),
                       Row(
                         children: [
                           Text(
                             '${ingredient.amount}',
-                            style: TextStyle(fontSize: 12),
+                            style: TextStyle(fontSize: AppScale.text(12)),
                           ),
                           SizedBox(width: 4),
                           Text(
                             ingredient.unit.name,
-                            style: TextStyle(fontSize: 12),
+                            style: TextStyle(fontSize: AppScale.text(12)),
                           ),
                         ],
                       ),

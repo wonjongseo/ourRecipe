@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
@@ -193,7 +194,7 @@ class NutritionDetailScreen extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: AppScale.text(11),
               color: Theme.of(
                 context,
               ).colorScheme.onSurface.withValues(alpha: 0.75),
@@ -202,7 +203,10 @@ class NutritionDetailScreen extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              fontSize: AppScale.text(16),
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
@@ -244,7 +248,10 @@ class NutritionDetailScreen extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             '${ingredient.amount} ${ingredient.unit.displayName}',
-            style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
+            style: TextStyle(
+              color: Colors.grey.shade700,
+              fontSize: AppScale.text(12),
+            ),
           ),
         ],
       ),

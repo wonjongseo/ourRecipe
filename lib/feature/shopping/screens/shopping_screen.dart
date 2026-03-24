@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/log_manager.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
@@ -117,9 +118,9 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                 Expanded(
                   child: Text(
                     recipe.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontSize: AppScale.text(15),
                     ),
                   ),
                 ),
@@ -128,7 +129,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: accent,
-                    fontSize: 12,
+                    fontSize: AppScale.text(12),
                   ),
                 ),
               ],

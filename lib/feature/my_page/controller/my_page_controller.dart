@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:our_recipe/core/common/app_color_presets.dart';
 import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/app_theme.dart';
@@ -20,6 +21,7 @@ import 'package:our_recipe/core/services/premium_service.dart';
 import 'package:our_recipe/feature/recipes/controller/recipe_controller.dart';
 import 'package:our_recipe/feature/recipes/screens/category_management_screen.dart';
 import 'package:our_recipe/feature/recipes/screens/ingredient_management_screen.dart';
+import 'package:our_recipe/feature/my_page/screens/font_preview_screen.dart';
 import 'package:our_recipe/feature/my_page/screens/icloud_sync_settings_screen.dart';
 import 'package:our_recipe/feature/my_page/screens/premium_purchase_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,6 +29,7 @@ import 'package:url_launcher/url_launcher.dart';
 class MyPageController extends GetxController {
   static const String supportEmail = 'visionwill3322@gmail.com';
   final themeMode = ThemeMode.system.obs;
+  final colorPresetKey = ThemeService.colorPresetKey;
   final fontKey = AppFonts.defaultKeyFor(const Locale('ja', 'JP')).obs;
   final textScale = 1.0.obs;
   final appVersionLabel = ''.obs;
@@ -43,6 +46,7 @@ class MyPageController extends GetxController {
   void onInit() {
     super.onInit();
     _initThemeMode();
+    _initColorPreset();
     _initFontKey();
     _initTextScale();
     _initICloudSync();
@@ -54,9 +58,16 @@ class MyPageController extends GetxController {
     final savedMode = await _themeService.getSavedThemeMode();
     if (savedMode != null) {
       themeMode.value = savedMode;
+      ThemeService.currentThemeMode.value = savedMode;
       return;
     }
     themeMode.value = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    ThemeService.currentThemeMode.value = themeMode.value;
+  }
+
+  Future<void> _initColorPreset() async {
+    final saved = await _themeService.getSavedColorPresetKey();
+    colorPresetKey.value = AppColorPresets.resolve(saved).key;
   }
 
   Future<void> _initFontKey() async {
@@ -96,7 +107,8 @@ class MyPageController extends GetxController {
   Future<void> _initAppVersion() async {
     try {
       final info = await PackageInfo.fromPlatform();
-      appVersionLabel.value = '${info.version}+${info.buildNumber}';
+      // appVersionLabel.value = '${info.version}+${info.buildNumber}';
+      appVersionLabel.value = info.version;
     } catch (e, s) {
       LogManager.error('Load app version failed', error: e, stackTrace: s);
       appVersionLabel.value = '-';
@@ -123,6 +135,15 @@ class MyPageController extends GetxController {
     return AppFonts.defaultKeyFor(locale);
   }
 
+  String selectedFontLabelForCurrentLocale() {
+    final selectedKey = selectedFontKeyForCurrentLocale();
+    final options = fontOptionsForCurrentLocale();
+    for (final option in options) {
+      if (option.key == selectedKey) return option.label;
+    }
+    return options.first.label;
+  }
+
   Future<void> changeLanguage(Locale locale) async {
     await LocaleService().saveLocale(locale);
     if (!AppFonts.isValidKeyForLocale(fontKey.value, locale)) {
@@ -135,9 +156,18 @@ class MyPageController extends GetxController {
 
   Future<void> changeThemeMode(ThemeMode mode) async {
     themeMode.value = mode;
+    ThemeService.currentThemeMode.value = mode;
     await _themeService.saveThemeMode(mode);
     _applyTheme(locale: currentLocale(), mode: mode);
     Get.changeThemeMode(mode);
+  }
+
+  Future<void> changeColorPreset(String key) async {
+    final resolved = AppColorPresets.resolve(key).key;
+    if (colorPresetKey.value == resolved) return;
+    colorPresetKey.value = resolved;
+    await _themeService.saveColorPresetKey(resolved);
+    _applyTheme(locale: currentLocale(), mode: themeMode.value);
   }
 
   Future<void> changeFont(String key) async {
@@ -147,9 +177,15 @@ class MyPageController extends GetxController {
     _applyTheme(locale: currentLocale(), mode: themeMode.value);
   }
 
+  Future<void> goToFontPreview() async {
+    await Get.to(() => const FontPreviewScreen());
+  }
+
   List<AppFontOption> fontOptionsForCurrentLocale() {
     return AppFonts.optionsFor(currentLocale());
   }
+
+  List<AppColorPreset> colorPresets() => AppColorPresets.values;
 
   Future<void> _ensureFontMatchesLocale() async {
     final locale = currentLocale();
@@ -175,18 +211,39 @@ class MyPageController extends GetxController {
 
   void _applyTheme({required Locale locale, required ThemeMode mode}) {
     final currentFont = fontKey.value;
+    final presetKey = colorPresetKey.value;
     if (mode == ThemeMode.dark) {
-      Get.changeTheme(AppTheme.darkThemeFor(locale, fontKey: currentFont));
+      Get.changeTheme(
+        AppTheme.darkThemeFor(
+          locale,
+          fontKey: currentFont,
+          colorPresetKey: presetKey,
+        ),
+      );
       return;
     }
     if (mode == ThemeMode.light) {
-      Get.changeTheme(AppTheme.lightThemeFor(locale, fontKey: currentFont));
+      Get.changeTheme(
+        AppTheme.lightThemeFor(
+          locale,
+          fontKey: currentFont,
+          colorPresetKey: presetKey,
+        ),
+      );
       return;
     }
     Get.changeTheme(
       Get.isDarkMode
-          ? AppTheme.darkThemeFor(locale, fontKey: currentFont)
-          : AppTheme.lightThemeFor(locale, fontKey: currentFont),
+          ? AppTheme.darkThemeFor(
+            locale,
+            fontKey: currentFont,
+            colorPresetKey: presetKey,
+          )
+          : AppTheme.lightThemeFor(
+            locale,
+            fontKey: currentFont,
+            colorPresetKey: presetKey,
+          ),
     );
   }
 

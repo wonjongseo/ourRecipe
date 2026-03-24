@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/widgets/ad_banner_bottom_sheet.dart';
 import 'package:our_recipe/core/widgets/app_native_ad_list_tile.dart';
@@ -54,7 +55,7 @@ class RecipesScreen extends GetView<RecipeController> {
                     onChanged: controller.onChanged,
                     prefixIcon: Icon(
                       FontAwesomeIcons.magnifyingGlass,
-                      size: 20,
+                      size: AppScale.size(20),
                     ),
                     suffixIcon:
                         controller.searchQuery.isEmpty

@@ -23,7 +23,10 @@ class AppDropdownStyles {
       floatingLabelStyle: TextStyle(
         color: Theme.of(context).colorScheme.primary,
       ),
-      hintStyle: TextStyle(color: Colors.grey),
+      hintStyle: TextStyle(
+        color: Colors.grey,
+        fontSize: UiConstants.scaledFormFieldHintSize(),
+      ),
       fillColor: Theme.of(context).colorScheme.surface,
       border: AppInputBorders.normal(),
       enabledBorder: AppInputBorders.normal(),
@@ -38,7 +41,7 @@ class AppDropdownStyles {
     EdgeInsetsGeometry? padding,
   }) {
     return ButtonStyleData(
-      height: height ?? UiConstants.formFieldHeight,
+      height: height ?? UiConstants.scaledFormFieldHeight(),
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
     );
   }
@@ -61,6 +64,6 @@ class AppDropdownStyles {
   }
 
   static MenuItemStyleData dropdown2ItemStyle() {
-    return const MenuItemStyleData(height: UiConstants.formFieldHeight);
+    return MenuItemStyleData(height: UiConstants.scaledFormFieldHeight());
   }
 }

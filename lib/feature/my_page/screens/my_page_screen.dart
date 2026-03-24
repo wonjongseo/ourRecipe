@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:our_recipe/core/common/app_color_presets.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/feature/my_page/controller/my_page_controller.dart';
@@ -80,7 +81,7 @@ class MyPageScreen extends GetView<MyPageController> {
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         _sectionHeader(AppStrings.settingsAppearance.tr),
         Obx(
           () => _card(
@@ -126,34 +127,52 @@ class MyPageScreen extends GetView<MyPageController> {
           () => _card(
             cardColor: cardColor,
             borderColor: borderColor,
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: const Icon(Icons.palette_outlined),
+                  title: Text(AppStrings.colorTheme.tr),
+                  trailing: _styledDropdown(
+                    context: context,
+                    child: DropdownButton<String>(
+                      value: controller.colorPresetKey.value,
+                      isDense: true,
+                      borderRadius: BorderRadius.circular(
+                        UiConstants.formFieldRadius,
+                      ),
+                      dropdownColor: Theme.of(context).colorScheme.surface,
+                      items: controller.colorPresets().map((preset) {
+                        return DropdownMenuItem<String>(
+                          value: preset.key,
+                          child: Text(_colorPresetLabel(preset)),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        if (value == null) return;
+                        controller.changeColorPreset(value);
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+                  child: _colorThemePreview(context),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Obx(
+          () => _card(
+            cardColor: cardColor,
+            borderColor: borderColor,
             child: ListTile(
               leading: const Icon(Icons.font_download_outlined),
               title: Text(AppStrings.font.tr),
-              trailing: _styledDropdown(
-                context: context,
-                child: DropdownButton<String>(
-                  value: controller.selectedFontKeyForCurrentLocale(),
-                  isDense: true,
-                  borderRadius: BorderRadius.circular(
-                    UiConstants.formFieldRadius,
-                  ),
-                  dropdownColor: Theme.of(context).colorScheme.surface,
-                  items:
-                      controller
-                          .fontOptionsForCurrentLocale()
-                          .map(
-                            (option) => DropdownMenuItem<String>(
-                              value: option.key,
-                              child: Text(option.label),
-                            ),
-                          )
-                          .toList(),
-                  onChanged: (value) {
-                    if (value == null) return;
-                    controller.changeFont(value);
-                  },
-                ),
-              ),
+              subtitle: Text(controller.selectedFontLabelForCurrentLocale()),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: controller.goToFontPreview,
             ),
           ),
         ),
@@ -168,7 +187,7 @@ class MyPageScreen extends GetView<MyPageController> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Row(
                   children: [
                     const Icon(Icons.format_size_outlined),
@@ -200,6 +219,141 @@ class MyPageScreen extends GetView<MyPageController> {
           ),
         ),
       ],
+    );
+  }
+
+  String _colorPresetLabel(AppColorPreset preset) {
+    switch (preset.key) {
+      case 'sage_kitchen':
+        return AppStrings.colorPresetSageKitchen.tr;
+      case 'terracotta':
+        return AppStrings.colorPresetTerracotta.tr;
+      case 'charcoal_mint':
+        return AppStrings.colorPresetCharcoalMint.tr;
+      case 'ocean_blue':
+        return AppStrings.colorPresetOceanBlue.tr;
+      case 'warm_ivory':
+      default:
+        return AppStrings.colorPresetWarmIvory.tr;
+    }
+  }
+
+  Widget _colorThemePreview(BuildContext context) {
+    final preset = AppColorPresets.resolve(controller.colorPresetKey.value);
+    final mode = controller.themeMode.value;
+    final isDark =
+        mode == ThemeMode.dark ||
+        (mode == ThemeMode.system &&
+            Theme.of(context).brightness == Brightness.dark);
+    final palette = isDark ? preset.dark : preset.light;
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: palette.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: palette.outline),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  _colorPresetLabel(preset),
+                  style: TextStyle(
+                    color: palette.onSurface,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: palette.secondaryContainer,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  isDark ? AppStrings.darkMode.tr : AppStrings.lightMode.tr,
+                  style: TextStyle(
+                    color: palette.onSecondaryContainer,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              _swatch(palette.primary, palette.onPrimary),
+              const SizedBox(width: 8),
+              _swatch(palette.secondary, palette.onSecondary),
+              const SizedBox(width: 8),
+              _swatch(palette.background, palette.onSurface),
+              const SizedBox(width: 8),
+              _swatch(palette.surface, palette.onSurface),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: palette.background,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: palette.outline),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.appTitle.tr,
+                        style: TextStyle(
+                          color: palette.onSurface,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        AppStrings.recipe.tr,
+                        style: TextStyle(
+                          color: palette.onSurface.withValues(alpha: 0.7),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: palette.primary,
+                    foregroundColor: palette.onPrimary,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                  ),
+                  onPressed: null,
+                  child: Text(AppStrings.save.tr),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _swatch(Color color, Color borderColor) {
+    return Container(
+      width: 26,
+      height: 26,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        border: Border.all(color: borderColor.withValues(alpha: 0.22)),
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
 import 'package:our_recipe/core/common/app_dropdown_styles.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
@@ -94,7 +95,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
             onTap: _add,
             child: Container(
               width: double.infinity,
-              height: 50,
+              height: AppScale.size(50),
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(
@@ -107,7 +108,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
-                  fontSize: 18,
+                  fontSize: AppScale.text(18),
                 ),
               ),
             ),
@@ -149,12 +150,15 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
   }
 
   Widget _inputProduct() {
-    const double inputHeight = 48;
+    final inputHeight = AppScale.size(48);
     return Column(
       children: [
         Text(
           AppStrings.recipePriceGuide.tr,
-          style: TextStyle(fontSize: 13, color: Colors.black87),
+          style: TextStyle(
+            fontSize: AppScale.text(13),
+            color: Colors.black87,
+          ),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 10),
@@ -198,7 +202,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
             child: TextFormField(
               controller: controller,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: AppScale.text(12)),
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderSide: BorderSide.none),
               ),
@@ -218,7 +222,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
       child: TextFormField(
         controller: priceTextCtl,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
-        style: TextStyle(fontSize: 12),
+        style: TextStyle(fontSize: AppScale.text(12)),
         decoration: InputDecoration(
           hintStyle: TextStyle(color: Colors.grey),
           hintText: AppStrings.price.tr,
@@ -245,7 +249,7 @@ class _InputCookingStepWidgetState extends State<InputCookingStepWidget> {
           value: unit,
           child: Text(
             unit.displayName,
-            style: TextStyle(fontSize: UiConstants.formFieldFontSize),
+            style: TextStyle(fontSize: UiConstants.scaledFormFieldFontSize()),
           ),
         );
       }),

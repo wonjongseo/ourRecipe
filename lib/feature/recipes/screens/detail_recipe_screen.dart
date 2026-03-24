@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:our_recipe/core/common/app_colors.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/helpers/snackbar_helper.dart';
 import 'package:our_recipe/core/services/icloud/icloud_sync_settings_service.dart';
@@ -86,7 +87,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                       recipeModel.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: AppScale.text(25),
                       ),
                     ),
                     if (recipeModel.description.isNotEmpty) ...[
@@ -94,7 +95,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
 
                       Text(
                         recipeModel.description,
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: AppScale.text(16)),
                       ),
                     ],
                     if (recipeModel.websiteLink.trim().isNotEmpty) ...[
@@ -113,7 +114,7 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
                               child: Text(
                                 recipeModel.websiteLink.trim(),
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: AppScale.text(13),
                                   color: Theme.of(context).colorScheme.primary,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -668,7 +669,10 @@ class _DetailRecipeScreenState extends State<DetailRecipeScreen> {
       children: [
         Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: AppScale.text(18),
+            ),
         ),
         SizedBox(height: 6),
 

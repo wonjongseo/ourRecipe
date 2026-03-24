@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:our_recipe/core/common/app_scale.dart';
 import 'package:our_recipe/core/common/app_input_borders.dart';
 import 'package:our_recipe/core/common/ui_constants.dart';
 
@@ -45,8 +46,6 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String)? onChanged;
   final Function()? onTap;
 
-  get formFieldFontSize => null;
-
   @override
   Widget build(BuildContext context) {
     final isMultiline = (maxLine ?? 1) > 1;
@@ -56,7 +55,7 @@ class CustomTextFormField extends StatelessWidget {
             : keyboardType;
 
     final field = TextFormField(
-      style: TextStyle(fontSize: formFieldFontSize),
+      style: TextStyle(fontSize: UiConstants.scaledFormFieldFontSize()),
       maxLines: maxLine,
       readOnly: readOnly,
       onTap: onTap,
@@ -83,14 +82,19 @@ class CustomTextFormField extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         hintText: hintText,
-        hintStyle: hintStyle ?? TextStyle(color: Colors.grey),
+        hintStyle:
+            hintStyle ??
+            TextStyle(
+              color: Colors.grey,
+              fontSize: UiConstants.scaledFormFieldHintSize(),
+            ),
         suffix:
             suffixText == null
                 ? null
                 : Text(
                   suffixText!,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: UiConstants.scaledFormFieldHintSize(),
                     color: Theme.of(
                       context,
                     ).colorScheme.onSurface.withValues(alpha: 0.65),
@@ -108,7 +112,7 @@ class CustomTextFormField extends StatelessWidget {
 
     if (isMultiline) return field;
     return SizedBox(
-      height: height ?? UiConstants.formFieldHeight,
+      height: height ?? AppScale.size(height ?? UiConstants.formFieldHeight),
       child: field,
     );
   }

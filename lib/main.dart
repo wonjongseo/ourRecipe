@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:our_recipe/core/common/app_color_presets.dart';
+import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/common/app_strings.dart';
 import 'package:our_recipe/core/common/app_theme.dart';
-import 'package:our_recipe/core/common/app_fonts.dart';
 import 'package:our_recipe/core/pages/app_pages.dart';
 import 'package:our_recipe/core/services/ad_interstitial_service.dart';
 import 'package:our_recipe/core/services/analytics_service.dart';
@@ -32,15 +33,20 @@ void main() async {
   final savedLocale = await LocaleService().getSavedLocale();
   final themeService = ThemeService();
   final savedThemeMode = await themeService.getSavedThemeMode();
+  final savedColorPresetKey = await themeService.getSavedColorPresetKey();
   final savedFontKey = await themeService.getSavedFontKey();
   final savedTextScale = await themeService.getSavedTextScale();
   final initialLocale = _resolveInitialLocale(savedLocale);
+  ThemeService.currentThemeMode.value = savedThemeMode ?? ThemeMode.system;
+  ThemeService.colorPresetKey.value =
+      AppColorPresets.resolve(savedColorPresetKey).key;
   ThemeService.textScale.value =
       savedTextScale == null ? 1.0 : savedTextScale.clamp(0.8, 1.4).toDouble();
   runApp(
     MyApp(
       initialLocale: initialLocale,
       initialThemeMode: savedThemeMode,
+      initialColorPresetKey: savedColorPresetKey,
       initialFontKey: savedFontKey,
     ),
   );
@@ -62,48 +68,64 @@ class MyApp extends StatelessWidget {
     super.key,
     this.initialLocale,
     this.initialThemeMode,
+    this.initialColorPresetKey,
     this.initialFontKey,
   });
   final Locale? initialLocale;
   final ThemeMode? initialThemeMode;
+  final String? initialColorPresetKey;
   final String? initialFontKey;
 
   @override
   Widget build(BuildContext context) {
-    final locale = initialLocale ?? _resolveInitialLocale(null);
-    final fontKey =
-        initialFontKey != null && AppFonts.isValidKey(initialFontKey!)
-            ? initialFontKey!
-            : AppFonts.defaultKeyFor(locale);
-    return GetMaterialApp(
-      title: AppStrings.appTitle.tr,
-      theme: AppTheme.lightThemeFor(locale, fontKey: fontKey),
-      darkTheme: AppTheme.darkThemeFor(locale, fontKey: fontKey),
-      themeMode: initialThemeMode ?? ThemeMode.system,
-      getPages: AppPages.pages,
-      initialRoute: SplashScreen.name,
-      fallbackLocale: const Locale('en', 'US'),
-      supportedLocales: _supportedLocales,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      debugShowCheckedModeBanner: false,
-      locale: locale,
-      translations: AppStrings(),
-      builder: (context, child) {
-        if (child == null) return const SizedBox.shrink();
-        return Obx(() {
-          final mediaQuery = MediaQuery.of(context);
-          final scale = ThemeService.textScale.value;
-          return MediaQuery(
-            data: mediaQuery.copyWith(textScaler: TextScaler.linear(scale)),
-            child: child,
-          );
-        });
-      },
-    );
+    return Obx(() {
+      final locale = initialLocale ?? _resolveInitialLocale(null);
+      final fontKey =
+          initialFontKey != null && AppFonts.isValidKey(initialFontKey!)
+              ? initialFontKey!
+              : AppFonts.defaultKeyFor(locale);
+      final colorPresetKey =
+          ThemeService.colorPresetKey.value.isEmpty
+              ? AppColorPresets.resolve(initialColorPresetKey).key
+              : ThemeService.colorPresetKey.value;
+      return GetMaterialApp(
+        title: AppStrings.appTitle.tr,
+        theme: AppTheme.lightThemeFor(
+          locale,
+          fontKey: fontKey,
+          colorPresetKey: colorPresetKey,
+        ),
+        darkTheme: AppTheme.darkThemeFor(
+          locale,
+          fontKey: fontKey,
+          colorPresetKey: colorPresetKey,
+        ),
+        themeMode: ThemeService.currentThemeMode.value,
+        getPages: AppPages.pages,
+        initialRoute: SplashScreen.name,
+        fallbackLocale: const Locale('en', 'US'),
+        supportedLocales: _supportedLocales,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        debugShowCheckedModeBanner: false,
+        locale: locale,
+        translations: AppStrings(),
+        builder: (context, child) {
+          if (child == null) return const SizedBox.shrink();
+          return Obx(() {
+            final mediaQuery = MediaQuery.of(context);
+            final scale = ThemeService.textScale.value;
+            return MediaQuery(
+              data: mediaQuery.copyWith(textScaler: TextScaler.linear(scale)),
+              child: child,
+            );
+          });
+        },
+      );
+    });
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:our_recipe/core/common/app_scale.dart';
 
 class CustomBottomButton extends StatelessWidget {
   const CustomBottomButton({
@@ -18,7 +19,7 @@ class CustomBottomButton extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
         child: SizedBox(
           width: double.infinity,
-          height: 50,
+          height: AppScale.size(50),
           child: ElevatedButton.icon(
             onPressed: onPressed,
             icon: icon == null ? null : Icon(icon),

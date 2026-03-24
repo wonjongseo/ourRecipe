@@ -182,6 +182,7 @@ class AppStrings extends Translations {
           AppStrings.deleteIngredientICloudWarningJp,
       AppStrings.share: AppStrings.shareJp,
       AppStrings.theme: AppStrings.themeJp,
+      AppStrings.colorTheme: AppStrings.colorThemeJp,
       AppStrings.font: AppStrings.fontJp,
       AppStrings.fontSize: AppStrings.fontSizeJp,
       AppStrings.fontSystem: AppStrings.fontSystemJp,
@@ -192,6 +193,12 @@ class AppStrings extends Translations {
       AppStrings.systemMode: AppStrings.systemModeJp,
       AppStrings.lightMode: AppStrings.lightModeJp,
       AppStrings.darkMode: AppStrings.darkModeJp,
+      AppStrings.colorPresetWarmIvory: AppStrings.colorPresetWarmIvoryJp,
+      AppStrings.colorPresetSageKitchen: AppStrings.colorPresetSageKitchenJp,
+      AppStrings.colorPresetTerracotta: AppStrings.colorPresetTerracottaJp,
+      AppStrings.colorPresetCharcoalMint:
+          AppStrings.colorPresetCharcoalMintJp,
+      AppStrings.colorPresetOceanBlue: AppStrings.colorPresetOceanBlueJp,
       AppStrings.perServing: AppStrings.perServingJp,
       AppStrings.all: AppStrings.allJp,
       AppStrings.favorite: AppStrings.favoriteJp,
@@ -414,6 +421,7 @@ class AppStrings extends Translations {
           AppStrings.deleteIngredientICloudWarningKr,
       AppStrings.share: AppStrings.shareKr,
       AppStrings.theme: AppStrings.themeKr,
+      AppStrings.colorTheme: AppStrings.colorThemeKr,
       AppStrings.font: AppStrings.fontKr,
       AppStrings.fontSize: AppStrings.fontSizeKr,
       AppStrings.fontSystem: AppStrings.fontSystemKr,
@@ -424,6 +432,12 @@ class AppStrings extends Translations {
       AppStrings.systemMode: AppStrings.systemModeKr,
       AppStrings.lightMode: AppStrings.lightModeKr,
       AppStrings.darkMode: AppStrings.darkModeKr,
+      AppStrings.colorPresetWarmIvory: AppStrings.colorPresetWarmIvoryKr,
+      AppStrings.colorPresetSageKitchen: AppStrings.colorPresetSageKitchenKr,
+      AppStrings.colorPresetTerracotta: AppStrings.colorPresetTerracottaKr,
+      AppStrings.colorPresetCharcoalMint:
+          AppStrings.colorPresetCharcoalMintKr,
+      AppStrings.colorPresetOceanBlue: AppStrings.colorPresetOceanBlueKr,
       AppStrings.perServing: AppStrings.perServingKr,
       AppStrings.all: AppStrings.allKr,
       AppStrings.favorite: AppStrings.favoriteKr,
@@ -647,6 +661,7 @@ class AppStrings extends Translations {
           AppStrings.deleteIngredientICloudWarningEn,
       AppStrings.share: AppStrings.shareEn,
       AppStrings.theme: AppStrings.themeEn,
+      AppStrings.colorTheme: AppStrings.colorThemeEn,
       AppStrings.font: AppStrings.fontEn,
       AppStrings.fontSize: AppStrings.fontSizeEn,
       AppStrings.fontSystem: AppStrings.fontSystemEn,
@@ -657,6 +672,12 @@ class AppStrings extends Translations {
       AppStrings.systemMode: AppStrings.systemModeEn,
       AppStrings.lightMode: AppStrings.lightModeEn,
       AppStrings.darkMode: AppStrings.darkModeEn,
+      AppStrings.colorPresetWarmIvory: AppStrings.colorPresetWarmIvoryEn,
+      AppStrings.colorPresetSageKitchen: AppStrings.colorPresetSageKitchenEn,
+      AppStrings.colorPresetTerracotta: AppStrings.colorPresetTerracottaEn,
+      AppStrings.colorPresetCharcoalMint:
+          AppStrings.colorPresetCharcoalMintEn,
+      AppStrings.colorPresetOceanBlue: AppStrings.colorPresetOceanBlueEn,
       AppStrings.perServing: AppStrings.perServingEn,
       AppStrings.all: AppStrings.allEn,
       AppStrings.favorite: AppStrings.favoriteEn,
@@ -1380,6 +1401,11 @@ class AppStrings extends Translations {
   static String themeJp = "テーマ";
   static String themeEn = "Theme";
 
+  static String colorTheme = "colorThemeTr";
+  static String colorThemeKr = "색상 테마";
+  static String colorThemeJp = "カラーテーマ";
+  static String colorThemeEn = "Color Theme";
+
   static String font = "fontTr";
   static String fontKr = "폰트";
   static String fontJp = "フォント";
@@ -1429,6 +1455,31 @@ class AppStrings extends Translations {
   static String darkModeKr = "다크";
   static String darkModeJp = "ダーク";
   static String darkModeEn = "Dark";
+
+  static String colorPresetWarmIvory = "colorPresetWarmIvoryTr";
+  static String colorPresetWarmIvoryKr = "웜 아이보리";
+  static String colorPresetWarmIvoryJp = "ウォームアイボリー";
+  static String colorPresetWarmIvoryEn = "Warm Ivory";
+
+  static String colorPresetSageKitchen = "colorPresetSageKitchenTr";
+  static String colorPresetSageKitchenKr = "세이지 키친";
+  static String colorPresetSageKitchenJp = "セージキッチン";
+  static String colorPresetSageKitchenEn = "Sage Kitchen";
+
+  static String colorPresetTerracotta = "colorPresetTerracottaTr";
+  static String colorPresetTerracottaKr = "테라코타";
+  static String colorPresetTerracottaJp = "テラコッタ";
+  static String colorPresetTerracottaEn = "Terracotta";
+
+  static String colorPresetCharcoalMint = "colorPresetCharcoalMintTr";
+  static String colorPresetCharcoalMintKr = "차콜 민트";
+  static String colorPresetCharcoalMintJp = "チャコールミント";
+  static String colorPresetCharcoalMintEn = "Charcoal Mint";
+
+  static String colorPresetOceanBlue = "colorPresetOceanBlueTr";
+  static String colorPresetOceanBlueKr = "오션 블루";
+  static String colorPresetOceanBlueJp = "オーシャンブルー";
+  static String colorPresetOceanBlueEn = "Ocean Blue";
 
   static String perServing = "perServingTr";
   static String perServingKr = "1인분당";
