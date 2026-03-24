@@ -141,12 +141,13 @@ class MyPageScreen extends GetView<MyPageController> {
                         UiConstants.formFieldRadius,
                       ),
                       dropdownColor: Theme.of(context).colorScheme.surface,
-                      items: controller.colorPresets().map((preset) {
-                        return DropdownMenuItem<String>(
-                          value: preset.key,
-                          child: Text(_colorPresetLabel(preset)),
-                        );
-                      }).toList(),
+                      items:
+                          controller.colorPresets().map((preset) {
+                            return DropdownMenuItem<String>(
+                              value: preset.key,
+                              child: Text(_colorPresetLabel(preset)),
+                            );
+                          }).toList(),
                       onChanged: (value) {
                         if (value == null) return;
                         controller.changeColorPreset(value);
@@ -387,7 +388,7 @@ class MyPageScreen extends GetView<MyPageController> {
             );
           }
 
-          if (!isPremium) {
+          if (Platform.isIOS && !isPremium) {
             if (tiles.isNotEmpty) {
               tiles.add(const SizedBox(height: 8));
             }
@@ -399,9 +400,7 @@ class MyPageScreen extends GetView<MyPageController> {
                   leading: const Icon(Icons.workspace_premium_outlined),
                   title: Text(AppStrings.premiumPurchase.tr),
                   subtitle: Text(
-                    Platform.isIOS
-                        ? AppStrings.premiumDescriptionIOS.tr
-                        : AppStrings.premiumDescriptionAndroid.tr,
+                    AppStrings.premiumDescriptionIOS.tr,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

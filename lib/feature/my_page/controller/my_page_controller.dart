@@ -39,6 +39,7 @@ class MyPageController extends GetxController {
   final PremiumService premiumService = Get.find<PremiumService>();
   final iCloudSyncEnabled = true.obs;
   final isICloudSyncUpdating = false.obs;
+  final isICloudAvailable = false.obs;
   final iCloudStatusMessage = ''.obs;
   Worker? _premiumWorker;
 
@@ -271,6 +272,7 @@ class MyPageController extends GetxController {
   }
 
   Future<void> goToPremiumPurchase() async {
+    if (!GetPlatform.isIOS) return;
     await Get.toNamed(PremiumPurchaseScreen.name);
   }
 
@@ -424,6 +426,7 @@ class MyPageController extends GetxController {
 
   Future<void> uploadLocalDataToICloud() async {
     if (isICloudSyncUpdating.value) return;
+    if (!await _ensureICloudAvailable()) return;
     await _runICloudTask(
       title: AppStrings.uploadToICloud.tr,
       description: AppStrings.iCloudUploadProgressDescription.tr,
@@ -439,13 +442,17 @@ class MyPageController extends GetxController {
           error: e,
           stackTrace: s,
         );
-        iCloudStatusMessage.value = AppStrings.dbSaveFailed.tr;
+        iCloudStatusMessage.value = _resolveICloudErrorMessage(
+          e,
+          fallback: AppStrings.dbSaveFailed.tr,
+        );
       },
     );
   }
 
   Future<void> downloadICloudDataToLocal() async {
     if (isICloudSyncUpdating.value) return;
+    if (!await _ensureICloudAvailable()) return;
     await _runICloudTask(
       title: AppStrings.downloadFromICloud.tr,
       description: AppStrings.iCloudDownloadProgressDescription.tr,
@@ -465,31 +472,64 @@ class MyPageController extends GetxController {
           error: e,
           stackTrace: s,
         );
-        iCloudStatusMessage.value = AppStrings.dbLoadFailed.tr;
+        iCloudStatusMessage.value = _resolveICloudErrorMessage(
+          e,
+          fallback: AppStrings.dbLoadFailed.tr,
+        );
       },
     );
   }
 
   Future<void> refreshICloudStatusMessage() async {
     if (!GetPlatform.isIOS) {
+      isICloudAvailable.value = false;
       iCloudStatusMessage.value = AppStrings.iCloudIOSOnly.tr;
       return;
     }
     if (!canUseICloud) {
+      isICloudAvailable.value = false;
       iCloudStatusMessage.value = AppStrings.premiumICloudLocked.tr;
       return;
     }
     final status = await AppDataPathService.getICloudStatus();
     if (status == null) {
-      iCloudStatusMessage.value = '';
+      isICloudAvailable.value = false;
+      iCloudStatusMessage.value = AppStrings.iCloudSettingsGuide.tr;
       return;
     }
     final tokenPresent = status['tokenPresent'] == true;
     final containerAvailable = status['containerAvailable'] == true;
+    final errorMessage = (status['errorMessage'] as String?)?.trim();
+    isICloudAvailable.value = tokenPresent && containerAvailable;
+    if (isICloudAvailable.value) {
+      iCloudStatusMessage.value = '';
+      return;
+    }
     iCloudStatusMessage.value =
-        tokenPresent && containerAvailable
-            ? ''
-            : AppStrings.pleaseCheckSettings.tr;
+        errorMessage != null && errorMessage.isNotEmpty
+            ? '${AppStrings.iCloudSettingsGuide.tr}\n$errorMessage'
+            : AppStrings.iCloudSettingsGuide.tr;
+  }
+
+  Future<bool> _ensureICloudAvailable() async {
+    await refreshICloudStatusMessage();
+    if (isICloudAvailable.value) return true;
+    final message =
+        iCloudStatusMessage.value.isEmpty
+            ? AppStrings.iCloudSettingsGuide.tr
+            : iCloudStatusMessage.value;
+    SnackBarHelper.showErrorSnackBar(message);
+    return false;
+  }
+
+  String _resolveICloudErrorMessage(Object error, {required String fallback}) {
+    if (error is PlatformException) {
+      final message = error.message?.trim();
+      if (message != null && message.isNotEmpty) {
+        return '${AppStrings.iCloudSettingsGuide.tr}\n$message';
+      }
+    }
+    return fallback;
   }
 
   Future<void> _runICloudTask({

@@ -113,6 +113,10 @@ class AppStrings extends Translations {
       AppStrings.premiumICloudLocked: AppStrings.premiumICloudLockedJp,
       AppStrings.iCloudIOSOnly: AppStrings.iCloudIOSOnlyJp,
       AppStrings.storeUnavailable: AppStrings.storeUnavailableJp,
+      AppStrings.androidBillingSetupGuide:
+          AppStrings.androidBillingSetupGuideJp,
+      AppStrings.purchaseProductUnavailable:
+          AppStrings.purchaseProductUnavailableJp,
       AppStrings.premiumPurchaseSuccess: AppStrings.premiumPurchaseSuccessJp,
       AppStrings.purchasePending: AppStrings.purchasePendingJp,
       AppStrings.purchaseCancelled: AppStrings.purchaseCancelledJp,
@@ -352,6 +356,10 @@ class AppStrings extends Translations {
       AppStrings.premiumICloudLocked: AppStrings.premiumICloudLockedKr,
       AppStrings.iCloudIOSOnly: AppStrings.iCloudIOSOnlyKr,
       AppStrings.storeUnavailable: AppStrings.storeUnavailableKr,
+      AppStrings.androidBillingSetupGuide:
+          AppStrings.androidBillingSetupGuideKr,
+      AppStrings.purchaseProductUnavailable:
+          AppStrings.purchaseProductUnavailableKr,
       AppStrings.premiumPurchaseSuccess: AppStrings.premiumPurchaseSuccessKr,
       AppStrings.purchasePending: AppStrings.purchasePendingKr,
       AppStrings.purchaseCancelled: AppStrings.purchaseCancelledKr,
@@ -592,6 +600,10 @@ class AppStrings extends Translations {
       AppStrings.premiumICloudLocked: AppStrings.premiumICloudLockedEn,
       AppStrings.iCloudIOSOnly: AppStrings.iCloudIOSOnlyEn,
       AppStrings.storeUnavailable: AppStrings.storeUnavailableEn,
+      AppStrings.androidBillingSetupGuide:
+          AppStrings.androidBillingSetupGuideEn,
+      AppStrings.purchaseProductUnavailable:
+          AppStrings.purchaseProductUnavailableEn,
       AppStrings.premiumPurchaseSuccess: AppStrings.premiumPurchaseSuccessEn,
       AppStrings.purchasePending: AppStrings.purchasePendingEn,
       AppStrings.purchaseCancelled: AppStrings.purchaseCancelledEn,
@@ -1106,6 +1118,22 @@ class AppStrings extends Translations {
   static String storeUnavailableKr = "스토어에 연결할 수 없습니다.";
   static String storeUnavailableJp = "ストアに接続できません。";
   static String storeUnavailableEn = "The store is currently unavailable.";
+
+  static String androidBillingSetupGuide = "androidBillingSetupGuideTr";
+  static String androidBillingSetupGuideKr =
+      "Google Play에서 설치한 내부 테스트 앱인지, 테스트 계정으로 Play 스토어에 로그인했는지 확인해주세요.";
+  static String androidBillingSetupGuideJp =
+      "Google Play からインストールした内部テスト版か、テスト用アカウントで Play ストアにログインしているか確認してください。";
+  static String androidBillingSetupGuideEn =
+      "Check that this app was installed from Google Play internal testing and that Play Store is signed in with a tester account.";
+
+  static String purchaseProductUnavailable = "purchaseProductUnavailableTr";
+  static String purchaseProductUnavailableKr =
+      "결제 상품을 불러오지 못했습니다. Play Console에서 상품이 활성화되었는지 확인해주세요.";
+  static String purchaseProductUnavailableJp =
+      "購入商品を読み込めませんでした。Play Console で商品が有効になっているか確認してください。";
+  static String purchaseProductUnavailableEn =
+      "Could not load the purchase product. Check that the product is active in Play Console.";
 
   static String premiumPurchaseSuccess = "premiumPurchaseSuccessTr";
   static String premiumPurchaseSuccessKr = "프리미엄 구매가 완료되었습니다.";

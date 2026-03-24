@@ -18,6 +18,7 @@ class PremiumService extends GetxService {
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
 
   final isInitialized = false.obs;
+  final isRefreshingStore = false.obs;
   final isPremium = false.obs;
   final isStoreAvailable = false.obs;
   final isPurchasing = false.obs;
@@ -53,15 +54,29 @@ class PremiumService extends GetxService {
   }
 
   Future<void> _refreshStoreState() async {
-    isStoreAvailable.value = await _inAppPurchase.isAvailable();
-    if (!isStoreAvailable.value) {
-      isPremium.value = false;
-      products.clear();
-      return;
+    isRefreshingStore.value = true;
+    try {
+      isStoreAvailable.value = await _inAppPurchase.isAvailable();
+      if (!isStoreAvailable.value) {
+        isPremium.value = false;
+        products.clear();
+        if (Platform.isAndroid) {
+          _setPurchaseMessage(
+            '${AppStrings.storeUnavailable.tr}\n${AppStrings.androidBillingSetupGuide.tr}',
+            isError: true,
+          );
+        }
+        return;
+      }
+      if (isPurchaseMessageError.value) {
+        clearPurchaseMessage();
+      }
+      await _loadProducts();
+      _listenPurchases();
+      await refreshEntitlement();
+    } finally {
+      isRefreshingStore.value = false;
     }
-    await _loadProducts();
-    _listenPurchases();
-    await refreshEntitlement();
   }
 
   Future<void> _loadProducts() async {
@@ -72,6 +87,14 @@ class PremiumService extends GetxService {
       LogManager.error('Premium product query failed: ${response.error}');
     }
     products.assignAll(response.productDetails);
+    if (products.isEmpty && Platform.isAndroid) {
+      _setPurchaseMessage(
+        '${AppStrings.purchaseProductUnavailable.tr}\n${AppStrings.androidBillingSetupGuide.tr}',
+        isError: true,
+      );
+    } else if (isPurchaseMessageError.value) {
+      clearPurchaseMessage();
+    }
   }
 
   void _listenPurchases() {

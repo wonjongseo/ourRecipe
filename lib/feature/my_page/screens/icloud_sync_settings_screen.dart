@@ -97,7 +97,8 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
                   height: 50,
                   child: FilledButton(
                     onPressed:
-                        controller.isICloudSyncUpdating.value
+                        controller.isICloudSyncUpdating.value ||
+                                !controller.isICloudAvailable.value
                             ? null
                             : controller.uploadLocalDataToICloud,
                     child: Text(AppStrings.uploadToICloud.tr),
@@ -116,7 +117,8 @@ class ICloudSyncSettingsScreen extends GetView<MyPageController> {
                   height: 50,
                   child: OutlinedButton.icon(
                     onPressed:
-                        controller.isICloudSyncUpdating.value
+                        controller.isICloudSyncUpdating.value ||
+                                !controller.isICloudAvailable.value
                             ? null
                             : controller.downloadICloudDataToLocal,
                     icon: const Icon(Icons.cloud_download_outlined),

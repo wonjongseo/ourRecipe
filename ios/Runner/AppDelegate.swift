@@ -70,12 +70,17 @@ import UIKit
 
   private func resolveICloudStatus(result: @escaping FlutterResult) {
     let container = CKContainer.default()
-    container.accountStatus { status, _ in
+    container.accountStatus { status, error in
       let available = status == .available
-      NSLog("[CloudKit] accountStatus=\(status.rawValue) available=\(available)")
+      let errorMessage = error?.localizedDescription
+      NSLog(
+        "[CloudKit] accountStatus=\(status.rawValue) available=\(available) error=\(errorMessage ?? "nil")"
+      )
       result([
         "tokenPresent": available,
-        "containerAvailable": true,
+        "containerAvailable": error == nil,
+        "accountStatus": status.rawValue,
+        "errorMessage": errorMessage as Any,
       ])
     }
   }

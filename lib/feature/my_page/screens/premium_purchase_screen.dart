@@ -12,6 +12,23 @@ class PremiumPurchaseScreen extends GetView<PremiumService> {
 
   @override
   Widget build(BuildContext context) {
+    if (!Platform.isIOS) {
+      return Scaffold(
+        appBar: AppBar(title: Text(AppStrings.premiumPurchase.tr)),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Text(
+                AppStrings.iCloudIOSOnly.tr,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text(AppStrings.premiumPurchase.tr)),
       body: SafeArea(
@@ -48,10 +65,12 @@ class PremiumPurchaseScreen extends GetView<PremiumService> {
                   subtitle: AppStrings.premiumICloudDescription.tr,
                 ),
               if (!controller.isPremium.value &&
+                  !controller.isRefreshingStore.value &&
                   !controller.isStoreAvailable.value) ...[
                 const SizedBox(height: 16),
                 Text(
-                  AppStrings.storeUnavailable.tr,
+                  controller.purchaseMessage.value ??
+                      AppStrings.storeUnavailable.tr,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.error,
                   ),
